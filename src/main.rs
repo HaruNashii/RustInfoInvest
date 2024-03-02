@@ -3,13 +3,10 @@
 //---------------------------------------CRATES BACK-END-------------------------------//
 //-------------------------------------------------------------------------------------//
 //=====================================================================================//
-use percentage::Percentage;
 use std::fs::File;
 use std::io::Read;
 use ron::de::from_str;
 use serde_derive::Deserialize;
-
-
 
 
 //=====================================================================================//
@@ -20,21 +17,21 @@ use serde_derive::Deserialize;
 #[derive(Deserialize)]
 struct RonFloatValues 
 {
-    return_value: f32,
-    total_invested: f32,
+    return_value: f64,
+    total_invested: f64,
 }
 
 
 
 
 
-fn round_float(value: f32, precision: usize) -> f32 
+fn round_float(value: f64, precision: usize) -> f64
 {
-    let factor = 10.0_f32.powi(precision as i32);
+    let factor = 10.0_f64.powi(precision as i32);
     (value * factor).round() / factor
 }
 
-fn read_ron_file() -> (f32, f32)
+fn read_ron_file() -> (f64, f64)
 {
  // Open the file
  let mut file = File::open("config/data.ron").unwrap();
@@ -56,23 +53,34 @@ fn read_ron_file() -> (f32, f32)
 fn maths() -> (String, String, String, String, String, String)
 {
     let (ron_file_total_invested, ron_file_return_value) = read_ron_file();
+    let ron_file_return_value: f64 = ron_file_return_value / 100.0;
+    let month_return_value: f64 = ron_file_return_value / 12.0;
 
-    let ron_file_return_value = ron_file_return_value / 100.0;
-    let percent = Percentage::from_decimal(ron_file_return_value.into());
+    let total_years_invested: u8 = 1;
+    let total_months_invested: u8 = 1;
 
-    let one_year = percent.apply_to(ron_file_total_invested.into());
-    let one_month = one_year / 12.0;
-    let one_day = one_month / 31.0;
-    let one_hour = one_day / 24.0;
-    let one_min = one_day / 60.0;
-    let one_secs = one_min / 60.0;
+    //formula = total_invested * (1 + return_value)^total_time_invested
+    let formula: f64 = ron_file_total_invested * f64::powf(1.0 + ron_file_return_value, total_years_invested as f64) - ron_file_total_invested;
+    let formula_month: f64 = ron_file_total_invested * f64::powf(1.0 + month_return_value, total_months_invested as f64) - ron_file_total_invested;
 
-    let one_year = round_float(one_year as f32, 2);
-    let one_month = round_float(one_month as f32, 2);
-    let one_day = round_float(one_day as f32, 2);
-    let one_hour = round_float(one_hour as f32, 2);
-    let one_min = round_float(one_min as f32, 2);
-    let one_secs = round_float(one_secs as f32, 2);
+
+    
+
+
+    let one_year: f64 = formula;
+    let one_month: f64 = formula_month;
+    let one_day: f64 =  formula_month / 31.0;
+    let one_hour: f64 = one_day / 24.0;
+    let one_min: f64 = one_hour / 60.0;
+    let one_secs: f64 = one_min / 60.0;
+
+
+    let one_year = round_float(one_year, 2);
+    let one_month = round_float(one_month, 2);
+    let one_day = round_float(one_day, 2);
+    let one_hour = round_float(one_hour, 2);
+    let one_min = round_float(one_min, 3);
+    let one_secs = round_float(one_secs, 4);
     
     return (one_year.to_string(), one_month.to_string(), one_day.to_string(), one_hour.to_string(), one_min.to_string(), one_secs.to_string());
 }
