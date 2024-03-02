@@ -1,11 +1,10 @@
 RustInfoInvest
 
-A Very simple Return Compost Calculator Write In Rust.
+A Very simple Return Compost Calculator With Online Return Value Write In Rust.
 
 I Planned to add more features like
-
-- A Web Scrapper To Pick The Recent Return Value Of The "Poupanca or Tesouro Selic" (Brasilian Investment Method's)
-- A Return Value Count To See Your Received Return Value
+- A Web Scrapper To Pick The Recent Return Value Of The "Poupanca" (Brasilian Investment Method)
+- A Return Value Count To See Your "Total Value Invested + Return Value" Updated In Real Time
 
 but i'm extremely buzy so it will probably take a long time. for now it's just one very simple calculator that you can make in 30 minutes or less
 
