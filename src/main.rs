@@ -7,6 +7,11 @@ use std::fs::File;
 use std::io::Read;
 use ron::de::from_str;
 use serde_derive::Deserialize;
+use crate::getinfo::infos;
+
+pub mod getinfo;
+
+
 
 
 //=====================================================================================//
@@ -17,10 +22,10 @@ use serde_derive::Deserialize;
 #[derive(Deserialize)]
 struct RonFloatValues 
 {
-    return_value: f64,
     total_invested: f64,
+    return_value: f64,
+    use_local_return_value: bool,
 }
-
 
 
 
@@ -31,7 +36,7 @@ fn round_float(value: f64, precision: usize) -> f64
     (value * factor).round() / factor
 }
 
-fn read_ron_file() -> (f64, f64)
+fn read_ron_file() -> (f64, f64, bool)
 {
  // Open the file
  let mut file = File::open("config/data.ron").unwrap();
@@ -47,14 +52,24 @@ fn read_ron_file() -> (f64, f64)
  let total_invested = round_float(my_struct.total_invested, 2);
  let return_value = round_float(my_struct.return_value, 2);
 
- return (total_invested, return_value);
+ return (total_invested, return_value, my_struct.use_local_return_value);
 }
 
 fn maths() -> (String, String, String, String, String, String)
 {
-    let (ron_file_total_invested, ron_file_return_value) = read_ron_file();
-    let ron_file_return_value: f64 = ron_file_return_value / 100.0;
-    let month_return_value: f64 = ron_file_return_value / 12.0;
+    let (ron_file_total_invested, mut ron_file_return_value, use_local_return_value) = read_ron_file();
+    let (_, online_return_value) = infos();
+
+    if use_local_return_value
+    {
+        ron_file_return_value = ron_file_return_value / 100.0;
+    }
+    if !use_local_return_value
+    {
+        ron_file_return_value = online_return_value / 100.0; 
+    }
+
+    let month_return_value: f64 = ron_file_return_value / 12.0 - 0.0004520;
 
     let total_years_invested: u8 = 1;
     let total_months_invested: u8 = 1;
@@ -91,12 +106,9 @@ fn maths() -> (String, String, String, String, String, String)
 
 
 
-
-
-
 //=====================================================================================//
 //-------------------------------------------------------------------------------------//
-//---------------------------------------CRATES BACK-END-------------------------------//
+//---------------------------------------CRATES FRONT-END------------------------------//
 //-------------------------------------------------------------------------------------//
 //=====================================================================================//
 use sdl2::pixels::Color;
@@ -131,7 +143,8 @@ const VALUE_RETURN_TEXT: [&str;6] = ["RETURN PER YEAR =", "RETURN PER MONTH =", 
 const VALUE_RETURN_TEXT_POS_X: i32 = 364;
 const VALUE_RETURN_TEXT_POS_Y: [i32;6] = [200, 250, 300, 350, 400, 450];
 
-
+const SELIC_RETURN_TEXT_POS: [i32;2] = [10, 650];
+const SELIC_RETURN_TEXT_SIZE: [u32;2] = [1300, 75];
 
 
 
@@ -192,6 +205,7 @@ fn render_scene(canvas: &mut Canvas<Window>, texture_creator: &TextureCreator<sd
     let (  
             invested_value_rect,
             return_percentage_value_rect,
+            selic_return_rect,
             one_year_rect,
             one_month_rect,
             one_day_rect,
@@ -204,6 +218,7 @@ fn render_scene(canvas: &mut Canvas<Window>, texture_creator: &TextureCreator<sd
     let (
             invested_value_text_image,
             return_percentage_value_text_image,
+            selic_return_text_image,
             one_year_text_image,
             one_month_text_image,
             one_day_text_image,        
@@ -217,6 +232,7 @@ fn render_scene(canvas: &mut Canvas<Window>, texture_creator: &TextureCreator<sd
 
     canvas.copy(&invested_value_text_image, None, invested_value_rect).unwrap();
     canvas.copy(&return_percentage_value_text_image, None, return_percentage_value_rect).unwrap();
+    canvas.copy(&selic_return_text_image, None, selic_return_rect).unwrap();
     
     canvas.copy(&one_year_text_image, None, one_year_rect).unwrap();
     canvas.copy(&one_month_text_image, None, one_month_rect).unwrap();
@@ -246,13 +262,24 @@ fn text_image_generator<'a>(additional_text: &str, main_text: &str, texture_crea
     return texture;
 }
 
-fn fonts<'a>(texture_creator: &'a TextureCreator<sdl2::video::WindowContext>) -> (Texture<'a>, Texture<'a>, Texture<'a>, Texture<'a>, Texture<'a>, Texture<'a>, Texture<'a>, Texture<'a>)
+fn fonts<'a>(texture_creator: &'a TextureCreator<sdl2::video::WindowContext>) -> (Texture<'a>, Texture<'a>, Texture<'a>, Texture<'a>, Texture<'a>, Texture<'a>, Texture<'a>, Texture<'a>, Texture<'a>)
 {
     let (one_year, one_month, one_day, one_hour, one_min, one_secs) = maths();
-    let (ron_file_total_invested, ron_file_return_value) = read_ron_file();
+    let (ron_file_total_invested, mut ron_file_return_value, use_local_return_value) = read_ron_file();
+    let (selic_return_text, online_return_value) = infos();
+
+    if use_local_return_value
+    {
+        ron_file_return_value = ron_file_return_value;
+    }
+    if !use_local_return_value
+    {
+        ron_file_return_value = online_return_value; 
+    }
 
     let invested_value_text_image = text_image_generator(VALUE_INVESTED_TEXT, &ron_file_total_invested.to_string(), texture_creator);
     let return_percentage_value_text_image = text_image_generator(RETURN_PERCENTAGE_TEXT, &ron_file_return_value.to_string(), texture_creator);
+    let selic_return_text_image = text_image_generator(" ", &selic_return_text, texture_creator);
 
     let one_year_text_image = text_image_generator(VALUE_RETURN_TEXT[0], &one_year, texture_creator);
     let one_month_text_image = text_image_generator(VALUE_RETURN_TEXT[1], &one_month, texture_creator);
@@ -264,6 +291,7 @@ fn fonts<'a>(texture_creator: &'a TextureCreator<sdl2::video::WindowContext>) ->
     return (
             invested_value_text_image,
             return_percentage_value_text_image,
+            selic_return_text_image,
             one_year_text_image,
             one_month_text_image,
             one_day_text_image,        
@@ -273,10 +301,11 @@ fn fonts<'a>(texture_creator: &'a TextureCreator<sdl2::video::WindowContext>) ->
             );
 }
 
-fn objects() -> (Rect, Rect, Rect, Rect, Rect, Rect, Rect, Rect)
+fn objects() -> (Rect, Rect, Rect, Rect, Rect, Rect, Rect, Rect, Rect)
 {
     let invested_value_rect = Rect::new(VALUE_INVEST_TEXT_POS[0], VALUE_INVEST_TEXT_POS[1], DEFAULT_RECT_FONT_SIZE[0], DEFAULT_RECT_FONT_SIZE[1]);
     let return_percentage_value_rect = Rect::new(RETURN_PERCENTAGE_POS[0], RETURN_PERCENTAGE_POS[1], DEFAULT_RECT_FONT_SIZE[0], DEFAULT_RECT_FONT_SIZE[1]);
+    let selic_return_rect = Rect::new(SELIC_RETURN_TEXT_POS[0], SELIC_RETURN_TEXT_POS[1], SELIC_RETURN_TEXT_SIZE[0], SELIC_RETURN_TEXT_SIZE[1]);
 
     let one_year_rect =  Rect::new(VALUE_RETURN_TEXT_POS_X, VALUE_RETURN_TEXT_POS_Y[0], DEFAULT_RECT_FONT_SIZE[0], DEFAULT_RECT_FONT_SIZE[1]);
     let one_month_rect = Rect::new(VALUE_RETURN_TEXT_POS_X, VALUE_RETURN_TEXT_POS_Y[1], DEFAULT_RECT_FONT_SIZE[0], DEFAULT_RECT_FONT_SIZE[1]);
@@ -289,6 +318,7 @@ fn objects() -> (Rect, Rect, Rect, Rect, Rect, Rect, Rect, Rect)
     return (
             invested_value_rect,
             return_percentage_value_rect,
+            selic_return_rect,
             one_year_rect,
             one_month_rect,
             one_day_rect,

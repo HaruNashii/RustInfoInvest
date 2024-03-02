@@ -1,5 +1,6 @@
 RonFloatValues 
 (
-    total_invested: 200000.0,
+    total_invested: 500000.0,
     return_value: 12.0,
+    use_local_return_value: false,
 )
