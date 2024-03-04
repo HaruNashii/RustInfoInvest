@@ -7,6 +7,7 @@ use std::fs::File;
 use std::io::Read;
 use ron::de::from_str;
 use serde_derive::Deserialize;
+use percentage::Percentage;
 use crate::getinfo::infos;
 
 pub mod getinfo;
@@ -20,11 +21,18 @@ pub mod getinfo;
 //-------------------------------------------------------------------------------------//
 //=====================================================================================//
 #[derive(Deserialize)]
-struct RonFloatValues 
+struct RonConfigTypes 
 {
+    // data
     total_invested: f64,
     return_value: f64,
-    use_local_return_value: bool,
+    cdi_value: f64,
+    // modes
+    use_online_selic_return_value: bool,
+    use_cdi_value: bool,
+    // time
+    years_invested: u32,
+    months_invested: u32,
 }
 
 
@@ -36,7 +44,7 @@ fn round_float(value: f64, precision: usize) -> f64
     (value * factor).round() / factor
 }
 
-fn read_ron_file() -> (f64, f64, bool)
+fn read_ron_file() -> (f64, f64, f64, f64, bool, bool, u32, u32)
 {
  // Open the file
  let mut file = File::open("config/data.ron").unwrap();
@@ -46,37 +54,49 @@ fn read_ron_file() -> (f64, f64, bool)
  file.read_to_string(&mut content).unwrap();
 
  // Parse the RON content into a MyStruct
- let my_struct: RonFloatValues = from_str(&content).expect("Failed to parse RON");
+ let my_struct: RonConfigTypes = from_str(&content).expect("Failed to parse RON");
 
  // Round the float to remove unecessary decimal numbers
  let total_invested = round_float(my_struct.total_invested, 2);
  let return_value = round_float(my_struct.return_value, 2);
 
- return (total_invested, return_value, my_struct.use_local_return_value);
+ let mut cdi_value_translated: f64 = 0.0;
+ let percent = Percentage::from_decimal(my_struct.cdi_value / 1000.0);
+ if !my_struct.use_online_selic_return_value
+ {
+    cdi_value_translated = (percent.apply_to(my_struct.return_value) - 0.01) * 10.0;
+ }
+ if my_struct.use_online_selic_return_value
+ {
+    let (_, online_return_value) = infos();
+    cdi_value_translated = (percent.apply_to(online_return_value) - 0.01) * 10.0;
+ }
+ return (total_invested, return_value, my_struct.cdi_value, cdi_value_translated, my_struct.use_online_selic_return_value, my_struct.use_cdi_value, my_struct.years_invested, my_struct.months_invested);
 }
 
 fn maths() -> (String, String, String, String, String, String)
 {
-    let (ron_file_total_invested, mut ron_file_return_value, use_local_return_value) = read_ron_file();
+    let (ron_file_total_invested, mut ron_file_return_value, _, ron_file_cdi_value_translated, use_online_selic_return_value, use_cdi_value, ron_file_years_invested, ron_file_months_invested) = read_ron_file();
     let (_, online_return_value) = infos();
 
-    if use_local_return_value
+    let month_return_value: f64 = (ron_file_return_value / 12.0) / 100.0;
+    if !use_online_selic_return_value && !use_cdi_value
     {
         ron_file_return_value = ron_file_return_value / 100.0;
     }
-    if !use_local_return_value
+    if use_online_selic_return_value && !use_cdi_value
     {
         ron_file_return_value = online_return_value / 100.0; 
     }
 
-    let month_return_value: f64 = ron_file_return_value / 12.0 - 0.0004520;
-
-    let total_years_invested: u8 = 1;
-    let total_months_invested: u8 = 1;
+    if use_cdi_value
+    {
+        ron_file_return_value = ron_file_cdi_value_translated / 100.0;
+    }
 
     //formula = total_invested * (1 + return_value)^total_time_invested
-    let formula: f64 = ron_file_total_invested * f64::powf(1.0 + ron_file_return_value, total_years_invested as f64) - ron_file_total_invested;
-    let formula_month: f64 = ron_file_total_invested * f64::powf(1.0 + month_return_value, total_months_invested as f64) - ron_file_total_invested;
+    let formula: f64 = ron_file_total_invested * f64::powf(1.0 + ron_file_return_value, ron_file_years_invested as f64) - ron_file_total_invested;
+    let formula_month: f64 = ron_file_total_invested * f64::powf(1.0 + month_return_value, ron_file_months_invested as f64) - ron_file_total_invested;
 
 
     
@@ -130,7 +150,7 @@ const WINDOW_WIDTH: u32 = 1360;
 const WINDOW_HEIGHT: u32 = 768;
 
 const DEFAULT_FONT_SIZE: u16 = 20;
-const DEFAULT_RECT_FONT_SIZE: [u32;2] = [550, 75];
+const DEFAULT_RECT_FONT_SIZE: [u32;2] = [650, 75];
 const DEFAULT_FONT_PATH: &str = "fonts/JetBrainsMonoNLNerdFontMono-Bold.ttf";
 const DEFAULT_FONT_COLOR: Color = Color::RGB(255, 255, 255);
 
@@ -139,7 +159,7 @@ const VALUE_INVEST_TEXT_POS: [i32;2] = [364, 50];
 const RETURN_PERCENTAGE_TEXT: &str = "RETURN PERCENTAGE =";
 const RETURN_PERCENTAGE_POS: [i32;2] = [364, 125];
 
-const VALUE_RETURN_TEXT: [&str;6] = ["RETURN PER YEAR =", "RETURN PER MONTH =", "RETURN PER DAY =", "RETURN PER HOUR =", "RETURN PER MINUTE =", "RETURN PER SECOND ="];
+const VALUE_RETURN_TEXT: [&str;6] = ["RETURN IN", "RETURN IN", "RETURN PER DAY =", "RETURN PER HOUR =", "RETURN PER MINUTE =", "RETURN PER SECOND ="];
 const VALUE_RETURN_TEXT_POS_X: i32 = 364;
 const VALUE_RETURN_TEXT_POS_Y: [i32;6] = [200, 250, 300, 350, 400, 450];
 
@@ -265,24 +285,50 @@ fn text_image_generator<'a>(additional_text: &str, main_text: &str, texture_crea
 fn fonts<'a>(texture_creator: &'a TextureCreator<sdl2::video::WindowContext>) -> (Texture<'a>, Texture<'a>, Texture<'a>, Texture<'a>, Texture<'a>, Texture<'a>, Texture<'a>, Texture<'a>, Texture<'a>)
 {
     let (one_year, one_month, one_day, one_hour, one_min, one_secs) = maths();
-    let (ron_file_total_invested, mut ron_file_return_value, use_local_return_value) = read_ron_file();
+    let (ron_file_total_invested, mut ron_file_return_value, ron_file_cdi_value, ron_file_cdi_value_translated, use_online_selic_return_value, use_cdi_value, ron_file_years_invested, ron_file_months_invested) = read_ron_file();
     let (selic_return_text, online_return_value) = infos();
 
-    if use_local_return_value
+    if !use_online_selic_return_value && !use_cdi_value
     {
         ron_file_return_value = ron_file_return_value;
     }
-    if !use_local_return_value
+    if use_online_selic_return_value && !use_cdi_value
     {
         ron_file_return_value = online_return_value; 
     }
+    let mut return_value_as_string: String = format!("{}% p.a", ron_file_return_value.to_string());
+
+    if use_cdi_value
+    {
+        return_value_as_string = format!("{}% / {}% p.a", ron_file_cdi_value, ron_file_cdi_value_translated);
+    };
+
 
     let invested_value_text_image = text_image_generator(VALUE_INVESTED_TEXT, &ron_file_total_invested.to_string(), texture_creator);
-    let return_percentage_value_text_image = text_image_generator(RETURN_PERCENTAGE_TEXT, &ron_file_return_value.to_string(), texture_creator);
+    let return_percentage_value_text_image = text_image_generator(RETURN_PERCENTAGE_TEXT, &return_value_as_string, texture_creator);
     let selic_return_text_image = text_image_generator(" ", &selic_return_text, texture_creator);
 
-    let one_year_text_image = text_image_generator(VALUE_RETURN_TEXT[0], &one_year, texture_creator);
-    let one_month_text_image = text_image_generator(VALUE_RETURN_TEXT[1], &one_month, texture_creator);
+    let mut year_string = String::new();
+    if ron_file_years_invested <= 1
+    {
+        year_string = format!("{} {} YEAR =", VALUE_RETURN_TEXT[0], ron_file_years_invested);
+    }
+    if ron_file_years_invested >= 2
+    {
+        year_string = format!("{} {} YEARS =", VALUE_RETURN_TEXT[0], ron_file_years_invested);
+    }
+
+    let mut month_string = String::new();
+    if ron_file_months_invested <= 1
+    {
+        month_string = format!("{} {} MONTH =", VALUE_RETURN_TEXT[1], ron_file_months_invested);
+    }
+    if ron_file_months_invested >= 2
+    {
+        month_string = format!("{} {} MONTHS =", VALUE_RETURN_TEXT[1], ron_file_months_invested);
+    }
+    let one_year_text_image = text_image_generator(&year_string, &one_year, texture_creator);
+    let one_month_text_image = text_image_generator(&month_string, &one_month, texture_creator);
     let one_day_text_image = text_image_generator(VALUE_RETURN_TEXT[2], &one_day, texture_creator);
     let one_hour_text_image = text_image_generator(VALUE_RETURN_TEXT[3], &one_hour, texture_creator);
     let one_min_text_image = text_image_generator(VALUE_RETURN_TEXT[4], &one_min, texture_creator);

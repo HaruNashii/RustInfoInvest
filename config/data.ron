@@ -1,6 +1,13 @@
-RonFloatValues 
+RonConfigTypes
 (
-    total_invested: 500000.0,
-    return_value: 12.0,
-    use_local_return_value: false,
+    // data
+    total_invested: 250000.0,
+    return_value: 8.5,
+    cdi_value: 110.0,
+    // modes
+    use_online_selic_return_value: false,
+    use_cdi_value: true,
+    // time
+    years_invested: 5,
+    months_invested: 1,
 )
