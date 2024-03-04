@@ -14,7 +14,7 @@ To Change the values of the calculator you just need to edit the "config/data.ro
 **Future Plans**
   
 - A Web Scrapper To Pick The Recent Return Value Of The "Poupanca" (Brasilian Investment Method)
-- A Return Value Count To See Your "Total Value Invested + Return Value" Updated In Real Time
+- A Total Value Count In Real Time
 
 but i'm extremely buzy so it will probably take a long time. for now it's just one very simple calculator that you can make in 30 minutes or less
 
