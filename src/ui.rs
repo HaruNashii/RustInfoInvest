@@ -99,8 +99,6 @@ pub fn fnloop(sdl_started: sdl2::Sdl, mut canvas: Canvas<Window>, texture_creato
     'running: loop 
     {
 
-
-
         std::thread::sleep(Duration::from_millis(32));
 
 

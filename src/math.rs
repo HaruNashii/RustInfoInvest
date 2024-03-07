@@ -11,9 +11,7 @@ use percentage::Percentage;
 use std::sync::Once;
 use std::sync::Mutex;
 
-use crate::getinfo::infos;
-
-static MY_STATIC_VALUE: Mutex<f64> = Mutex::new(72.7);
+use crate::getonlineinfo::infos;
 
 
 
@@ -38,14 +36,13 @@ struct RonConfigTypes
     years_invested: u32,
     months_invested: u32,
 }
+
+
+
+
+
+static MY_STATIC_VALUE: Mutex<f64> = Mutex::new(72.7);
 static CALL_ONCE: Once = Once::new();
-
-
-
-
-
-
-
 
 
 

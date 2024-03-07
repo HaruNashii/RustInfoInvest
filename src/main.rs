@@ -2,7 +2,7 @@ use crate::ui::exec_fn;
 
 mod ui;
 mod math;
-mod getinfo;
+mod getonlineinfo;
 
 fn main()
 {
