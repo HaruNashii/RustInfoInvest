@@ -15,6 +15,9 @@ use crate::getinfo::infos;
 static MY_STATIC_VALUE: Mutex<f64> = Mutex::new(72.7);
 
 
+
+
+
 //=====================================================================================//
 //-------------------------------------------------------------------------------------//
 //---------------------------------------BACK-END--------------------------------------//
@@ -75,8 +78,8 @@ pub fn read_ron_file() -> (f64, f64, f64, f64, bool, bool, u32, u32)
  {
 
             CALL_ONCE.call_once(|| {
-                    let mut value = MY_STATIC_VALUE.lock().unwrap();
                     let (_, online_return_value) = infos();
+                    let mut value = MY_STATIC_VALUE.lock().unwrap();
                     *value = online_return_value;
             });
             let value = MY_STATIC_VALUE.lock().unwrap();
@@ -96,8 +99,8 @@ pub fn maths() -> (String, String, String, String, String, String)
 {
     let (ron_file_total_invested, mut ron_file_return_value, _, ron_file_cdi_value_translated, _, use_cdi_value, ron_file_years_invested, ron_file_months_invested) = read_ron_file();
 
-    let month_return_value: f64 = (ron_file_return_value / 12.0) / 100.0;
     ron_file_return_value = ron_file_return_value / 100.0;
+    let month_return_value = f64::powf(1.0 + ron_file_return_value, 1.00 / 12.00) - 1.0;
 
 
     if use_cdi_value
@@ -105,11 +108,9 @@ pub fn maths() -> (String, String, String, String, String, String)
         ron_file_return_value = ron_file_cdi_value_translated / 100.0;
     }
 
-
     //formula = total_invested * (1 + return_value)^total_time_invested
     let formula: f64 = ron_file_total_invested * f64::powf(1.0 + ron_file_return_value, ron_file_years_invested as f64) - ron_file_total_invested;
     let formula_month: f64 = ron_file_total_invested * f64::powf(1.0 + month_return_value, ron_file_months_invested as f64) - ron_file_total_invested;
-
 
     let one_year: f64 = formula;
     let one_month: f64 = formula_month;
