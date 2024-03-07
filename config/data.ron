@@ -2,7 +2,7 @@ RonConfigTypes
 (
     // data
     total_invested: 400000.0,
-    return_value: 8.5,
+    return_value: 8.52323,
     cdi_value: 110.0,
     // modes
     use_online_selic_return_value: false,
