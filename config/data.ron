@@ -1,13 +1,13 @@
 RonConfigTypes
 (
     // data
-    total_invested: 250000.0,
+    total_invested: 450000.0,
     return_value: 8.5,
     cdi_value: 110.0,
     // modes
-    use_online_selic_return_value: false,
-    use_cdi_value: true,
+    use_online_selic_return_value: true,
+    use_cdi_value: false,
     // time
-    years_invested: 5,
+    years_invested: 1,
     months_invested: 1,
 )

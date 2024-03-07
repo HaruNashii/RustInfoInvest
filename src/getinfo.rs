@@ -1,11 +1,20 @@
 use scraper::{Html, Selector};
 
 
+
+
+
+
 fn keep_selected_chars(input: &str, allowed_chars: &str) -> String {
     input.chars()
         .filter(|&c| allowed_chars.contains(c))
         .collect()
 }
+
+
+
+
+
 
 fn remove_after_char(input: &str, target_char: char) -> String {
     let mut parts = input.split(target_char);
@@ -17,6 +26,9 @@ fn remove_after_char(input: &str, target_char: char) -> String {
 }
 
 
+
+
+
 fn clean_string_and_parse(string_to_send: &str) -> f64
 {
     let allowed_chars = "1234567890,%";
@@ -24,11 +36,15 @@ fn clean_string_and_parse(string_to_send: &str) -> f64
 
     let selic_return = keep_selected_chars(&string_to_send, allowed_chars);
     let selic_return = remove_after_char(&selic_return, target_char);
-    let selic_return = &selic_return.replace(",", ".");
+    let selic_return: &String = &selic_return.replace(",", ".");
     let f64_to_send: f64 = selic_return.parse().unwrap();
-
     return f64_to_send;
 }
+
+
+
+
+
 
 #[tokio::main]
 pub async fn infos() -> (String, f64)
