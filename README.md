@@ -2,6 +2,9 @@
 
 A Very simple And Configurable Return Compost Calculator With Online Return Value Write In Rust.
 
+> [!WARNING]
+> BRAZIL ONLINE RETURN VALUE IS NOT WORKING CURRENTLY DUE TO WEBSITE THAT WAS SCRAPED BEING CHANGED
+
 > [!IMPORTANT]
 > This APP is under development and currently it's not a serious project, don't use it to calculate your investment return yet,
 
