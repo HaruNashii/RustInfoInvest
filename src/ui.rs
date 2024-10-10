@@ -216,16 +216,6 @@ fn pop_string(mut string: String) -> String
 
 
 
-fn round_float(value: f64, precision: usize) -> f64
-{
-    let factor = 10.0_f64.powi(precision as i32);
-    (value * factor).round() / factor
-}
-
-
-
-
-
 fn format_string() -> (String, String, String, String, String, String)
 {
     let (one_year, one_month, one_day, one_hour, one_min, one_secs) = maths();
@@ -233,14 +223,15 @@ fn format_string() -> (String, String, String, String, String, String)
 
 
         let num = NumberFormat::new();
-        let format_spec = ",f";
+        let format_spec = ",.6";
+        let format_spec_for_secs_and_min = ",.7";
 
         let one_year  = num.format(format_spec, one_year);
         let one_month = num.format(format_spec, one_month);
         let one_day   = num.format(format_spec, one_day);
         let one_hour  = num.format(format_spec, one_hour);
-        let one_min   = num.format(format_spec, one_min);
-        let one_secs  = num.format(format_spec, one_secs);
+        let one_min   = num.format(format_spec_for_secs_and_min, one_min);
+        let one_secs  = num.format(format_spec_for_secs_and_min, one_secs);
 
 
 
@@ -272,21 +263,33 @@ fn fonts<'a>(texture_creator: &'a TextureCreator<sdl2::video::WindowContext>) ->
 {   
 
     let (one_year, one_month, one_day, one_hour, one_min, one_secs) = format_string();
-    let (ron_file_total_invested, mut ron_file_return_value, mut ron_file_cdi_value, mut ron_file_cdi_value_translated, _, use_cdi_value, ron_file_years_invested, ron_file_months_invested) = read_ron_file();
+    let (
+            ron_file_total_invested,
+            ron_file_return_value,
+            ron_file_cdi_value,
+            ron_file_cdi_value_translated,
+            _,
+            use_cdi_value,
+            ron_file_years_invested,
+            ron_file_months_invested
+        ) = read_ron_file();
 
 
-        ron_file_return_value = round_float(ron_file_return_value, 2);
-        ron_file_cdi_value = round_float(ron_file_cdi_value, 2);
-        ron_file_cdi_value_translated = round_float(ron_file_cdi_value_translated, 2);
+        let num = NumberFormat::new();
+        let ron_file_total_invested = num.format(",.2", ron_file_total_invested);
+        let ron_file_return_value =   num.format(",.2", ron_file_return_value);
+        let ron_file_cdi_value =      num.format(",.2", ron_file_cdi_value);
+        let ron_file_cdi_value_translated = num.format(",.2", ron_file_cdi_value_translated);
+
+
         let mut return_value_as_string: String = format!("{}% p.a", ron_file_return_value.to_string());
+
         if use_cdi_value
         {
-        return_value_as_string = format!("{}% / {}% p.a", ron_file_cdi_value, ron_file_cdi_value_translated);
+            return_value_as_string = format!("{}% / {}% p.a", ron_file_cdi_value, ron_file_cdi_value_translated);
         };
 
 
-            let num = NumberFormat::new();
-            let ron_file_total_invested = num.format(",.2", ron_file_total_invested);
             let invested_value_text_image = text_image_generator(VALUE_INVESTED_TEXT, &ron_file_total_invested.to_string(), texture_creator);
             let return_percentage_value_text_image = text_image_generator(RETURN_PERCENTAGE_TEXT, &return_value_as_string, texture_creator);
 

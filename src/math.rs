@@ -113,16 +113,15 @@ pub fn maths() -> (f64, f64, f64, f64, f64 ,f64)
     let (ron_file_total_invested, mut ron_file_return_value, _, ron_file_cdi_value_translated, _, use_cdi_value, ron_file_years_invested, ron_file_months_invested) = read_ron_file();
 
 
-
         // Move numbers one case to the right to fit the formula math (example = 1.0 -> 0.1)
         ron_file_return_value = ron_file_return_value / 100.0;
         if use_cdi_value { ron_file_return_value = ron_file_cdi_value_translated / 100.0; }
         let month_return_value = f64::powf(1.0 + ron_file_return_value, 1.00 / 12.00) - 1.0;
 
 
-            // Formula
-            //formula = total_invested * (1 + return_value)^total_time_invested
-            let formula: f64 = ron_file_total_invested * f64::powf(1.0 + ron_file_return_value, ron_file_years_invested as f64) - ron_file_total_invested;
+            // Formulas
+            // formula = total_invested * (1 + return_value)^total_time_invested
+            let formula: f64       = ron_file_total_invested * f64::powf(1.0 + ron_file_return_value, ron_file_years_invested as f64) - ron_file_total_invested;
             let formula_month: f64 = ron_file_total_invested * f64::powf(1.0 + month_return_value, ron_file_months_invested as f64) - ron_file_total_invested;
 
 
