@@ -43,9 +43,6 @@ fn text_generator<'a>(additional_text: &str, main_text: &str, texture_creator: &
 
 
 
-
-
-
 fn format_string() -> (String, String, String, String, String, String)
 {
     let (one_year, one_month, one_day, one_hour, one_min, one_secs) = maths();
@@ -75,22 +72,11 @@ fn format_string() -> (String, String, String, String, String, String)
 
 
 
-
-
-pub fn fonts<'a>(texture_creator: &'a TextureCreator<sdl2::video::WindowContext>) -> (Texture<'a>, Texture<'a>, Texture<'a>, Texture<'a>, Texture<'a>, Texture<'a>, Texture<'a>, Texture<'a>)
+pub fn fonts(texture_creator: &TextureCreator<sdl2::video::WindowContext>) -> (Texture<'_>, Texture<'_>, Texture<'_>, Texture<'_>, Texture<'_>, Texture<'_>, Texture<'_>, Texture<'_>)
 {   
 
     let (one_year, one_month, one_day, one_hour, one_min, one_secs) = format_string();
-    let (
-            ron_file_total_invested,
-            ron_file_return_value,
-            ron_file_cdi_value,
-            ron_file_cdi_value_translated,
-            _,
-            use_cdi_value,
-            ron_file_years_invested,
-            ron_file_months_invested
-        ) = read_ron_file();
+    let ( ron_file_total_invested, ron_file_return_value, ron_file_cdi_value, ron_file_cdi_value_translated, _, use_cdi_value, ron_file_years_invested, ron_file_months_invested) = read_ron_file();
 
 
         let num = NumberFormat::new();
@@ -100,17 +86,12 @@ pub fn fonts<'a>(texture_creator: &'a TextureCreator<sdl2::video::WindowContext>
         let ron_file_cdi_value_translated = num.format(",.2", ron_file_cdi_value_translated);
 
 
-        let mut return_value_as_string: String = format!("{}% p.a", ron_file_return_value.to_string());
-
-        if use_cdi_value
-        {
-            return_value_as_string = format!("{}% / {}% p.a", ron_file_cdi_value, ron_file_cdi_value_translated);
-        };
+        let mut return_value_as_string: String = format!("{}% p.a", ron_file_return_value);
+        if use_cdi_value { return_value_as_string = format!("{}% / {}% p.a", ron_file_cdi_value, ron_file_cdi_value_translated); };
 
 
             let invested_value_text_image = text_generator(VALUE_INVESTED_TEXT, &ron_file_total_invested.to_string(), texture_creator);
             let return_percentage_value_text_image = text_generator(RETURN_PERCENTAGE_TEXT, &return_value_as_string, texture_creator);
-
 
 
                 let mut year_string = String::new();
@@ -134,14 +115,12 @@ pub fn fonts<'a>(texture_creator: &'a TextureCreator<sdl2::video::WindowContext>
                 }
 
 
-
                     let one_year_text_image = text_generator(&year_string, &one_year, texture_creator);
                     let one_month_text_image = text_generator(&month_string, &one_month, texture_creator);
                     let one_day_text_image = text_generator(VALUE_RETURN_TEXT[2], &one_day, texture_creator);
                     let one_hour_text_image = text_generator(VALUE_RETURN_TEXT[3], &one_hour, texture_creator);
                     let one_min_text_image = text_generator(VALUE_RETURN_TEXT[4], &one_min, texture_creator);
                     let one_secs_text_image = text_generator(VALUE_RETURN_TEXT[5], &one_secs, texture_creator);
-
 
 
                         (
@@ -158,13 +137,10 @@ pub fn fonts<'a>(texture_creator: &'a TextureCreator<sdl2::video::WindowContext>
 
 
 
-
-
 pub fn objects() -> (Rect, Rect, Rect, Rect, Rect, Rect, Rect, Rect)
 {
     let invested_value_rect = Rect::new(VALUE_INVEST_TEXT_POS[0], VALUE_INVEST_TEXT_POS[1], DEFAULT_RECT_FONT_SIZE[0], DEFAULT_RECT_FONT_SIZE[1]);
     let return_percentage_value_rect = Rect::new(RETURN_PERCENTAGE_POS[0], RETURN_PERCENTAGE_POS[1], DEFAULT_RECT_FONT_SIZE[0], DEFAULT_RECT_FONT_SIZE[1]);
-
 
 
         let one_year_rect =  Rect::new(VALUE_RETURN_TEXT_POS_X, VALUE_RETURN_TEXT_POS_Y[0], DEFAULT_RECT_FONT_SIZE[0], DEFAULT_RECT_FONT_SIZE[1]);
@@ -173,7 +149,6 @@ pub fn objects() -> (Rect, Rect, Rect, Rect, Rect, Rect, Rect, Rect)
         let one_hour_rect =  Rect::new(VALUE_RETURN_TEXT_POS_X, VALUE_RETURN_TEXT_POS_Y[3], DEFAULT_RECT_FONT_SIZE[0], DEFAULT_RECT_FONT_SIZE[1]);
         let one_min_rect =   Rect::new(VALUE_RETURN_TEXT_POS_X, VALUE_RETURN_TEXT_POS_Y[4], DEFAULT_RECT_FONT_SIZE[0], DEFAULT_RECT_FONT_SIZE[1]);
         let one_secs_rect =  Rect::new(VALUE_RETURN_TEXT_POS_X, VALUE_RETURN_TEXT_POS_Y[5], DEFAULT_RECT_FONT_SIZE[0], DEFAULT_RECT_FONT_SIZE[1]);
-
 
 
             (
@@ -185,6 +160,5 @@ pub fn objects() -> (Rect, Rect, Rect, Rect, Rect, Rect, Rect, Rect)
                 one_hour_rect, 
                 one_min_rect,
                 one_secs_rect,
-
             )
 }

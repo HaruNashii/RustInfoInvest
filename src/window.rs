@@ -14,32 +14,19 @@ pub fn create_window() -> (sdl2::Sdl, Canvas<Window>, TextureCreator<WindowConte
 {
     let sdl_started = sdl2::init().unwrap();
     let sdl_videosystem = sdl_started.video().unwrap();
-    let window = sdl_videosystem
-    .window("ruinvest", WINDOW_WIDTH, WINDOW_HEIGHT)
-    .position_centered()
-    .build()
-    .map_err(|e| e.to_string())
-    .unwrap();
+    let window = sdl_videosystem.window("ruinvest", WINDOW_WIDTH, WINDOW_HEIGHT).position_centered().build().unwrap();
+
+    let mut canvas = window.into_canvas().accelerated().build().unwrap();
+    canvas.set_logical_size(WINDOW_WIDTH, WINDOW_HEIGHT).unwrap();
+
+    let texture_creator = canvas.texture_creator();
 
 
-
-        let mut canvas = window.into_canvas()
-        .accelerated()
-        .build()
-        .map_err(|e| e.to_string())
-        .unwrap();
-        canvas.set_logical_size(WINDOW_WIDTH, WINDOW_HEIGHT).unwrap();
-
-
-
-            let texture_creator = canvas.texture_creator();
-
-                return
                 (
                     sdl_started,
                     canvas,
                     texture_creator
-                );
+                )
 }
 
 
@@ -60,7 +47,6 @@ pub fn render_scene(canvas: &mut Canvas<Window>, texture_creator: &TextureCreato
     ) = objects();
 
 
-
         //pick the textures/texts/images
         let 
         (
@@ -75,10 +61,8 @@ pub fn render_scene(canvas: &mut Canvas<Window>, texture_creator: &TextureCreato
         ) = fonts(texture_creator);
 
 
-
             canvas.set_draw_color(Color::RGB(0,0,0));
             canvas.clear();
-
 
 
                 canvas.copy(&invested_value_text_image, None, invested_value_rect).unwrap();
@@ -89,7 +73,6 @@ pub fn render_scene(canvas: &mut Canvas<Window>, texture_creator: &TextureCreato
                 canvas.copy(&one_hour_text_image, None, one_hour_rect).unwrap();
                 canvas.copy(&one_min_text_image, None, one_min_rect).unwrap();
                 canvas.copy(&one_secs_text_image, None, one_secs_rect).unwrap();
-
 
 
                     canvas.present();

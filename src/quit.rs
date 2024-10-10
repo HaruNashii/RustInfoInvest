@@ -8,10 +8,6 @@ pub fn handle_quit(event_pump: &mut EventPump)
 {
     for event in event_pump.poll_iter()
     {
-        match event
-        {
-            Event::Quit { .. } => exit(0),
-            _=> ()
-        }
+        if let Event::Quit { .. } = event { exit(0) }
     }
 }
