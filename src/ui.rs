@@ -286,7 +286,7 @@ fn fonts<'a>(texture_creator: &'a TextureCreator<sdl2::video::WindowContext>) ->
 
 
             let num = NumberFormat::new();
-            let ron_file_total_invested = num.format(",s", ron_file_total_invested);
+            let ron_file_total_invested = num.format(",.2", ron_file_total_invested);
             let invested_value_text_image = text_image_generator(VALUE_INVESTED_TEXT, &ron_file_total_invested.to_string(), texture_creator);
             let return_percentage_value_text_image = text_image_generator(RETURN_PERCENTAGE_TEXT, &return_value_as_string, texture_creator);
 

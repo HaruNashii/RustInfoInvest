@@ -5,7 +5,7 @@ RonConfigTypes
     return_value: 8.5,
     cdi_value: 110.0,
     // modes
-    use_online_selic_return_value: false,
+    use_online_selic_return_value: true,
     use_cdi_value: true,
     // time
     years_invested: 1,
