@@ -90,7 +90,6 @@ pub fn read_ron_file() -> (f64, f64, f64, f64, bool, bool, u32, u32)
 
 
                     // Return values
-                    return 
                     (
                         my_struct.total_invested,
                         return_value,
@@ -100,7 +99,7 @@ pub fn read_ron_file() -> (f64, f64, f64, f64, bool, bool, u32, u32)
                         my_struct.use_cdi_value,
                         my_struct.years_invested, 
                         my_struct.months_invested
-                    );
+                    )
 }
 
 
@@ -137,7 +136,6 @@ pub fn maths() -> (f64, f64, f64, f64, f64 ,f64)
 
 
                         // Return Values
-                        return 
                         (
                             one_year,
                             one_month, 
@@ -145,7 +143,7 @@ pub fn maths() -> (f64, f64, f64, f64, f64 ,f64)
                             one_hour,
                             one_min,
                             one_secs
-                        );
+                        )
 }
 
 
