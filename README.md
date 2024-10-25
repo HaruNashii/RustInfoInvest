@@ -1,9 +1,13 @@
 - **RustInfoInvest**
-
-A Very simple And Configurable Return Compost Calculator With Online Return Value Write In Rust.
+  
+A Very simple And Configurable Compound interest Calculator With Online Selic Tax Values Write In Rust. 
 
 > [!IMPORTANT]
 > This APP is under development and currently it's not a serious project, don't use it to calculate your investment return yet,
+
+**KNOW ISSUES**
+- daily, hours and secs values are incorrect
+- app crashes when changing ron file while app is running  
 
 
 **Config**
