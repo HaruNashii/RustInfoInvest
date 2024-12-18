@@ -20,7 +20,7 @@ static CALL_ONCE: Once = Once::new();
 
 
 
-pub fn basic_data() -> (f64, f64, bool, bool, f64, f64, f64)
+pub fn basic_data() -> (f64, f64, bool, bool, f64, f64, f64, f64, f64)
 {
         let total_invested = 250000.0;
         let mut year_return_value = 11.25;
@@ -30,6 +30,8 @@ pub fn basic_data() -> (f64, f64, bool, bool, f64, f64, f64)
         let years_invested = 1.0;
         let months_invested = 1.0;
         let days_invested = 1.0;
+        let hours_invested = 1.0;
+        let minutes_invested = 1.0;
   
 
 
@@ -67,6 +69,8 @@ pub fn basic_data() -> (f64, f64, bool, bool, f64, f64, f64)
                         years_invested, 
                         months_invested,
                         days_invested,
+                        hours_invested,
+                        minutes_invested,
                     )
 }
 
@@ -77,30 +81,34 @@ pub fn basic_data() -> (f64, f64, bool, bool, f64, f64, f64)
 pub fn maths() -> (f64, f64, f64, f64, f64 ,f64)
 {
     // Pull info string from another function
-    let (total_invested, mut year_return_value, _, _, years_invested, months_invested, days_invested) = basic_data();
+    let (total_invested, mut year_return_value, _, _, years_invested, months_invested, days_invested, hours_invested, minutes_invested) = basic_data();
 
 
         // Move numbers one case to the right to fit the formula math (example = 1.0 -> 0.1)
         year_return_value /= 100.0;
 
-        let month_return_value = f64::powf(1.0 + year_return_value, 1.00 / 12.00) - 1.0;
-        let day_return_value = f64::powf(1.0 + month_return_value, 1.00 / 30.00) - 1.0;
+        let month_return_value  = f64::powf(1.0 + year_return_value,  1.00 / 12.00) - 1.0;
+        let day_return_value    = f64::powf(1.0 + month_return_value, 1.00 / 30.00) - 1.0;
+        let hour_return_value   = f64::powf(1.0 + day_return_value,   1.00 / 24.00) - 1.0;
+        let minute_return_value = f64::powf(1.0 + hour_return_value,  1.00 / 60.00) - 1.0;
 
 
             // Formulas
             // formula = total_invested * (1 + return_value)^total_time_invested
-            let formula: f64       = total_invested * f64::powf(1.0 + year_return_value,   years_invested) - total_invested;
-            let formula_month: f64 = total_invested * f64::powf(1.0 + month_return_value, months_invested) - total_invested;
-            let formula_day: f64   = total_invested * f64::powf(1.0 + day_return_value,     days_invested) - total_invested;
+            let formula_year: f64   = total_invested * f64::powf(1.0 + year_return_value,  years_invested) - total_invested;
+            let formula_month: f64  = total_invested * f64::powf(1.0 + month_return_value, months_invested) - total_invested;
+            let formula_day: f64    = total_invested * f64::powf(1.0 + day_return_value,   days_invested) - total_invested;
+            let formula_hour: f64   = total_invested * f64::powf(1.0 + hour_return_value,  hours_invested) - total_invested;
+            let formula_minute: f64 = total_invested * f64::powf(1.0 + minute_return_value,  minutes_invested) - total_invested;
 
 
                 // Define which node will use their respective formulas
-                let one_year: f64 = formula;
+                let one_year: f64  = formula_year;
                 let one_month: f64 = formula_month;
-                let one_day: f64 =  formula_day;
-                let one_hour: f64 = one_day / 24.0;
-                let one_min: f64 = one_hour / 60.0;
-                let one_secs: f64 = one_min / 60.0;
+                let one_day: f64   = formula_day;
+                let one_hour: f64  = formula_hour;
+                let one_min: f64   = formula_minute;
+                let one_secs: f64  = one_min / 60.0;
 
 
                         // Return Values

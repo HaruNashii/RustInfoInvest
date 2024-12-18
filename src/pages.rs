@@ -85,7 +85,7 @@ pub fn main_page() -> Page<'static>
     //===================== variables =========================
     let default_text_color = Color::RGB(205, 214, 244);
     let ( one_year, one_month, one_day, one_hour, one_min, one_secs,) = maths();
-    let ( total_invested, year_return_value, _, _, years_invested, months_invested, days_invested,) = basic_data();
+    let ( total_invested, year_return_value, _, _, years_invested, months_invested, days_invested, hours_invested, minutes_invested) = basic_data();
     unsafe { if USER_INPUT.is_empty() { USER_INPUT.push(' ') }; };
 
 
@@ -94,7 +94,7 @@ pub fn main_page() -> Page<'static>
     let all_rects = vec!
     [
         //header info background
-        (Color::RGB(203, 166, 247), Rect::new(15, 120, 550, 100)),
+        (Color::RGB(203, 166, 247), Rect::new(15, 120, 760, 100)),
     ];
 
 
@@ -112,26 +112,33 @@ pub fn main_page() -> Page<'static>
 
 
     //===================== texts =========================
+    let year_string: String   = format!("Year:   R$ {:.2}", one_year);
+    let month_string: String  = format!("Month:  R$ {:.2}", one_month);
+    let day_string: String    = format!("Day:    R$ {:.3}", one_day);
+    let hour_string: String   = format!("Hour:   R$ {:.3}", one_hour);
+    let minute_string: String = format!("Minute: R$ {:.4}", one_min);
+    let second_string: String = format!("Second: R$ {:.4}", one_secs);
+    
     let all_text = vec!
     [
         //one year text
-        gen_text(20, (30, 340),  format!("Year:    R$ {}", one_year.to_string()  ), default_text_color),
+        gen_text(20, (30, 340), year_string, default_text_color),
         //one month text
-        gen_text(20, (30, 360),  format!("Month:   R$ {}", one_month.to_string() ), default_text_color),
+        gen_text(20, (30, 360), month_string, default_text_color),
         //one day text
-        gen_text(20, (30, 380),  format!("Day:     R$ {}", one_day.to_string()   ), default_text_color),
+        gen_text(20, (30, 380), day_string, default_text_color),
         //one hour text
-        gen_text(20, (30, 400),  format!("Hour:    R$ {}", one_hour.to_string()  ), default_text_color),
+        gen_text(20, (30, 400), hour_string, default_text_color),
         //one min text
-        gen_text(20, (30, 420),  format!("Minute:  R$ {}", one_min.to_string()   ), default_text_color),
+        gen_text(20, (30, 420), minute_string, default_text_color),
         //one sec text
-        gen_text(20, (30, 440),  format!("Secound: R$ {}", one_secs.to_string()  ), default_text_color),
+        gen_text(20, (30, 440), second_string, default_text_color),
         //total invested text
         gen_text(20, (30, 140), format!("Total Invested : R$ {}", total_invested.to_string()    ), default_text_color),
         //year return value text
         gen_text(20, (30, 160), format!("Year Return Value : {}%", year_return_value.to_string()), default_text_color),
         //time invested text     
-        gen_text(20, (30, 180), format!("Time Invested : {} Years, {} Months, {} Days", years_invested.to_string(), months_invested.to_string(), days_invested.to_string()), default_text_color),
+        gen_text(20, (30, 180), format!("Time Invested : {} Years, {} Months, {} Days, {} Hours, {} Minutes", years_invested.to_string(), months_invested.to_string(), days_invested.to_string(), hours_invested.to_string(), minutes_invested.to_string()), default_text_color),
         //receive input button text
         gen_text(20, (all_buttons[0].2.x + 15, all_buttons[0].2.y + 15), "Receive Input".to_string(), default_text_color),
         //user input text
