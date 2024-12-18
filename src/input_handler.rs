@@ -16,7 +16,7 @@ pub static mut BUTTON_CLICKED: Option<usize> = None;
 
 
 #[allow(static_mut_refs)]
-pub fn handle_input(buttons: &Vec<(bool, Option<Color>, Rect)>)
+pub fn handle_input(buttons: &[(bool, Option<Color>, Rect)])
 {   
         let event_pump = unsafe{&mut SDL2_EVENT_PUMP[0]};
 

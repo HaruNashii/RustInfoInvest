@@ -134,11 +134,11 @@ pub fn main_page() -> Page<'static>
         //one sec text
         gen_text(20, (30, 440), second_string, default_text_color),
         //total invested text
-        gen_text(20, (30, 140), format!("Total Invested : R$ {}", total_invested.to_string()    ), default_text_color),
+        gen_text(20, (30, 140), format!("Total Invested : R$ {}", total_invested    ), default_text_color),
         //year return value text
-        gen_text(20, (30, 160), format!("Year Return Value : {}%", year_return_value.to_string()), default_text_color),
+        gen_text(20, (30, 160), format!("Year Return Value : {}%", year_return_value), default_text_color),
         //time invested text     
-        gen_text(20, (30, 180), format!("Time Invested : {} Years, {} Months, {} Days, {} Hours, {} Minutes", years_invested.to_string(), months_invested.to_string(), days_invested.to_string(), hours_invested.to_string(), minutes_invested.to_string()), default_text_color),
+        gen_text(20, (30, 180), format!("Time Invested : {} Years, {} Months, {} Days, {} Hours, {} Minutes", years_invested, months_invested, days_invested, hours_invested, minutes_invested), default_text_color),
         //receive input button text
         gen_text(20, (all_buttons[0].2.x + 15, all_buttons[0].2.y + 15), "Receive Input".to_string(), default_text_color),
         //user input text

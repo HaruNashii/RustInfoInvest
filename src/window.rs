@@ -42,45 +42,21 @@ pub fn render_page(page: Page, persistent_elements: Page)
     canvas.set_draw_color(persistent_elements.background_color.unwrap());
     canvas.clear();
 
-        match &page.rects 
-        {
-            Some(rect_vector_of_tuple) => for tuple in rect_vector_of_tuple { canvas.set_draw_color(tuple.0); canvas.fill_rect(tuple.1).unwrap(); },
-            None => {}
-        }
+        if let Some(rect_vector_of_tuple) = &page.rects { for tuple in rect_vector_of_tuple { canvas.set_draw_color(tuple.0); canvas.fill_rect(tuple.1).unwrap(); } }
 
-        match &page.buttons
-        {
-            Some(buttons_vector_of_tuple) => for tuple in buttons_vector_of_tuple { if tuple.0 { canvas.set_draw_color(tuple.1.expect("Draw flag set to button, but no color was defined")); canvas.fill_rect(tuple.2).unwrap(); } },
-            None => {}
-        }
+        if let Some(buttons_vector_of_tuple) = &page.buttons { for tuple in buttons_vector_of_tuple { if tuple.0 { canvas.set_draw_color(tuple.1.expect("Draw flag set to button, but no color was defined")); canvas.fill_rect(tuple.2).unwrap(); } } }
 
-        match &page.texts
-        {
-            Some(texts_vector_of_tuple) => for tuple in texts_vector_of_tuple { canvas.copy(&tuple.0, None, tuple.1).unwrap(); },
-            None => {}
-        }
+        if let Some(texts_vector_of_tuple) = &page.texts { for tuple in texts_vector_of_tuple { canvas.copy(&tuple.0, None, tuple.1).unwrap(); } }
 
 
         //================================
         
 
-        match &persistent_elements.rects 
-        {
-            Some(rect_vector_of_tuple) => for tuple in rect_vector_of_tuple { canvas.set_draw_color(tuple.0); canvas.fill_rect(tuple.1).unwrap(); },
-            None => {}
-        }
+        if let Some(rect_vector_of_tuple) = &persistent_elements.rects { for tuple in rect_vector_of_tuple { canvas.set_draw_color(tuple.0); canvas.fill_rect(tuple.1).unwrap(); } }
 
-        match &persistent_elements.buttons
-        {
-            Some(buttons_vector_of_tuple) => for tuple in buttons_vector_of_tuple { if tuple.0 { canvas.set_draw_color(tuple.1.expect("Draw flag set to button, but no color was defined")); canvas.fill_rect(tuple.2).unwrap(); } },
-            None => {}
-        }
+        if let Some(buttons_vector_of_tuple) = &persistent_elements.buttons { for tuple in buttons_vector_of_tuple { if tuple.0 { canvas.set_draw_color(tuple.1.expect("Draw flag set to button, but no color was defined")); canvas.fill_rect(tuple.2).unwrap(); } } }
 
-        match &persistent_elements.texts
-        {
-            Some(texts_vector_of_tuple) => for tuple in texts_vector_of_tuple { canvas.copy(&tuple.0, None, tuple.1).unwrap(); },
-            None => {}
-        }
+        if let Some(texts_vector_of_tuple) = &persistent_elements.texts { for tuple in texts_vector_of_tuple { canvas.copy(&tuple.0, None, tuple.1).unwrap(); } }
 
         canvas.present();
 }
