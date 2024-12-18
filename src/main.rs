@@ -20,19 +20,14 @@ fn main()
 {
     create_window();
 
-
     loop
     {
         std::thread::sleep(Duration::from_millis(32));
-
 
         let main_page = main_page();
         let second_page = second_page();
         let selic_page = selic_page();
         let persistent_page = persistent_page();
-
-
-
 
         match unsafe{PAGE_TO_RENDER}
         {
@@ -41,20 +36,20 @@ fn main()
                 let mut all_objects = Vec::new();
                 all_objects.append(&mut persistent_page.buttons.clone().unwrap());
                 all_objects.append(&mut main_page.buttons.clone().unwrap());
-                handle_input(&all_objects);
+                handle_input(all_objects);
 
                 button_action();
                 render_page(main_page, persistent_page);
             },
             1 =>
             {
-                handle_input(&persistent_page.buttons.clone().unwrap());
+                handle_input(persistent_page.buttons.clone().unwrap());
                 button_action();
                 render_page(second_page, persistent_page);
             },
             2 =>
             {
-                handle_input(&persistent_page.buttons.clone().unwrap());
+                handle_input(persistent_page.buttons.clone().unwrap());
                 button_action();
                 render_page(selic_page, persistent_page);
             },

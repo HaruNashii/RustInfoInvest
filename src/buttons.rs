@@ -1,4 +1,4 @@
-use crate::input_handler::{IS_ON_WRITE_MODE, BUTTON_CLICKED};
+use crate::input_handler::{IS_ON_WRITE_MODE_ON_BUTTON_1, IS_ON_WRITE_MODE_ON_BUTTON_2, BUTTON_CLICKED};
 
 
 pub static mut PAGE_TO_RENDER: u8 = 0;
@@ -42,13 +42,27 @@ pub fn button_action()
 
             3 => 
             {
-                //user input text
+                //user input text button 1
                 unsafe 
                 {
                     println!("button 2 pressed");
-                    if !IS_ON_WRITE_MODE
+                    if !IS_ON_WRITE_MODE_ON_BUTTON_1
                     {
-                        IS_ON_WRITE_MODE = true;
+                        IS_ON_WRITE_MODE_ON_BUTTON_1 = true;
+                        BUTTON_CLICKED = None;
+                    }
+                };
+            }
+
+            4 =>
+            {
+                //user input text button 2
+                unsafe
+                {
+                    println!("button 3 pressed");
+                    if !IS_ON_WRITE_MODE_ON_BUTTON_2
+                    {
+                        IS_ON_WRITE_MODE_ON_BUTTON_2 = true;
                         BUTTON_CLICKED = None;
                     }
                 };

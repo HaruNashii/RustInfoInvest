@@ -28,11 +28,10 @@ fn clean_string_from_vector(vector_of_string: Vec<String>) -> Vec<String>
             }
         }
 
-
         let mut final_string = String::new();
         for string in separeted_string
         {
-            final_string.push_str( &format!("{}       ", string) );
+            final_string.push_str( &format!("{}            ", string) );
         }
 
         vector_of_clean_strings.push(final_string);
@@ -40,6 +39,8 @@ fn clean_string_from_vector(vector_of_string: Vec<String>) -> Vec<String>
 
     vector_of_clean_strings
 }
+
+
 
 
 

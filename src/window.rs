@@ -6,9 +6,11 @@ use std::time::Duration;
 
 
 
+
 pub static mut SDL2_CANVAS: Vec<Canvas<Window>> = Vec::new();
 pub static mut SDL2_TEXTURE_CREATOR: Vec<TextureCreator<WindowContext>> = Vec::new();
 pub static mut SDL2_EVENT_PUMP: Vec<sdl2::EventPump> = Vec::new();
+
 
 
 
@@ -35,6 +37,8 @@ pub fn create_window()
 
 
 
+
+
 #[allow(static_mut_refs)]
 pub fn render_page(page: Page, persistent_elements: Page)
 {
@@ -44,7 +48,7 @@ pub fn render_page(page: Page, persistent_elements: Page)
 
         if let Some(rect_vector_of_tuple) = &page.rects { for tuple in rect_vector_of_tuple { canvas.set_draw_color(tuple.0); canvas.fill_rect(tuple.1).unwrap(); } }
 
-        if let Some(buttons_vector_of_tuple) = &page.buttons { for tuple in buttons_vector_of_tuple { if tuple.0 { canvas.set_draw_color(tuple.1.expect("Draw flag set to button, but no color was defined")); canvas.fill_rect(tuple.2).unwrap(); } } }
+        if let Some(buttons_vector_of_tuple) = &page.buttons { for tuple in buttons_vector_of_tuple { if tuple.0 { canvas.set_draw_color(tuple.1); canvas.fill_rect(tuple.2).unwrap(); } } }
 
         if let Some(texts_vector_of_tuple) = &page.texts { for tuple in texts_vector_of_tuple { canvas.copy(&tuple.0, None, tuple.1).unwrap(); } }
 
@@ -54,7 +58,7 @@ pub fn render_page(page: Page, persistent_elements: Page)
 
         if let Some(rect_vector_of_tuple) = &persistent_elements.rects { for tuple in rect_vector_of_tuple { canvas.set_draw_color(tuple.0); canvas.fill_rect(tuple.1).unwrap(); } }
 
-        if let Some(buttons_vector_of_tuple) = &persistent_elements.buttons { for tuple in buttons_vector_of_tuple { if tuple.0 { canvas.set_draw_color(tuple.1.expect("Draw flag set to button, but no color was defined")); canvas.fill_rect(tuple.2).unwrap(); } } }
+        if let Some(buttons_vector_of_tuple) = &persistent_elements.buttons { for tuple in buttons_vector_of_tuple { if tuple.0 { canvas.set_draw_color(tuple.1); canvas.fill_rect(tuple.2).unwrap(); } } }
 
         if let Some(texts_vector_of_tuple) = &persistent_elements.texts { for tuple in texts_vector_of_tuple { canvas.copy(&tuple.0, None, tuple.1).unwrap(); } }
 
