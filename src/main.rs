@@ -1,31 +1,65 @@
 use std::time::Duration;
-use crate::
+use crate::pages::{main_page, persistent_page, second_page, selic_page};
+use crate::window::{create_window, render_page};
+use crate::input_handler::handle_input;
+use crate::buttons::{PAGE_TO_RENDER, button_action};
+
+pub mod math;
+pub mod getonlineinfo;
+pub mod pages;
+pub mod window;
+pub mod input_handler;
+pub mod sdl2_generators;
+pub mod buttons;
+
+
+
+
+
+fn main() 
 {
-    window::{create_window, render_scene},
-    quit::handle_quit,
-};
+    create_window();
 
 
-
-mod window;
-mod quit;
-mod ui;
-mod math;
-mod getonlineinfo;
-
-
-
-fn main()
-{
-    let (sdl_started, mut canvas, texture_creator) = create_window();
-
-
-    let mut event_pump = sdl_started.event_pump().unwrap(); 
-    loop 
+    loop
     {
         std::thread::sleep(Duration::from_millis(32));
 
-        render_scene(&mut canvas, &texture_creator);
-        handle_quit(&mut event_pump);
+
+        let main_page = main_page();
+        let second_page = second_page();
+        let selic_page = selic_page();
+        let persistent_page = persistent_page();
+
+
+
+
+        match unsafe{PAGE_TO_RENDER}
+        {
+            0 => 
+            {
+                let mut all_objects = Vec::new();
+                all_objects.append(&mut persistent_page.buttons.clone().unwrap());
+                all_objects.append(&mut main_page.buttons.clone().unwrap());
+                handle_input(&mut all_objects);
+
+                button_action();
+                render_page(main_page, persistent_page);
+            },
+            1 =>
+            {
+                handle_input(&mut persistent_page.buttons.clone().unwrap());
+                button_action();
+                render_page(second_page, persistent_page);
+            },
+            2 =>
+            {
+                handle_input(&mut persistent_page.buttons.clone().unwrap());
+                button_action();
+                render_page(selic_page, persistent_page);
+            },
+            _=>{},
+        }
     }
+
 }

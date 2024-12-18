@@ -1,79 +1,86 @@
-use crate::ui::{objects, fonts};
-use sdl2::pixels::Color;
-use sdl2::video::{Window, WindowContext};
-use sdl2::render::{Canvas, TextureCreator};
+use sdl2::video::{WindowContext, Window};
+use sdl2::render::{TextureCreator, Canvas};
+use crate::pages::Page;
+use std::time::Duration;
 
 
 
-const WINDOW_WIDTH: u32 = 1360;
-const WINDOW_HEIGHT: u32 = 768;
+
+pub static mut SDL2_CANVAS: Vec<Canvas<Window>> = Vec::new();
+pub static mut SDL2_TEXTURE_CREATOR: Vec<TextureCreator<WindowContext>> = Vec::new();
+pub static mut SDL2_EVENT_PUMP: Vec<sdl2::EventPump> = Vec::new();
 
 
 
-pub fn create_window() -> (sdl2::Sdl, Canvas<Window>, TextureCreator<WindowContext>)
+
+#[allow(static_mut_refs)]
+pub fn create_window()
 {
     let sdl_started = sdl2::init().unwrap();
-    let sdl_videosystem = sdl_started.video().unwrap();
-    let window = sdl_videosystem.window("ruinvest", WINDOW_WIDTH, WINDOW_HEIGHT).position_centered().build().unwrap();
-
-    let mut canvas = window.into_canvas().accelerated().build().unwrap();
-    canvas.set_logical_size(WINDOW_WIDTH, WINDOW_HEIGHT).unwrap();
-
+    let video_system = sdl_started.video().unwrap();
+    let window = video_system.window("RustInfoInvest", 800, 600).position_centered().build().unwrap();
+    let canvas = window.into_canvas().accelerated().build().unwrap();
     let texture_creator = canvas.texture_creator();
+    let event_pump = sdl_started.event_pump().unwrap();
 
+    unsafe 
+    { 
+        SDL2_CANVAS.push(canvas);
+        SDL2_TEXTURE_CREATOR.push(texture_creator);
+        SDL2_EVENT_PUMP.push(event_pump);
+    };
 
-                (
-                    sdl_started,
-                    canvas,
-                    texture_creator
-                )
+    while unsafe{SDL2_EVENT_PUMP.is_empty()} { println!("waiting for event pump"); std::thread::sleep(Duration::from_millis(250)) };
 }
 
 
 
-pub fn render_scene(canvas: &mut Canvas<Window>, texture_creator: &TextureCreator<sdl2::video::WindowContext>)
+#[allow(static_mut_refs)]
+pub fn render_page(page: Page, persistent_elements: Page)
 {
-    //pick the objects
-    let 
-    (  
-        invested_value_rect,
-        return_percentage_value_rect,
-        one_year_rect,
-        one_month_rect,
-        one_day_rect,
-        one_hour_rect, 
-        one_min_rect,
-        one_secs_rect
-    ) = objects();
+    let canvas = unsafe {&mut SDL2_CANVAS[0]};
+    canvas.set_draw_color(persistent_elements.background_color.unwrap());
+    canvas.clear();
+
+        match &page.rects 
+        {
+            Some(rect_vector_of_tuple) => for tuple in rect_vector_of_tuple { canvas.set_draw_color(tuple.0); canvas.fill_rect(tuple.1).unwrap(); },
+            None => {}
+        }
+
+        match &page.buttons
+        {
+            Some(buttons_vector_of_tuple) => for tuple in buttons_vector_of_tuple { if tuple.0 { canvas.set_draw_color(tuple.1.expect("Draw flag set to button, but no color was defined")); canvas.fill_rect(tuple.2).unwrap(); } },
+            None => {}
+        }
+
+        match &page.texts
+        {
+            Some(texts_vector_of_tuple) => for tuple in texts_vector_of_tuple { canvas.copy(&tuple.0, None, tuple.1).unwrap(); },
+            None => {}
+        }
 
 
-        //pick the textures/texts/images
-        let 
-        (
-            invested_value_text_image,
-            return_percentage_value_text_image,
-            one_year_text_image,
-            one_month_text_image,
-            one_day_text_image,        
-            one_hour_text_image, 
-            one_min_text_image,
-            one_secs_text_image,
-        ) = fonts(texture_creator);
+        //================================
+        
 
+        match &persistent_elements.rects 
+        {
+            Some(rect_vector_of_tuple) => for tuple in rect_vector_of_tuple { canvas.set_draw_color(tuple.0); canvas.fill_rect(tuple.1).unwrap(); },
+            None => {}
+        }
 
-            canvas.set_draw_color(Color::RGB(0,0,0));
-            canvas.clear();
+        match &persistent_elements.buttons
+        {
+            Some(buttons_vector_of_tuple) => for tuple in buttons_vector_of_tuple { if tuple.0 { canvas.set_draw_color(tuple.1.expect("Draw flag set to button, but no color was defined")); canvas.fill_rect(tuple.2).unwrap(); } },
+            None => {}
+        }
 
+        match &persistent_elements.texts
+        {
+            Some(texts_vector_of_tuple) => for tuple in texts_vector_of_tuple { canvas.copy(&tuple.0, None, tuple.1).unwrap(); },
+            None => {}
+        }
 
-                canvas.copy(&invested_value_text_image, None, invested_value_rect).unwrap();
-                canvas.copy(&return_percentage_value_text_image, None, return_percentage_value_rect).unwrap();
-                canvas.copy(&one_year_text_image, None, one_year_rect).unwrap();
-                canvas.copy(&one_month_text_image, None, one_month_rect).unwrap();
-                canvas.copy(&one_day_text_image, None, one_day_rect).unwrap();
-                canvas.copy(&one_hour_text_image, None, one_hour_rect).unwrap();
-                canvas.copy(&one_min_text_image, None, one_min_rect).unwrap();
-                canvas.copy(&one_secs_text_image, None, one_secs_rect).unwrap();
-
-
-                    canvas.present();
+        canvas.present();
 }

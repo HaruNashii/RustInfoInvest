@@ -32,7 +32,7 @@ fn clean_string_from_vector(vector_of_string: Vec<String>) -> Vec<String>
         let mut final_string = String::new();
         for string in separeted_string
         {
-            final_string.push_str( &format!("{} ", string) );
+            final_string.push_str( &format!("{}       ", string) );
         }
 
         vector_of_clean_strings.push(final_string);
@@ -92,7 +92,11 @@ pub async fn infos() -> (Vec<String>, f64)
         list_elements.push(search_result);
     }
 
-    
+    for string in &list_elements
+    {
+        println!("{}", string);
+    }
+
     // Close the Client and the Geckodriver WebDriver
     client.close().await.unwrap();
     web_driver.unwrap().kill().unwrap();
