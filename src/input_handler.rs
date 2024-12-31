@@ -70,27 +70,14 @@ pub fn handle_input(buttons: Vec<(bool, Color, Rect)>)
                         {
                             unsafe 
                             {
-                                if IS_ON_WRITE_MODE_ON_BUTTON_1 && (text == "0" || text == "1" || text == "2" || text == "3" || text == "4" || text == "5" || text == "6" || text == "7" || text == "8" || text == "9" || text == ".") {
-                                    if USER_INPUT_BUTTON_1.contains('.') && text == "." || USER_INPUT_BUTTON_1.len() == 1 && text == "."
-                                    {
-                                        continue;
-                                    }
-                                    else 
-                                    {
-                                        USER_INPUT_BUTTON_1.push_str(&text);
-                                    }
+                                if IS_ON_WRITE_MODE_ON_BUTTON_1 && (text == "0" || text == "1" || text == "2" || text == "3" || text == "4" || text == "5" || text == "6" || text == "7" || text == "8" || text == "9") || (!USER_INPUT_BUTTON_1.contains('.') && USER_INPUT_BUTTON_1.len() != 1 && text == ".")
+                                {
+                                    USER_INPUT_BUTTON_1.push_str(&text);
                                 }
 
-                                if IS_ON_WRITE_MODE_ON_BUTTON_2 && (text == "0" || text == "1" || text == "2" || text == "3" || text == "4" || text == "5" || text == "6" || text == "7" || text == "8" || text == "9" || text == ".") 
+                                if IS_ON_WRITE_MODE_ON_BUTTON_2 && (text == "0" || text == "1" || text == "2" || text == "3" || text == "4" || text == "5" || text == "6" || text == "7" || text == "8" || text == "9") || (!USER_INPUT_BUTTON_2.contains('.') && USER_INPUT_BUTTON_2.len() != 1 && text == ".")
                                 {
-                                    if USER_INPUT_BUTTON_2.contains('.') && text == "." || USER_INPUT_BUTTON_2.len() == 1 && text == "."
-                                    {
-                                        continue;
-                                    }
-                                    else 
-                                    {
-                                        USER_INPUT_BUTTON_2.push_str(&text);
-                                    };
+                                    USER_INPUT_BUTTON_2.push_str(&text);
                                 }
                             };
                         }
