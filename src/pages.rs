@@ -2,8 +2,8 @@ use sdl2::rect::Rect;
 use sdl2::pixels::Color;
 use sdl2::render::Texture;
 use crate::sdl2_generators::gen_text;
-use crate::math::{basic_data, maths, ONLINE_HISTORIC_RETURN_VALUE};
-use crate::input_handler::{USER_INPUT_BUTTON_1, USER_INPUT_BUTTON_2};
+use crate::math::{maths, ONLINE_HISTORIC_RETURN_VALUE, RETURN_VALUE, TOTAL_INVESTED};
+use crate::input_handler::{USER_INPUT_BUTTON_1, USER_INPUT_BUTTON_2, IS_ON_WRITE_MODE_ON_BUTTON_1, IS_ON_WRITE_MODE_ON_BUTTON_2};
 
 
 
@@ -86,12 +86,7 @@ pub fn main_page() -> Page<'static>
     let default_text_color = Color::RGB(255, 255, 255);
     let subtext_color      = Color::RGB(186, 194, 222);
     let ( one_year, one_month, one_day, one_hour, one_min, one_secs) = maths();
-    let ( total_invested, year_return_value, _, _, _, _, _, _, _) = basic_data();
     
-    //let ( total_invested, year_return_value, _, _, years_invested, months_invested, days_invested, hours_invested, minutes_invested) = basic_data();
-    ////time invested text     
-    //gen_text(25, (15, 225), format!("Time Invested: {} Yr, {} Mo, {} D, {} Hr, {} Min", years_invested, months_invested, days_invested, hours_invested, minutes_invested), default_text_color),
-
     unsafe { if USER_INPUT_BUTTON_1.is_empty() { USER_INPUT_BUTTON_1.push(' ') }; };
     unsafe { if USER_INPUT_BUTTON_2.is_empty() { USER_INPUT_BUTTON_2.push(' ') }; };
 
@@ -110,9 +105,9 @@ pub fn main_page() -> Page<'static>
     let all_buttons = vec!
     [
         //receive input button 1
-        (true, Color::RGB(0,   255, 0),   Rect::new(20, 105, 365, 50)),
+        (true, Color::RGB(203,   166, 247),   Rect::new(20, 105, 365, 50)),
         //receive input button 2
-        (true, Color::RGB(0,   255, 0),   Rect::new(415, 105, 355, 50)),
+        (true, Color::RGB(203,   166, 247),   Rect::new(415, 105, 355, 50)),
     ];
     
 
@@ -125,12 +120,8 @@ pub fn main_page() -> Page<'static>
     let minute_string: String = format!("Return Per Minute: R$ {:.4}", one_min);
     let second_string: String = format!("Return Per Second: R$ {:.4}", one_secs);
     
-    let all_text = vec!
+    let mut all_text = vec!
     [
-        //total invested text
-        gen_text(24, (425, 113), format!("Total Invested: R${}", total_invested    ), default_text_color),
-        //year return value text
-        gen_text(24, (30, 113), format!("Year Return Value: {}%", year_return_value), default_text_color),
         //one year text
         gen_text(20, (225, 245), year_string, subtext_color),
         //one month text
@@ -144,10 +135,35 @@ pub fn main_page() -> Page<'static>
         //one sec text
         gen_text(20, (225, 495), second_string, subtext_color),
         //user input text
-        gen_text(24, (20, 100), unsafe{USER_INPUT_BUTTON_1.clone()}, default_text_color),
-        gen_text(24, (350, 100), unsafe{USER_INPUT_BUTTON_2.clone()}, default_text_color),
+        gen_text(24, (284, 113), unsafe{USER_INPUT_BUTTON_1.clone()}, default_text_color),
+        gen_text(24, (663, 113), unsafe{USER_INPUT_BUTTON_2.clone()}, default_text_color),
     ];
+    unsafe
+    {
+        //year return value text
+        if IS_ON_WRITE_MODE_ON_BUTTON_1
+        {
+            all_text.push(gen_text(24, (30, 113), "Year Return Value: ".to_string(), default_text_color));
+        }
 
+        //year return value text
+        if !IS_ON_WRITE_MODE_ON_BUTTON_1
+        {
+            all_text.push(gen_text(24, (30, 113), format!("Year Return Value: {}%", RETURN_VALUE), default_text_color));
+        }
+
+        if IS_ON_WRITE_MODE_ON_BUTTON_2
+        {
+            //total invested text
+            all_text.push(gen_text(24, (425, 113), "Total Invested: R$".to_string(), default_text_color));
+        }
+
+        if !IS_ON_WRITE_MODE_ON_BUTTON_2
+        {
+            //total invested text
+            all_text.push(gen_text(24, (425, 113), format!("Total Invested: R${}", TOTAL_INVESTED), default_text_color));
+        }
+    };
     
 
     //===================== page creation =========================

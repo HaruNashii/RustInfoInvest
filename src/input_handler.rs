@@ -2,6 +2,7 @@ use sdl2::mouse::MouseButton;
 use sdl2::keyboard::Keycode;
 use sdl2::event::Event;
 use crate::window::SDL2_EVENT_PUMP;
+use crate::math::{RETURN_VALUE, TOTAL_INVESTED};
 use std::process::exit;
 use sdl2::rect::Rect;
 use sdl2::pixels::Color;
@@ -73,7 +74,7 @@ pub fn handle_input(buttons: Vec<(bool, Color, Rect)>)
                                 {
                                     if text == "0" || text == "1" || text == "2" || text == "3" || text == "4" || text == "5" || text == "6" || text == "7" || text == "8" || text == "9" || text == "."
                                     {
-                                        if USER_INPUT_BUTTON_1.contains('.') && text == "."
+                                        if USER_INPUT_BUTTON_1.contains('.') && text == "." || USER_INPUT_BUTTON_1.len() == 1 && text == "."
                                         {
                                             continue;
                                         }
@@ -88,7 +89,7 @@ pub fn handle_input(buttons: Vec<(bool, Color, Rect)>)
                                 {
                                     if text == "0" || text == "1" || text == "2" || text == "3" || text == "4" || text == "5" || text == "6" || text == "7" || text == "8" || text == "9" || text == "."
                                     {
-                                        if USER_INPUT_BUTTON_2.contains('.') && text == "."
+                                        if USER_INPUT_BUTTON_2.contains('.') && text == "." || USER_INPUT_BUTTON_2.len() == 1 && text == "."
                                         {
                                             continue;
                                         }
@@ -143,12 +144,20 @@ pub fn handle_input(buttons: Vec<(bool, Color, Rect)>)
                             {
                                 if IS_ON_WRITE_MODE_ON_BUTTON_1
                                 {
+                                    if !USER_INPUT_BUTTON_1.is_empty()
+                                    {
+                                        RETURN_VALUE = USER_INPUT_BUTTON_1.replace(" ", "").parse().unwrap();
+                                    }
                                     USER_INPUT_BUTTON_1.clear();
                                     IS_ON_WRITE_MODE_ON_BUTTON_1 = false;
                                 }
 
                                 if IS_ON_WRITE_MODE_ON_BUTTON_2
                                 {
+                                    if !USER_INPUT_BUTTON_2.is_empty()
+                                    {
+                                        TOTAL_INVESTED = USER_INPUT_BUTTON_2.replace(" ", "").parse().unwrap();
+                                    }
                                     USER_INPUT_BUTTON_2.clear();
                                     IS_ON_WRITE_MODE_ON_BUTTON_2 = false;
                                 }
