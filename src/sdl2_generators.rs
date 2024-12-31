@@ -1,7 +1,6 @@
 use sdl2::rect::Rect;
 use sdl2::pixels::Color;
 use sdl2::render::Texture;
-use sdl2::image::LoadTexture;
 use crate::window::SDL2_TEXTURE_CREATOR;
 
 
@@ -18,10 +17,3 @@ pub fn gen_text<'a>(font_size: u16, pos: (i32, i32), content: String, font_color
 
     (texture, rect)
 }
-
-pub fn gen_image(pos: (i32, i32), size: (u32, u32), path_to_image: &str) -> (Texture, Rect)
-{
-    let texture = unsafe{SDL2_TEXTURE_CREATOR[0].load_texture(path_to_image).unwrap()};
-    let rect = Rect::new(pos.0, pos.1, size.0, size.1);
-    (texture, rect)
-}   

@@ -6,7 +6,7 @@ edition = "2021"
 [dependencies]
 fantoccini = "0.21.2"
 percentage = "0.1.0"
-sdl2 = { version = "0.37.0", features = ["ttf", "image"] }
+sdl2 = { version = "0.37.0", features = ["ttf"] }
 serde = "1.0.215"
 serde_derive = "1.0.215"
 serde_json = "1.0.133"
