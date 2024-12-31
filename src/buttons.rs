@@ -12,30 +12,36 @@ pub fn button_action()
         {
             0 =>
             {
-                println!("button 0 pressed");
                 unsafe 
                 {
-                    PAGE_TO_RENDER = 0;
+                    if !IS_ON_WRITE_MODE_ON_BUTTON_1  && !IS_ON_WRITE_MODE_ON_BUTTON_2
+                    {
+                        PAGE_TO_RENDER = 0;
+                    };
                     BUTTON_CLICKED = None;
                 }
             }
 
             1 =>
             {
-                println!("button 1 pressed");
                 unsafe 
                 {
-                    PAGE_TO_RENDER = 1;
+                    if !IS_ON_WRITE_MODE_ON_BUTTON_1  && !IS_ON_WRITE_MODE_ON_BUTTON_2
+                    {
+                        PAGE_TO_RENDER = 1;
+                    };
                     BUTTON_CLICKED = None;
                 }
             }
 
             2 =>
             {
-                println!("button 2 pressed");
                 unsafe 
                 {
-                    PAGE_TO_RENDER = 2;
+                    if !IS_ON_WRITE_MODE_ON_BUTTON_1  && !IS_ON_WRITE_MODE_ON_BUTTON_2
+                    {
+                        PAGE_TO_RENDER = 2;
+                    };
                     BUTTON_CLICKED = None;
                 }
             }
@@ -45,12 +51,11 @@ pub fn button_action()
                 //user input text button 1
                 unsafe 
                 {
-                    println!("button 2 pressed");
-                    if !IS_ON_WRITE_MODE_ON_BUTTON_1
+                    if !IS_ON_WRITE_MODE_ON_BUTTON_1 && !IS_ON_WRITE_MODE_ON_BUTTON_2
                     {
                         IS_ON_WRITE_MODE_ON_BUTTON_1 = true;
-                        BUTTON_CLICKED = None;
                     }
+                    BUTTON_CLICKED = None;
                 };
             }
 
@@ -59,12 +64,11 @@ pub fn button_action()
                 //user input text button 2
                 unsafe
                 {
-                    println!("button 3 pressed");
-                    if !IS_ON_WRITE_MODE_ON_BUTTON_2
+                    if !IS_ON_WRITE_MODE_ON_BUTTON_1  && !IS_ON_WRITE_MODE_ON_BUTTON_2
                     {
                         IS_ON_WRITE_MODE_ON_BUTTON_2 = true;
-                        BUTTON_CLICKED = None;
                     }
+                    BUTTON_CLICKED = None;
                 };
             }
 

@@ -154,6 +154,7 @@ pub fn handle_input(buttons: Vec<(bool, Color, Rect)>)
                                     USER_INPUT_BUTTON_2.clear();
                                     USER_INPUT_BUTTON_1.push(' ');
                                     USER_INPUT_BUTTON_2.push(' ');
+                                    BUTTON_CLICKED = None;
                                     IS_ON_WRITE_MODE_ON_BUTTON_1 = false;
                                     IS_ON_WRITE_MODE_ON_BUTTON_2 = false;
                                 } 
