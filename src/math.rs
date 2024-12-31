@@ -25,7 +25,7 @@ static CALL_ONCE2: Once = Once::new();
 pub fn basic_data() -> (f64, f64, f64, f64, f64)
 {
         let cdi_percentage = 100.0;
-        let use_online_selic_return_value = false;
+        let use_online_selic_return_value = true;
         let use_cdi_value = true;
         let years_invested = 1.0;
         let months_invested = 1.0;

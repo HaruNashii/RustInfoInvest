@@ -67,7 +67,6 @@ pub async fn infos() -> (Vec<String>, f64)
     let web_driver = Command::new("geckodriver").stdout(Stdio::null()).stderr(Stdio::null()).spawn();
     std::thread::sleep(Duration::from_millis(500));
 
-
     // Start the Fantoccini client
     let mut caps = serde_json::map::Map::new();
     let opts = serde_json::json!
@@ -91,11 +90,6 @@ pub async fn infos() -> (Vec<String>, f64)
         let search = format!("/html/body/app-root/app-root/div/div/main/dynamic-comp/div/div/bcb-histtaxajuros/div[1]/table/tbody/tr[{}]", index);
         let search_result = client.wait().for_element(Locator::XPath(&search)).await.unwrap().text().await.unwrap();
         list_elements.push(search_result);
-    }
-
-    for string in &list_elements
-    {
-        println!("{}", string);
     }
 
     // Close the Client and the Geckodriver WebDriver
