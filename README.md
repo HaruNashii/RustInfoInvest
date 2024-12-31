@@ -5,8 +5,12 @@ A Very simple And Configurable Compound interest Calculator With Online Selic Ta
 > [!IMPORTANT]
 > This APP is under development and currently it's not a serious project, don't use it to calculate your investment return yet,
 
-**KNOW ISSUES**
-- no know issue anymore :)
+**Showcase**
+![image](https://github.com/user-attachments/assets/5d36cd9e-afc0-4cf9-b923-471360338331)
+
+
+**Known Issues**
+- no knowm issue anymore :)
 
 
 **Config**
