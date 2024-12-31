@@ -10,7 +10,7 @@ A Very simple And Configurable Compound interest Calculator With Online Selic Ta
 
 
 **Known Issues**
-- no knowm issue anymore :)
+- app taking up to 1 minute to start because of the connection with the Selic Tax website
 
 
 **Config**
