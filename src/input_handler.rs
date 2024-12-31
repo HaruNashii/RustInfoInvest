@@ -144,7 +144,7 @@ pub fn handle_input(buttons: Vec<(bool, Color, Rect)>)
                             {
                                 if IS_ON_WRITE_MODE_ON_BUTTON_1
                                 {
-                                    if !USER_INPUT_BUTTON_1.is_empty()
+                                    if !USER_INPUT_BUTTON_1.replace(" ", "").is_empty()
                                     {
                                         RETURN_VALUE = USER_INPUT_BUTTON_1.replace(" ", "").parse().unwrap();
                                     }
@@ -154,7 +154,7 @@ pub fn handle_input(buttons: Vec<(bool, Color, Rect)>)
 
                                 if IS_ON_WRITE_MODE_ON_BUTTON_2
                                 {
-                                    if !USER_INPUT_BUTTON_2.is_empty()
+                                    if !USER_INPUT_BUTTON_2.replace(" ", "").is_empty()
                                     {
                                         TOTAL_INVESTED = USER_INPUT_BUTTON_2.replace(" ", "").parse().unwrap();
                                     }

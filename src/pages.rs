@@ -105,9 +105,9 @@ pub fn main_page() -> Page<'static>
     let all_buttons = vec!
     [
         //receive input button 1
-        (true, Color::RGB(203,   166, 247),   Rect::new(20, 105, 365, 50)),
+        (true, Color::RGB(166,   227, 161),   Rect::new(20, 105, 365, 50)),
         //receive input button 2
-        (true, Color::RGB(203,   166, 247),   Rect::new(415, 105, 355, 50)),
+        (true, Color::RGB(166,   227, 161),   Rect::new(415, 105, 355, 50)),
     ];
     
 
