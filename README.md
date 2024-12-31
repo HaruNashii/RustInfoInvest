@@ -29,5 +29,4 @@ if you for some reason you want to download it you will need the sdl2 sdl2_ttf a
 
 **Downloading And Running**
 
-after download the dependencies you can run the "build.sh" script and run the app that will be created in "target/release".
-(MAKE SURE TO RUN IT WHILE YOU ARE IN THE SAME FOLDER AS THE APP EXECUTABLE)
+after downloading the dependencies you can run the app with: ```cargo run --release```
