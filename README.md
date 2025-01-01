@@ -6,11 +6,21 @@ A Very simple And Configurable Compound interest Calculator With Online Selic Ta
 > This APP is under development and currently it's not a serious project, this app is not optimized, but the compound interest formula is correct, so you can use it,
 
 **Showcase**
-![image](https://github.com/user-attachments/assets/5d36cd9e-afc0-4cf9-b923-471360338331)
+
+![image](https://github.com/user-attachments/assets/c077e5d9-04eb-4d5e-aea6-6c77a35c47f6)
+<details> <summary>Others Pages</summary>
+  
+- Realtime Currency Page
+  
+![image](https://github.com/user-attachments/assets/2966d0b8-3df7-4229-9f4c-9a053a17bed7)
+- Selic Page
+  
+![image](https://github.com/user-attachments/assets/5c2c3d84-4810-42e1-bea7-cb34bfee8166)
+</details>
 
 
 **Known Issues**
-- app taking up to 1 minute to start because of the connection with the Selic Tax website
+- ugly ui
 
 
 **Config**
@@ -19,7 +29,7 @@ To Change the values of the calculator you just need click in the value and type
 
 
 **Future Plans**
-- A Total Value Count In Real Time
+Separate the Main Page values ​​with the RealTime Currency Page
 - Better UI
 
 but i'm extremely lazy so it will probably take a long time. for now it's just one very simple calculator that you can make in 30 minutes or less
