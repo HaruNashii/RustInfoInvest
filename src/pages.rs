@@ -9,6 +9,8 @@ use std::sync::Once;
 
 static START: Once = Once::new();
 static mut CURRENT_TIME: Option<SystemTime> = None; 
+static mut REALTIME_SECS: f64 = 0.0;
+static mut REALTIME_CURRENCY: f64 = 0.0;
 
 pub struct Page<'a>
 {
@@ -189,18 +191,32 @@ pub fn realtime_currency_page() -> Page<'static>
     let bg_color = Color::RGB(30, 30, 46);
     let default_text_color = Color::RGB(255, 255, 255);
     let subtext_color      = Color::RGB(186, 194, 222);
-    let ( _, _, _, _, _, one_secs) = maths();
-    let mut realtime_curreny = 0.0;
+
 
     unsafe
     {
+        // Move numbers one case to the right to fit the formula math (example = 1.0 -> 0.1)
+        let mut year_return_value: f64 = RETURN_VALUE;
+        year_return_value /= 100.0;
+
+        let month_return_value  = f64::powf(1.0 + year_return_value,   1.00 / 12.00) - 1.0;
+        let day_return_value    = f64::powf(1.0 + month_return_value,  1.00 / 30.00) - 1.0;
+        let hour_return_value   = f64::powf(1.0 + day_return_value,    1.00 / 24.00) - 1.0;
+        let minute_return_value = f64::powf(1.0 + hour_return_value,   1.00 / 60.00) - 1.0;
+        let secs_return_value   = f64::powf(1.0 + minute_return_value, 1.00 / 60.00) - 1.0;
+
+        // Formulas
+        // formula = total_invested * (1 + return_value)^total_time_invested
+        REALTIME_SECS = REALTIME_CURRENCY * f64::powf(1.0 + secs_return_value,  1.0) - REALTIME_CURRENCY;
+
+
         START.call_once
         (|| {
             CURRENT_TIME = Some(SystemTime::now())
         });
 
         let secs_since_checked_current_time = CURRENT_TIME.unwrap().elapsed().unwrap().as_secs();
-        realtime_curreny = TOTAL_INVESTED + (one_secs * secs_since_checked_current_time as f64);
+        REALTIME_CURRENCY = TOTAL_INVESTED + (REALTIME_SECS * secs_since_checked_current_time as f64);
         
         if USER_INPUT_BUTTON_1.is_empty() { USER_INPUT_BUTTON_1.push(' ') }; 
         if USER_INPUT_BUTTON_2.is_empty() { USER_INPUT_BUTTON_2.push(' ') }; 
@@ -229,8 +245,8 @@ pub fn realtime_currency_page() -> Page<'static>
 
 
     //===================== texts =========================
-    let realtime_currency_string: String = format!("Realtime Currency: R$ {:.4}", realtime_curreny);
-    let second_string: String = format!("Return Per Second: R$ {:.6}", one_secs);
+    let realtime_currency_string: String = format!("Realtime Currency: R$ {:.4}", unsafe{REALTIME_CURRENCY});
+    let second_string: String = format!("Return Per Second: R$ {:.6}", unsafe{REALTIME_SECS});
     
     let mut all_text = vec!
     [
