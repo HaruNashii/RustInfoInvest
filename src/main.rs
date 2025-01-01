@@ -1,5 +1,5 @@
 use std::time::Duration;
-use crate::pages::{main_page, persistent_page, second_page, selic_page};
+use crate::pages::{main_page, persistent_page, realtime_currency_page, selic_page, config_page};
 use crate::window::{create_window, render_page};
 use crate::input_handler::handle_input;
 use crate::buttons::{PAGE_TO_RENDER, button_action};
@@ -25,34 +25,45 @@ fn main()
         std::thread::sleep(Duration::from_millis(32));
 
         let main_page = main_page();
-        let second_page = second_page();
+        let realtime_currency_page = realtime_currency_page();
         let selic_page = selic_page();
         let persistent_page = persistent_page();
+        let config_page = config_page();
 
         match unsafe{PAGE_TO_RENDER}
         {
             0 => 
             {
-                let mut all_objects = Vec::new();
-                all_objects.append(&mut persistent_page.buttons.clone().unwrap());
-                all_objects.append(&mut main_page.buttons.clone().unwrap());
-                handle_input(all_objects);
+                let mut all_buttons = Vec::new();
+                all_buttons.append(&mut persistent_page.buttons.clone().unwrap());
+                all_buttons.append(&mut main_page.buttons.clone().unwrap());
+                handle_input(all_buttons);
 
                 button_action();
-                render_page(main_page, persistent_page);
+                render_page(main_page, Some(persistent_page));
             },
             1 =>
             {
-                handle_input(persistent_page.buttons.clone().unwrap());
+                let mut all_buttons = Vec::new();
+                all_buttons.append(&mut persistent_page.buttons.clone().unwrap());
+                all_buttons.append(&mut realtime_currency_page.buttons.clone().unwrap());
+                handle_input(all_buttons);
                 button_action();
-                render_page(second_page, persistent_page);
+                render_page(realtime_currency_page, Some(persistent_page));
             },
             2 =>
             {
-                handle_input(persistent_page.buttons.clone().unwrap());
+                let mut all_buttons = Vec::new();
+                all_buttons.append(&mut persistent_page.buttons.clone().unwrap());
+                all_buttons.append(&mut selic_page.buttons.clone().unwrap());
+                handle_input(all_buttons);
                 button_action();
-                render_page(selic_page, persistent_page);
+                render_page(selic_page, Some(persistent_page));
             },
+            3 =>
+            {
+                render_page(config_page, None);
+            }
             _=>{},
         }
     }

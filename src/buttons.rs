@@ -1,7 +1,12 @@
 use crate::input_handler::{IS_ON_WRITE_MODE_ON_BUTTON_1, IS_ON_WRITE_MODE_ON_BUTTON_2, BUTTON_CLICKED};
+use crate::math::{RETURN_VALUE, ONLINE_HISTORIC_RETURN_VALUE};
+use crate::getonlineinfo::infos;
+
 
 
 pub static mut PAGE_TO_RENDER: u8 = 0;
+
+
 
 #[allow(static_mut_refs)]
 pub fn button_action()
@@ -48,12 +53,23 @@ pub fn button_action()
 
             3 => 
             {
-                //user input text button 1
                 unsafe 
                 {
-                    if !IS_ON_WRITE_MODE_ON_BUTTON_1 && !IS_ON_WRITE_MODE_ON_BUTTON_2
+                    if PAGE_TO_RENDER == 0 || PAGE_TO_RENDER == 1 
                     {
-                        IS_ON_WRITE_MODE_ON_BUTTON_1 = true;
+                        //user input text button 1
+                        if !IS_ON_WRITE_MODE_ON_BUTTON_1 && !IS_ON_WRITE_MODE_ON_BUTTON_2
+                        {
+                            IS_ON_WRITE_MODE_ON_BUTTON_1 = true;
+                        }
+                    }
+
+                    if PAGE_TO_RENDER == 2
+                    {
+                        let (online_historic_return_value, online_return_value) = infos();
+                        RETURN_VALUE = online_return_value;
+                        ONLINE_HISTORIC_RETURN_VALUE = online_historic_return_value;
+                        println!("second page button clicked");
                     }
                     BUTTON_CLICKED = None;
                 };

@@ -71,7 +71,7 @@ pub async fn infos() -> (Vec<String>, f64)
     client.goto("https://www.bcb.gov.br/controleinflacao/historicotaxasjuros").await.unwrap();
 
     // Get the last 10 Selic tax value
-    let list_lenght: u8 = 10;
+    let list_lenght: u8 = 6;
     let mut list_elements: Vec<String> = Vec::new();
     for index in 1..(list_lenght + 1)
     {
