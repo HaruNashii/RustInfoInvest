@@ -3,12 +3,14 @@ use sdl2::pixels::Color;
 use sdl2::render::Texture;
 use crate::sdl2_generators::gen_text;
 use crate::math::{maths, ONLINE_HISTORIC_RETURN_VALUE, RETURN_VALUE, TOTAL_INVESTED};
-use crate::input_handler::{USER_INPUT_BUTTON_1, USER_INPUT_BUTTON_2, IS_ON_WRITE_MODE_ON_BUTTON_1, IS_ON_WRITE_MODE_ON_BUTTON_2};
+use crate::input_handler::{USER_INPUT_BUTTON_1, USER_INPUT_BUTTON_2, IS_ON_WRITE_MODE_ON_BUTTON_1, IS_ON_WRITE_MODE_ON_BUTTON_2, IS_ON_WRITE_MODE_ON_BUTTON_1_PAGE_2, IS_ON_WRITE_MODE_ON_BUTTON_2_PAGE_2, USER_INPUT_BUTTON_1_PAGE_2, USER_INPUT_BUTTON_2_PAGE_2};
 use std::time::SystemTime;
 use std::sync::Once;
 
 static START: Once = Once::new();
 static mut CURRENT_TIME: Option<SystemTime> = None; 
+pub static mut RETURN_VALUE_REALTIME_PAGE: f64 = 12.15;
+pub static mut TOTAL_INVESTED_REALTIME_PAGE: f64 = 5000.0;
 static mut REALTIME_SECS: f64 = 0.0;
 static mut REALTIME_MILISECS: f64 = 0.0;
 static mut REALTIME_CURRENCY: f64 = 0.0;
@@ -91,9 +93,11 @@ pub fn main_page() -> Page<'static>
     let subtext_color      = Color::RGB(186, 194, 222);
     let ( one_year, one_month, one_day, one_hour, one_min, one_secs) = maths();
     
-    unsafe { if USER_INPUT_BUTTON_1.is_empty() { USER_INPUT_BUTTON_1.push(' ') }; };
-    unsafe { if USER_INPUT_BUTTON_2.is_empty() { USER_INPUT_BUTTON_2.push(' ') }; };
-
+    unsafe 
+    { 
+        if USER_INPUT_BUTTON_1.is_empty() { USER_INPUT_BUTTON_1.push(' ') }; 
+        if USER_INPUT_BUTTON_2.is_empty() { USER_INPUT_BUTTON_2.push(' ') }; 
+    };
 
 
     //===================== rects =========================
@@ -196,8 +200,11 @@ pub fn realtime_currency_page() -> Page<'static>
 
     unsafe
     {
+        if USER_INPUT_BUTTON_1_PAGE_2.is_empty() { USER_INPUT_BUTTON_1_PAGE_2.push(' ') };
+        if USER_INPUT_BUTTON_2_PAGE_2.is_empty() { USER_INPUT_BUTTON_2_PAGE_2.push(' ') };
+
         // Move numbers one case to the right to fit the formula math (example = 1.0 -> 0.1)
-        let mut year_return_value: f64 = RETURN_VALUE;
+        let mut year_return_value: f64 = RETURN_VALUE_REALTIME_PAGE;
         year_return_value /= 100.0;
 
         let month_return_value  = f64::powf(1.0 + year_return_value,   1.00 / 12.00) - 1.0;
@@ -219,10 +226,7 @@ pub fn realtime_currency_page() -> Page<'static>
         });
 
         let milisecs_since_checked_current_time = CURRENT_TIME.unwrap().elapsed().unwrap().as_millis();
-        REALTIME_CURRENCY = TOTAL_INVESTED + (REALTIME_MILISECS * milisecs_since_checked_current_time as f64);
-        
-        if USER_INPUT_BUTTON_1.is_empty() { USER_INPUT_BUTTON_1.push(' ') }; 
-        if USER_INPUT_BUTTON_2.is_empty() { USER_INPUT_BUTTON_2.push(' ') }; 
+        REALTIME_CURRENCY = TOTAL_INVESTED_REALTIME_PAGE + (REALTIME_MILISECS * milisecs_since_checked_current_time as f64);
     };
     
 
@@ -258,33 +262,32 @@ pub fn realtime_currency_page() -> Page<'static>
         //one sec text
         gen_text(20, (225, 495), second_string, subtext_color),
         //user input text
-        gen_text(24, (284, 113), unsafe{USER_INPUT_BUTTON_1.clone()}, default_text_color),
-        gen_text(24, (663, 113), unsafe{USER_INPUT_BUTTON_2.clone()}, default_text_color),
-    ];
+        gen_text(24, (284, 113), unsafe{USER_INPUT_BUTTON_1_PAGE_2.clone()}, default_text_color),
+        gen_text(24, (663, 113), unsafe{USER_INPUT_BUTTON_2_PAGE_2.clone()}, default_text_color), ];
     unsafe
     {
         //year return value text
-        if IS_ON_WRITE_MODE_ON_BUTTON_1
+        if IS_ON_WRITE_MODE_ON_BUTTON_1_PAGE_2
         {
             all_text.push(gen_text(24, (30, 113), "Year Return Value: ".to_string(), default_text_color));
         }
 
         //year return value text
-        if !IS_ON_WRITE_MODE_ON_BUTTON_1
+        if !IS_ON_WRITE_MODE_ON_BUTTON_1_PAGE_2
         {
-            all_text.push(gen_text(24, (30, 113), format!("Year Return Value: {}%", RETURN_VALUE), default_text_color));
+            all_text.push(gen_text(24, (30, 113), format!("Year Return Value: {}%", RETURN_VALUE_REALTIME_PAGE), default_text_color));
         }
 
-        if IS_ON_WRITE_MODE_ON_BUTTON_2
+        if IS_ON_WRITE_MODE_ON_BUTTON_2_PAGE_2
         {
             //total invested text
             all_text.push(gen_text(24, (425, 113), "Total Invested: R$".to_string(), default_text_color));
         }
 
-        if !IS_ON_WRITE_MODE_ON_BUTTON_2
+        if !IS_ON_WRITE_MODE_ON_BUTTON_2_PAGE_2
         {
             //total invested text
-            all_text.push(gen_text(24, (425, 113), format!("Total Invested: R${}", TOTAL_INVESTED), default_text_color));
+            all_text.push(gen_text(24, (425, 113), format!("Total Invested: R${}", TOTAL_INVESTED_REALTIME_PAGE), default_text_color));
         }
     };
     

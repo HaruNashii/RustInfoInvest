@@ -25,7 +25,6 @@ static CALL_ONCE2: Once = Once::new();
 pub fn basic_data() -> (f64, f64, f64, f64, f64, f64)
 {
         let cdi_percentage = 100.0;
-        let use_online_selic_return_value = false;
         let use_cdi_value = true;
         let years_invested = 1.0;
         let months_invested = 1.0;
@@ -35,33 +34,16 @@ pub fn basic_data() -> (f64, f64, f64, f64, f64, f64)
         let secs_invested = 1.0;
   
 
-
-        // Get infos online with the "infos()" function
-        if use_online_selic_return_value
-        {
-            CALL_ONCE.call_once(|| 
-            {
-                let (online_historic_return_value, online_return_value) = infos();
-                unsafe
-                {
-                    RETURN_VALUE = online_return_value;
-                    ONLINE_HISTORIC_RETURN_VALUE = online_historic_return_value;
-                };
-            });
-        }
-
-
-
                 // Calcule the return value with CDI 
                 // Example of the formula used : "CDI 110% = 10%xreturn_value - 0.10"
-                if use_cdi_value
-                {
-                    CALL_ONCE2.call_once(|| 
-                    {
-                        let percent = Percentage::from_decimal(cdi_percentage / 1000.0);
-                        unsafe{RETURN_VALUE = (percent.apply_to(RETURN_VALUE) - 0.01) * 10.0};
-                    });
-                }
+                //if use_cdi_value
+                //{
+                //    CALL_ONCE2.call_once(|| 
+                //    {
+                //        let percent = Percentage::from_decimal(cdi_percentage / 1000.0);
+                //        unsafe{RETURN_VALUE = (percent.apply_to(RETURN_VALUE) - 0.01) * 10.0};
+                //    });
+                //}
 
                     // Return values
                     (

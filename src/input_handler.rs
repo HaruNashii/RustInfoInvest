@@ -3,6 +3,7 @@ use sdl2::keyboard::Keycode;
 use sdl2::event::Event;
 use crate::window::SDL2_EVENT_PUMP;
 use crate::math::{RETURN_VALUE, TOTAL_INVESTED};
+use crate::pages::{RETURN_VALUE_REALTIME_PAGE, TOTAL_INVESTED_REALTIME_PAGE};
 use std::process::exit;
 use sdl2::rect::Rect;
 use sdl2::pixels::Color;
@@ -10,8 +11,13 @@ use sdl2::pixels::Color;
 
 pub static mut USER_INPUT_BUTTON_1: String = String::new();
 pub static mut USER_INPUT_BUTTON_2: String = String::new();
+pub static mut USER_INPUT_BUTTON_1_PAGE_2: String = String::new();
+pub static mut USER_INPUT_BUTTON_2_PAGE_2: String = String::new();
+
 pub static mut IS_ON_WRITE_MODE_ON_BUTTON_1: bool = false;
 pub static mut IS_ON_WRITE_MODE_ON_BUTTON_2: bool = false;
+pub static mut IS_ON_WRITE_MODE_ON_BUTTON_1_PAGE_2: bool = false;
+pub static mut IS_ON_WRITE_MODE_ON_BUTTON_2_PAGE_2: bool = false;
 
 pub static mut BUTTON_BEING_HOVERED: usize = 0;
 pub static mut IS_HOVERING_BUTTON: bool = false;
@@ -79,6 +85,16 @@ pub fn handle_input(buttons: Vec<(bool, Color, Rect)>)
                                 {
                                     USER_INPUT_BUTTON_2.push_str(&text);
                                 }
+
+                                if IS_ON_WRITE_MODE_ON_BUTTON_1_PAGE_2 && (text == "0" || text == "1" || text == "2" || text == "3" || text == "4" || text == "5" || text == "6" || text == "7" || text == "8" || text == "9") || (!USER_INPUT_BUTTON_1_PAGE_2.contains('.') && USER_INPUT_BUTTON_1_PAGE_2.len() != 1 && text == ".")
+                                {
+                                    USER_INPUT_BUTTON_1_PAGE_2.push_str(&text);
+                                }
+
+                                if IS_ON_WRITE_MODE_ON_BUTTON_2_PAGE_2 && (text == "0" || text == "1" || text == "2" || text == "3" || text == "4" || text == "5" || text == "6" || text == "7" || text == "8" || text == "9") || (!USER_INPUT_BUTTON_2_PAGE_2.contains('.') && USER_INPUT_BUTTON_2_PAGE_2.len() != 1 && text == ".")
+                                {
+                                    USER_INPUT_BUTTON_2_PAGE_2.push_str(&text);
+                                }
                             };
                         }
 
@@ -114,6 +130,34 @@ pub fn handle_input(buttons: Vec<(bool, Color, Rect)>)
                                         USER_INPUT_BUTTON_2.pop();
                                     }
                                 }
+
+                                if IS_ON_WRITE_MODE_ON_BUTTON_1_PAGE_2
+                                {
+                                    if USER_INPUT_BUTTON_1_PAGE_2.len() == 1 
+                                    {
+                                        USER_INPUT_BUTTON_1_PAGE_2.insert(0, ' ');
+                                        USER_INPUT_BUTTON_1_PAGE_2.pop();
+                                    }
+
+                                    if !USER_INPUT_BUTTON_1_PAGE_2.is_empty() 
+                                    {
+                                        USER_INPUT_BUTTON_1_PAGE_2.pop();
+                                    }
+                                }
+
+                                if IS_ON_WRITE_MODE_ON_BUTTON_2_PAGE_2
+                                {
+                                    if USER_INPUT_BUTTON_2_PAGE_2.len() == 1 
+                                    {
+                                        USER_INPUT_BUTTON_2_PAGE_2.insert(0, ' ');
+                                        USER_INPUT_BUTTON_2_PAGE_2.pop();
+                                    }
+
+                                    if !USER_INPUT_BUTTON_2_PAGE_2.is_empty() 
+                                    {
+                                        USER_INPUT_BUTTON_2_PAGE_2.pop();
+                                    }
+                                }
                             }
                         }
 
@@ -141,6 +185,28 @@ pub fn handle_input(buttons: Vec<(bool, Color, Rect)>)
                                     USER_INPUT_BUTTON_2.clear();
                                     IS_ON_WRITE_MODE_ON_BUTTON_2 = false;
                                 }
+
+
+
+                                if IS_ON_WRITE_MODE_ON_BUTTON_1_PAGE_2
+                                {
+                                    if !USER_INPUT_BUTTON_1_PAGE_2.replace(" ", "").is_empty()
+                                    {
+                                        RETURN_VALUE_REALTIME_PAGE = USER_INPUT_BUTTON_1_PAGE_2.replace(" ", "").parse().unwrap();
+                                    }
+                                    USER_INPUT_BUTTON_1_PAGE_2.clear();
+                                    IS_ON_WRITE_MODE_ON_BUTTON_1_PAGE_2 = false;
+                                }
+
+                                if IS_ON_WRITE_MODE_ON_BUTTON_2_PAGE_2
+                                {
+                                    if !USER_INPUT_BUTTON_2_PAGE_2.replace(" ", "").is_empty()
+                                    {
+                                        TOTAL_INVESTED_REALTIME_PAGE = USER_INPUT_BUTTON_2_PAGE_2.replace(" ", "").parse().unwrap();
+                                    }
+                                    USER_INPUT_BUTTON_2_PAGE_2.clear();
+                                    IS_ON_WRITE_MODE_ON_BUTTON_2_PAGE_2 = false;
+                                }
                             }
                        }
                        
@@ -148,15 +214,21 @@ pub fn handle_input(buttons: Vec<(bool, Color, Rect)>)
                        {
                             unsafe
                             {
-                                if IS_ON_WRITE_MODE_ON_BUTTON_1 || IS_ON_WRITE_MODE_ON_BUTTON_2
+                                if IS_ON_WRITE_MODE_ON_BUTTON_1 || IS_ON_WRITE_MODE_ON_BUTTON_2 || IS_ON_WRITE_MODE_ON_BUTTON_1_PAGE_2 || IS_ON_WRITE_MODE_ON_BUTTON_2_PAGE_2
                                 {
                                     USER_INPUT_BUTTON_1.clear();
                                     USER_INPUT_BUTTON_2.clear();
                                     USER_INPUT_BUTTON_1.push(' ');
                                     USER_INPUT_BUTTON_2.push(' ');
+                                    USER_INPUT_BUTTON_1_PAGE_2.clear();
+                                    USER_INPUT_BUTTON_2_PAGE_2.clear();
+                                    USER_INPUT_BUTTON_1_PAGE_2.push(' ');
+                                    USER_INPUT_BUTTON_2_PAGE_2.push(' ');
                                     BUTTON_CLICKED = None;
                                     IS_ON_WRITE_MODE_ON_BUTTON_1 = false;
                                     IS_ON_WRITE_MODE_ON_BUTTON_2 = false;
+                                    IS_ON_WRITE_MODE_ON_BUTTON_1_PAGE_2 = false;
+                                    IS_ON_WRITE_MODE_ON_BUTTON_2_PAGE_2 = false;
                                 } 
                                 else 
                                 {
