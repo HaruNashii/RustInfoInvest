@@ -89,20 +89,12 @@ pub fn button_action()
                 //user input text button 2
                 unsafe
                 {
-                    if PAGE_TO_RENDER == 0
-                    {
-                        if !IS_ON_WRITE_MODE_ON_BUTTON_1  && !IS_ON_WRITE_MODE_ON_BUTTON_2
-                        {
-                            IS_ON_WRITE_MODE_ON_BUTTON_2 = true;
-                        }
+                    if PAGE_TO_RENDER == 0 && !IS_ON_WRITE_MODE_ON_BUTTON_1 && !IS_ON_WRITE_MODE_ON_BUTTON_2 {
+                        IS_ON_WRITE_MODE_ON_BUTTON_2 = true;
                     }
 
-                    if PAGE_TO_RENDER == 1
-                    {
-                        if !IS_ON_WRITE_MODE_ON_BUTTON_1_PAGE_2  && !IS_ON_WRITE_MODE_ON_BUTTON_2_PAGE_2
-                        {
-                            IS_ON_WRITE_MODE_ON_BUTTON_2_PAGE_2 = true;
-                        }
+                    if PAGE_TO_RENDER == 1 && !IS_ON_WRITE_MODE_ON_BUTTON_1_PAGE_2 && !IS_ON_WRITE_MODE_ON_BUTTON_2_PAGE_2 {
+                        IS_ON_WRITE_MODE_ON_BUTTON_2_PAGE_2 = true;
                     }
                     BUTTON_CLICKED = None;
                 };

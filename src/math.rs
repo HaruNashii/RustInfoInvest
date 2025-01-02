@@ -3,9 +3,7 @@
 //---------------------------------------CRATES BACK-END-------------------------------//
 //-------------------------------------------------------------------------------------//
 //=====================================================================================//
-use std::sync::Once;
-use percentage::Percentage;
-use crate::getonlineinfo::infos;
+//use std::sync::Once;
 
 
 
@@ -17,15 +15,15 @@ use crate::getonlineinfo::infos;
 pub static mut RETURN_VALUE: f64 = 10.0;
 pub static mut TOTAL_INVESTED: f64 = 150000.0;
 pub static mut ONLINE_HISTORIC_RETURN_VALUE: Vec<String> = Vec::new();
-static CALL_ONCE: Once = Once::new();
-static CALL_ONCE2: Once = Once::new();
+//static CALL_ONCE: Once = Once::new();
+//static CALL_ONCE2: Once = Once::new();
 
 
 
 pub fn basic_data() -> (f64, f64, f64, f64, f64, f64)
 {
-        let cdi_percentage = 100.0;
-        let use_cdi_value = true;
+        //let cdi_percentage = 100.0;
+        //let use_cdi_value = true;
         let years_invested = 1.0;
         let months_invested = 1.0;
         let days_invested = 1.0;

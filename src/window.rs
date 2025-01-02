@@ -55,17 +55,12 @@ pub fn render_page(page: Page, persistent_page: Option<Page>)
 
         //================================
         
-        match persistent_page
-        {
-            Some(persistent_elements) =>
-            {
-                if let Some(rect_vector_of_tuple) = &persistent_elements.rects { for tuple in rect_vector_of_tuple { canvas.set_draw_color(tuple.0); canvas.fill_rect(tuple.1).unwrap(); } }
+        if let Some(persistent_elements) = persistent_page {
+            if let Some(rect_vector_of_tuple) = &persistent_elements.rects { for tuple in rect_vector_of_tuple { canvas.set_draw_color(tuple.0); canvas.fill_rect(tuple.1).unwrap(); } }
 
-                if let Some(buttons_vector_of_tuple) = &persistent_elements.buttons { for tuple in buttons_vector_of_tuple { if tuple.0 { canvas.set_draw_color(tuple.1); canvas.fill_rect(tuple.2).unwrap(); } } }
+            if let Some(buttons_vector_of_tuple) = &persistent_elements.buttons { for tuple in buttons_vector_of_tuple { if tuple.0 { canvas.set_draw_color(tuple.1); canvas.fill_rect(tuple.2).unwrap(); } } }
 
-                if let Some(texts_vector_of_tuple) = &persistent_elements.texts { for tuple in texts_vector_of_tuple { canvas.copy(&tuple.0, None, tuple.1).unwrap(); } }
-            },
-            None => {},
+            if let Some(texts_vector_of_tuple) = &persistent_elements.texts { for tuple in texts_vector_of_tuple { canvas.copy(&tuple.0, None, tuple.1).unwrap(); } }
         }
 
         canvas.present();
