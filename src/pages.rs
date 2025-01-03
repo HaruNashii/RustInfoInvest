@@ -61,11 +61,11 @@ pub fn persistent_page() -> Page<'static>
     let all_text = vec!
     [
         //main page button text
-        gen_text(20, (all_buttons[0].2.x + 30, all_buttons[0].2.y + 20), " Main Page ".to_string(), default_text_color),
+        gen_text(17, (all_buttons[0].2.x + 10, all_buttons[0].2.y + 24), "    Calculator   ".to_string(), default_text_color),
         //second page button text
-        gen_text(19, (all_buttons[1].2.x + 10, all_buttons[1].2.y + 20), "Realtime Currency".to_string(), default_text_color),
+        gen_text(17, (all_buttons[1].2.x + 9, all_buttons[1].2.y + 24), "Real-time Currency".to_string(), default_text_color),
         //selic page button text
-        gen_text(20, (all_buttons[2].2.x + 30, all_buttons[2].2.y + 20), " Selic Page".to_string(), default_text_color),
+        gen_text(17, (all_buttons[2].2.x + 31, all_buttons[2].2.y + 24), "Selic Historic  ".to_string(), default_text_color),
     ];
 
 
@@ -100,22 +100,13 @@ pub fn main_page() -> Page<'static>
     };
 
 
-    //===================== rects =========================
-    let all_rects = vec!
-    [
-        //header info background
-        (Color::RGB(203, 166, 247), Rect::new(0, 105, 800, 50)),
-    ];
-
-
-
     //===================== buttons =========================
     let all_buttons = vec!
     [
         //receive input button 1
-        (true, Color::RGB(166,   227, 161),   Rect::new(20, 105, 365, 50)),
+        (true, Color::RGB(203,   166, 247),   Rect::new(10, 125, 385, 50)),
         //receive input button 2
-        (true, Color::RGB(166,   227, 161),   Rect::new(415, 105, 355, 50)),
+        (true, Color::RGB(203,   166, 247),   Rect::new(405, 125, 385, 50)),
     ];
     
 
@@ -143,33 +134,33 @@ pub fn main_page() -> Page<'static>
         //one sec text
         gen_text(20, (225, 495), second_string, subtext_color),
         //user input text
-        gen_text(24, (284, 113), unsafe{USER_INPUT_BUTTON_1.clone()}, default_text_color),
-        gen_text(24, (663, 113), unsafe{USER_INPUT_BUTTON_2.clone()}, default_text_color),
+        gen_text(23, (274, 133), unsafe{USER_INPUT_BUTTON_1.clone()}, default_text_color),
+        gen_text(23, (653, 133), unsafe{USER_INPUT_BUTTON_2.clone()}, default_text_color),
     ];
     unsafe
     {
         //year return value text
         if IS_ON_WRITE_MODE_ON_BUTTON_1
         {
-            all_text.push(gen_text(24, (30, 113), "Year Return Value: ".to_string(), default_text_color));
+            all_text.push(gen_text(23, (20, 133), "Year Return Value: ".to_string(), default_text_color));
         }
 
         //year return value text
         if !IS_ON_WRITE_MODE_ON_BUTTON_1
         {
-            all_text.push(gen_text(24, (30, 113), format!("Year Return Value: {}%", RETURN_VALUE), default_text_color));
+            all_text.push(gen_text(23, (20, 133), format!("Year Return Value: {}%", RETURN_VALUE), default_text_color));
         }
 
         if IS_ON_WRITE_MODE_ON_BUTTON_2
         {
             //total invested text
-            all_text.push(gen_text(24, (425, 113), "Total Invested: R$".to_string(), default_text_color));
+            all_text.push(gen_text(23, (415, 133), "Total Invested: R$".to_string(), default_text_color));
         }
 
         if !IS_ON_WRITE_MODE_ON_BUTTON_2
         {
             //total invested text
-            all_text.push(gen_text(24, (425, 113), format!("Total Invested: R${}", TOTAL_INVESTED), default_text_color));
+            all_text.push(gen_text(23, (415, 133), format!("Total Invested: R${}", TOTAL_INVESTED), default_text_color));
         }
     };
     
@@ -178,7 +169,7 @@ pub fn main_page() -> Page<'static>
     Page 
     {
         background_color: Some(bg_color),
-        rects:   Some( all_rects ),
+        rects:   None,
         buttons: Some( all_buttons  ),
         texts:   Some( all_text ),
         images:  None,
@@ -230,64 +221,54 @@ pub fn realtime_currency_page() -> Page<'static>
     };
     
 
-
-    //===================== rects =========================
-    let all_rects = vec!
-    [
-        //header info background
-        (Color::RGB(203, 166, 247), Rect::new(0, 105, 800, 50)),
-    ];
-
-
-
     //===================== buttons =========================
     let all_buttons = vec!
     [
         //receive input button 1
-        (true, Color::RGB(166,   227, 161),   Rect::new(20, 105, 365, 50)),
+        (true, Color::RGB(203,   166, 247),   Rect::new(10, 125, 385, 50)),
         //receive input button 2
-        (true, Color::RGB(166,   227, 161),   Rect::new(415, 105, 355, 50)),
+        (true, Color::RGB(203,   166, 247),   Rect::new(405, 125, 385, 50)),
     ];
-    
 
 
     //===================== texts =========================
     let realtime_currency_string: String = format!("Realtime Currency: R$ {:.7}", unsafe{REALTIME_CURRENCY});
-    let second_string: String = format!("Return Per Second: R$ {:.8}", unsafe{REALTIME_SECS});
+    let second_string: String = format!("Return Per Second: R$ {:.10}", unsafe{REALTIME_SECS});
     
     let mut all_text = vec!
     [
         //realtime curreny text
-        gen_text(30, (100, 350), realtime_currency_string, subtext_color),
+        gen_text(30, (100, 300), realtime_currency_string, subtext_color),
         //one sec text
-        gen_text(20, (225, 495), second_string, subtext_color),
+        gen_text(18, (225, 350), second_string, subtext_color),
         //user input text
-        gen_text(24, (284, 113), unsafe{USER_INPUT_BUTTON_1_PAGE_2.clone()}, default_text_color),
-        gen_text(24, (663, 113), unsafe{USER_INPUT_BUTTON_2_PAGE_2.clone()}, default_text_color), ];
+        gen_text(23, (274, 133), unsafe{USER_INPUT_BUTTON_1_PAGE_2.clone()}, default_text_color),
+        gen_text(23, (653, 133), unsafe{USER_INPUT_BUTTON_2_PAGE_2.clone()}, default_text_color), 
+    ];
     unsafe
     {
         //year return value text
         if IS_ON_WRITE_MODE_ON_BUTTON_1_PAGE_2
         {
-            all_text.push(gen_text(24, (30, 113), "Year Return Value: ".to_string(), default_text_color));
+            all_text.push(gen_text(23, (20, 133), "Year Return Value: ".to_string(), default_text_color));
         }
 
         //year return value text
         if !IS_ON_WRITE_MODE_ON_BUTTON_1_PAGE_2
         {
-            all_text.push(gen_text(24, (30, 113), format!("Year Return Value: {}%", RETURN_VALUE_REALTIME_PAGE), default_text_color));
+            all_text.push(gen_text(23, (20, 133), format!("Year Return Value: {}%", RETURN_VALUE_REALTIME_PAGE), default_text_color));
         }
 
         if IS_ON_WRITE_MODE_ON_BUTTON_2_PAGE_2
         {
             //total invested text
-            all_text.push(gen_text(24, (425, 113), "Total Invested: R$".to_string(), default_text_color));
+            all_text.push(gen_text(23, (415, 133), "Total Invested: R$".to_string(), default_text_color));
         }
 
         if !IS_ON_WRITE_MODE_ON_BUTTON_2_PAGE_2
         {
             //total invested text
-            all_text.push(gen_text(24, (425, 113), format!("Total Invested: R${}", TOTAL_INVESTED_REALTIME_PAGE), default_text_color));
+            all_text.push(gen_text(23, (415, 133), format!("Total Invested: R${}", TOTAL_INVESTED_REALTIME_PAGE), default_text_color));
         }
     };
     
@@ -296,7 +277,7 @@ pub fn realtime_currency_page() -> Page<'static>
     Page 
     {
         background_color: Some(bg_color),
-        rects:   Some( all_rects ),
+        rects:   None,
         buttons: Some( all_buttons  ),
         texts:   Some( all_text ),
         images:  None,
@@ -316,19 +297,11 @@ pub fn selic_page() -> Page<'static>
     let subtext_color = Color::RGB(186, 194, 222);
 
 
-    //===================== rects =========================
-    let all_rects = vec!
-    [
-        //header info background
-        (Color::RGB(203, 166, 247), Rect::new(0, 105, 800, 50)),
-    ];
-
-
     //===================== buttons =========================
     let all_buttons = vec!
     [
         //sync online info button
-        (true, Color::RGB(166, 227, 161), Rect::new(300, 105, 200, 50)),
+        (true, Color::RGB(203, 166, 247), Rect::new(300, 125, 213, 50)),
     ];
 
 
@@ -338,7 +311,7 @@ pub fn selic_page() -> Page<'static>
     [
         //sync online info button text
         gen_text(20, (all_buttons[0].2.x + 10, all_buttons[0].2.y + 10),  "Sync With Online".to_string(), default_text_color),
-        gen_text(25, (125, 175), "Number          Date         Selic Tax".to_string(), default_text_color),
+        gen_text(25, (125, 205), "Number          Date         Selic Tax".to_string(), subtext_color),
     ];
     for (index, string) in unsafe{ONLINE_HISTORIC_RETURN_VALUE.iter().enumerate()}
     {
@@ -352,7 +325,7 @@ pub fn selic_page() -> Page<'static>
     Page 
     {
         background_color: Some(bg_color),
-        rects:   Some( all_rects ),
+        rects:   None,
         buttons: Some( all_buttons ),
         texts:   Some( all_text ),
         images:  None,

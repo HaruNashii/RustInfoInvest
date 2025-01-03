@@ -45,19 +45,20 @@ fn clean_string_from_vector(vector_of_string: Vec<String>) -> Vec<String>
 
 
 
-fn parse_to_f64(string: &str) -> f64
-{
-    let separeted_string = string.split_whitespace().collect::<Vec<&str>>();
-    let last_string = separeted_string.last().unwrap();
-    last_string.replace(",", ".").parse::<f64>().unwrap()
-}
+//fn parse_to_f64(string: &str) -> f64
+//{
+//    let separeted_string = string.split_whitespace().collect::<Vec<&str>>();
+//    let last_string = separeted_string.last().unwrap();
+//    last_string.replace(",", ".").parse::<f64>().unwrap()
+//}
 
 
 
 
 
 #[tokio::main]
-pub async fn infos() -> (Vec<String>, f64)
+pub async fn infos() -> Vec<String>
+//-> (Vec<String>, f64)
 {
     // Start the Geckodriver WebDriver
     let web_driver = Command::new("geckodriver").stdout(Stdio::null()).stderr(Stdio::null()).spawn();
@@ -85,11 +86,12 @@ pub async fn infos() -> (Vec<String>, f64)
     web_driver.unwrap().kill().unwrap();
 
     // Remove unecessary data from every string in the list_elements vector
-    let vector_to_send = clean_string_from_vector(list_elements.clone());
+    //let vector_to_send = clean_string_from_vector(list_elements.clone());
 
     // Parse the most recent Selic tax value to f64
-    let f64_to_send = parse_to_f64(&vector_to_send[0]);
+    //let f64_to_send = parse_to_f64(&vector_to_send[0]);
 
     // Return the vectors of string and f64 
-    (vector_to_send, f64_to_send) 
+    //(vector_to_send, f64_to_send) 
+    clean_string_from_vector(list_elements.clone())
 }

@@ -1,5 +1,5 @@
 use crate::input_handler::{IS_ON_WRITE_MODE_ON_BUTTON_1, IS_ON_WRITE_MODE_ON_BUTTON_2, IS_ON_WRITE_MODE_ON_BUTTON_1_PAGE_2, IS_ON_WRITE_MODE_ON_BUTTON_2_PAGE_2, BUTTON_CLICKED};
-use crate::math::{RETURN_VALUE, ONLINE_HISTORIC_RETURN_VALUE};
+use crate::math::ONLINE_HISTORIC_RETURN_VALUE;
 use crate::getonlineinfo::infos;
 
 
@@ -76,9 +76,7 @@ pub fn button_action()
 
                     if PAGE_TO_RENDER == 2
                     {
-                        let (online_historic_return_value, online_return_value) = infos();
-                        RETURN_VALUE = online_return_value;
-                        ONLINE_HISTORIC_RETURN_VALUE = online_historic_return_value;
+                        ONLINE_HISTORIC_RETURN_VALUE = infos();
                     }
                     BUTTON_CLICKED = None;
                 };
