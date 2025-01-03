@@ -1,16 +1,14 @@
 # **RustInfoInvest**
-  
-A Very Simple And Configurable Compound Interest Calculator With Online Selic Rate Values, Writed In Rust. 
+> A Very Simple And Configurable Compound Interest Calculator With Online Selic Rate Values, Writed In Rust. 
 
 > [!IMPORTANT]
 > This APP is under development and currently it's not a serious project, this app is not optimized, but the compound interest formula is correct!
 
+<br/>
+<br/>
+<br/>
 
-
-
-
-
-**Showcase**
+## **Showcase**
 ![image](https://github.com/user-attachments/assets/665f34b9-690c-45c1-bdb0-cd117606db88)
 <details> <summary>Others Pages</summary>
   
@@ -21,31 +19,42 @@ A Very Simple And Configurable Compound Interest Calculator With Online Selic Ra
 ![image](https://github.com/user-attachments/assets/75c78493-349f-4d85-86b7-c9cf33bce357)
 </details>
 
+<br/>
+<br/>
+<br/>
 
-
-**Known Issues**
+## **Known Issues**
 - not good UI and UX
 
+<br/>
+<br/>
+<br/>
 
-
-**Config**
+## **Config**
 - To change the values of the calculator and the realtime currency you just need click in the value and type you desired value
 
+<br/>
+<br/>
+<br/>
 
-
-**Future Plans**
+## **Future Plans**
 - Better UI
 - Config Page
 - Set time in real-time page
 
+<br/>
+<br/>
+<br/>
 
-
-**Dependencies**
-- you will need sdl2, sdl2_ttf, pkg-config and geckodriver packages, on Arch Linux you can get it with: 
+## **Dependencies**
+- you will need sdl2, sdl2_ttf, pkg-config and geckodriver packages,
+- on Arch Linux: 
 - ```sudo pacman -S sdl2 sdl2_ttf pkg-config geckodriver```
 
+<br/>
+<br/>
+<br/>
 
-
-**Downloading And Running**
-- after downloading the dependencies you can run the app with:
+## **Downloading And Running**
+- after downloading the dependencies, you can run the app with:
 - ```cargo run --release```
