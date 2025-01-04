@@ -8,7 +8,7 @@ use std::time::SystemTime;
 use std::sync::Once;
 
 static START: Once = Once::new();
-static mut CURRENT_TIME: Option<SystemTime> = None; 
+pub static mut CURRENT_TIME: Option<SystemTime> = None; 
 pub static mut RETURN_VALUE_REALTIME_PAGE: f64 = 12.15;
 pub static mut TOTAL_INVESTED_REALTIME_PAGE: f64 = 5000.0;
 static mut REALTIME_SECS: f64 = 0.0;

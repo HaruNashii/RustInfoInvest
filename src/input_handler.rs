@@ -1,12 +1,13 @@
 use sdl2::mouse::MouseButton;
 use sdl2::keyboard::Keycode;
 use sdl2::event::Event;
-use crate::window::SDL2_EVENT_PUMP;
-use crate::math::{RETURN_VALUE, TOTAL_INVESTED};
-use crate::pages::{RETURN_VALUE_REALTIME_PAGE, TOTAL_INVESTED_REALTIME_PAGE};
-use std::process::exit;
 use sdl2::rect::Rect;
 use sdl2::pixels::Color;
+use std::process::exit;
+use std::time::SystemTime;
+use crate::window::SDL2_EVENT_PUMP;
+use crate::math::{RETURN_VALUE, TOTAL_INVESTED};
+use crate::pages::{RETURN_VALUE_REALTIME_PAGE, TOTAL_INVESTED_REALTIME_PAGE, CURRENT_TIME};
 
 
 pub static mut USER_INPUT_BUTTON_1: String = String::new();
@@ -202,6 +203,8 @@ pub fn handle_input(buttons: Vec<(bool, Color, Rect)>)
                                 {
                                     if !USER_INPUT_BUTTON_2_PAGE_2.replace(" ", "").is_empty()
                                     {
+                                        
+                                        CURRENT_TIME = Some(SystemTime::now());
                                         TOTAL_INVESTED_REALTIME_PAGE = USER_INPUT_BUTTON_2_PAGE_2.replace(" ", "").parse().unwrap();
                                     }
                                     USER_INPUT_BUTTON_2_PAGE_2.clear();
