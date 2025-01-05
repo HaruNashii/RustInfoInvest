@@ -3,7 +3,8 @@
 //---------------------------------------CRATES BACK-END-------------------------------//
 //-------------------------------------------------------------------------------------//
 //=====================================================================================//
-//use std::sync::Once;
+use std::time::SystemTime;
+use std::sync::Once;
 
 
 
@@ -15,6 +16,14 @@
 pub static mut RETURN_VALUE: f64 = 10.0;
 pub static mut TOTAL_INVESTED: f64 = 150000.0;
 pub static mut ONLINE_HISTORIC_RETURN_VALUE: Vec<String> = Vec::new();
+
+pub static mut CURRENT_TIME: Option<SystemTime> = None; 
+pub static mut RETURN_VALUE_REALTIME_PAGE: f64 = 12.15;
+pub static mut TOTAL_INVESTED_REALTIME_PAGE: f64 = 5000.0;
+pub static mut REALTIME_SECS: f64 = 0.0;
+pub static mut REALTIME_MILISECS: f64 = 0.0;
+pub static mut REALTIME_CURRENCY: f64 = 0.0;
+static START: Once = Once::new();
 //static CALL_ONCE: Once = Once::new();
 //static CALL_ONCE2: Once = Once::new();
 
@@ -58,7 +67,7 @@ pub fn basic_data() -> (f64, f64, f64, f64, f64, f64)
 
 
 
-pub fn maths() -> (f64, f64, f64, f64, f64 ,f64)
+pub fn calculator_maths() -> (f64, f64, f64, f64, f64 ,f64)
 {
     // Pull info string from another function
     let (years_invested, months_invested, days_invested, hours_invested, minutes_invested, secs_invested) = basic_data();
@@ -99,4 +108,34 @@ pub fn maths() -> (f64, f64, f64, f64, f64 ,f64)
 
 
 
+#[allow(static_mut_refs)]
+pub fn realtime_currency_maths()
+{
+    unsafe 
+    {
+        // Move numbers one case to the right to fit the formula math (example = 1.0 -> 0.1)
+        let mut year_return_value: f64 = RETURN_VALUE_REALTIME_PAGE;
+        year_return_value /= 100.0;
 
+        let month_return_value  = f64::powf(1.0 + year_return_value,   1.00 / 12.00) - 1.0;
+        let day_return_value    = f64::powf(1.0 + month_return_value,  1.00 / 30.00) - 1.0;
+        let hour_return_value   = f64::powf(1.0 + day_return_value,    1.00 / 24.00) - 1.0;
+        let minute_return_value = f64::powf(1.0 + hour_return_value,   1.00 / 60.00) - 1.0;
+        let secs_return_value   = f64::powf(1.0 + minute_return_value, 1.00 / 60.00) - 1.0;
+        let milisecs_return_value   = f64::powf(1.0 + secs_return_value, 1.00 / 1000.00) - 1.0;
+
+        // Formulas
+        // formula = total_invested * (1 + return_value)^total_time_invested
+        REALTIME_SECS = REALTIME_CURRENCY * f64::powf(1.0 + secs_return_value,  1.0) - REALTIME_CURRENCY;
+        REALTIME_MILISECS = REALTIME_CURRENCY * f64::powf(1.0 + milisecs_return_value,  1.0) - REALTIME_CURRENCY;
+
+
+        START.call_once
+        (|| {
+            CURRENT_TIME = Some(SystemTime::now())
+        });
+
+        let milisecs_since_checked_current_time = CURRENT_TIME.unwrap().elapsed().unwrap().as_millis();
+        REALTIME_CURRENCY = TOTAL_INVESTED_REALTIME_PAGE + (REALTIME_MILISECS * milisecs_since_checked_current_time as f64);
+    };
+}

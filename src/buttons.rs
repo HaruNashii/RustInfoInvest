@@ -1,6 +1,7 @@
-use crate::input_handler::{IS_ON_WRITE_MODE_ON_BUTTON_1, IS_ON_WRITE_MODE_ON_BUTTON_2, IS_ON_WRITE_MODE_ON_BUTTON_1_PAGE_2, IS_ON_WRITE_MODE_ON_BUTTON_2_PAGE_2, BUTTON_CLICKED};
+use crate::input_handler::{IS_ON_WRITE_MODE_ON_BUTTON_1, IS_ON_WRITE_MODE_ON_BUTTON_2, IS_ON_WRITE_MODE_ON_BUTTON_1_PAGE_2, IS_ON_WRITE_MODE_ON_BUTTON_2_PAGE_2, IS_ON_WRITE_MODE_ON_BUTTON_1_PAGE_3, IS_ON_WRITE_MODE_ON_BUTTON_2_PAGE_3, IS_ON_WRITE_MODE_ON_BUTTON_3_PAGE_3, BUTTON_CLICKED};
 use crate::math::ONLINE_HISTORIC_RETURN_VALUE;
 use crate::getonlineinfo::infos;
+use crate::investment_wallet::add_investment;
 
 
 
@@ -19,11 +20,21 @@ pub fn button_action()
             {
                 unsafe 
                 {
-                    if !IS_ON_WRITE_MODE_ON_BUTTON_1  && !IS_ON_WRITE_MODE_ON_BUTTON_2
+                    //CALCULATOR BUTTON (PERSISTENT PAGE)
+                    if !IS_ON_WRITE_MODE_ON_BUTTON_1  && !IS_ON_WRITE_MODE_ON_BUTTON_2 && PAGE_TO_RENDER != 3
                     {
+                        println!("compound interest calculator button clicked");
                         PAGE_TO_RENDER = 0;
+                        BUTTON_CLICKED = None;
                     };
-                    BUTTON_CLICKED = None;
+
+                    //BACK BUTTON (INVESTMENT WALLET PAGE)
+                    if PAGE_TO_RENDER == 3 && !IS_ON_WRITE_MODE_ON_BUTTON_1_PAGE_3 && !IS_ON_WRITE_MODE_ON_BUTTON_2_PAGE_3 && !IS_ON_WRITE_MODE_ON_BUTTON_3_PAGE_3
+                    {
+                        println!("investment wallet page back button clicked");
+                        PAGE_TO_RENDER = 1;
+                        BUTTON_CLICKED = None;
+                    };
                 }
             }
 
@@ -31,8 +42,17 @@ pub fn button_action()
             {
                 unsafe 
                 {
-                    if !IS_ON_WRITE_MODE_ON_BUTTON_1  && !IS_ON_WRITE_MODE_ON_BUTTON_2
+                    //USER INPUT 1 BUTTON (INVESTMENT WALLET PAGE) (YEAR RETURN VALUE)
+                    if PAGE_TO_RENDER == 3 && !IS_ON_WRITE_MODE_ON_BUTTON_1_PAGE_3 && !IS_ON_WRITE_MODE_ON_BUTTON_2_PAGE_3 && !IS_ON_WRITE_MODE_ON_BUTTON_3_PAGE_3
                     {
+                        println!("user input 1 button in investment wallet clicked");
+                        IS_ON_WRITE_MODE_ON_BUTTON_1_PAGE_3 = true;
+                    };
+
+                    //REALTIME CURRENCY BUTTON (PERSISTENT PAGE)
+                    if !IS_ON_WRITE_MODE_ON_BUTTON_1  && !IS_ON_WRITE_MODE_ON_BUTTON_2 && PAGE_TO_RENDER != 3
+                    {
+                        println!("realtime currency button clicked");
                         PAGE_TO_RENDER = 1;
                     };
                     BUTTON_CLICKED = None;
@@ -43,8 +63,17 @@ pub fn button_action()
             {
                 unsafe 
                 {
-                    if !IS_ON_WRITE_MODE_ON_BUTTON_1  && !IS_ON_WRITE_MODE_ON_BUTTON_2
+                    //USER INPUT 2 BUTTON (INVESTMENT WALLET PAGE) (TOTAL INVESTED)
+                    if PAGE_TO_RENDER == 3 && !IS_ON_WRITE_MODE_ON_BUTTON_1_PAGE_3 && !IS_ON_WRITE_MODE_ON_BUTTON_2_PAGE_3 && !IS_ON_WRITE_MODE_ON_BUTTON_3_PAGE_3
                     {
+                        println!("user input 2 button in investment wallet clicked");
+                        IS_ON_WRITE_MODE_ON_BUTTON_2_PAGE_3 = true;
+                    };
+
+                    //SELIC PAGE BUTTON
+                    if !IS_ON_WRITE_MODE_ON_BUTTON_1  && !IS_ON_WRITE_MODE_ON_BUTTON_2 && PAGE_TO_RENDER != 3
+                    {
+                        println!("selic page button clicked");
                         PAGE_TO_RENDER = 2;
                     };
                     BUTTON_CLICKED = None;
@@ -55,27 +84,38 @@ pub fn button_action()
             {
                 unsafe 
                 {
+                    //USER INPUT 3 (INVESTMENT WALLET) (INVESTMENT NAME)
+                    if PAGE_TO_RENDER == 3 && !IS_ON_WRITE_MODE_ON_BUTTON_1_PAGE_3 && !IS_ON_WRITE_MODE_ON_BUTTON_2_PAGE_3 && !IS_ON_WRITE_MODE_ON_BUTTON_3_PAGE_3
+                    {
+                        println!("user input 3 button in investment wallet clicked");
+                        IS_ON_WRITE_MODE_ON_BUTTON_3_PAGE_3 = true;
+                    }
+
+                    //USER INPUT 1 (CALCULATOR PAGE) (YEAR RETURN VALUE)
                     if PAGE_TO_RENDER == 0
                     {
-                        //user input text button 1
                         if !IS_ON_WRITE_MODE_ON_BUTTON_1 && !IS_ON_WRITE_MODE_ON_BUTTON_2
                         {
+                            println!("user input 1 in compound interest calculator clicked");
                             IS_ON_WRITE_MODE_ON_BUTTON_1 = true;
                         }
                     }
 
+                    //USER INPUT 1 (REALTIME CURRENCY PAGE) (YEAR RETURN VALUE)
                     if PAGE_TO_RENDER == 1 
                     {
-                        //user input text button 1
                         if !IS_ON_WRITE_MODE_ON_BUTTON_1_PAGE_2 && !IS_ON_WRITE_MODE_ON_BUTTON_2_PAGE_2
                         {
+                            println!("user input 1 in real-time currency clicked");
                             IS_ON_WRITE_MODE_ON_BUTTON_1_PAGE_2 = true;
                         }
 
                     }
 
+                    //SYNC ONLINE BUTTON (SELIC PAGE)
                     if PAGE_TO_RENDER == 2
                     {
+                        println!("get online info button clicked");
                         ONLINE_HISTORIC_RETURN_VALUE = infos();
                     }
                     BUTTON_CLICKED = None;
@@ -84,16 +124,42 @@ pub fn button_action()
 
             4 =>
             {
-                //user input text button 2
                 unsafe
                 {
-                    if PAGE_TO_RENDER == 0 && !IS_ON_WRITE_MODE_ON_BUTTON_1 && !IS_ON_WRITE_MODE_ON_BUTTON_2 {
+                    //ADD INVESTMENT BUTTON (INVESTMENT WALLET)
+                    if PAGE_TO_RENDER == 3 && !IS_ON_WRITE_MODE_ON_BUTTON_1_PAGE_3 && !IS_ON_WRITE_MODE_ON_BUTTON_2_PAGE_3 && !IS_ON_WRITE_MODE_ON_BUTTON_3_PAGE_3
+                    {
+                        println!("add investment button in investment wallet clicked");
+                        add_investment();
+                    }
+
+                    //USER INPUT 2 (CALCULATOR PAGE) (TOTAL INVESTED)
+                    if PAGE_TO_RENDER == 0 && !IS_ON_WRITE_MODE_ON_BUTTON_1 && !IS_ON_WRITE_MODE_ON_BUTTON_2 
+                    {
+                        println!("user input 1 in compound interest calculator clicked");
                         IS_ON_WRITE_MODE_ON_BUTTON_2 = true;
                     }
 
-                    if PAGE_TO_RENDER == 1 && !IS_ON_WRITE_MODE_ON_BUTTON_1_PAGE_2 && !IS_ON_WRITE_MODE_ON_BUTTON_2_PAGE_2 {
+                    //USER INPUT 2 (REALTIME CURRENCY PAGE) (TOTAL INVESTED)
+                    if PAGE_TO_RENDER == 1 && !IS_ON_WRITE_MODE_ON_BUTTON_1_PAGE_2 && !IS_ON_WRITE_MODE_ON_BUTTON_2_PAGE_2 
+                    {
+                        println!("user input 2 in real-time currency clicked");
                         IS_ON_WRITE_MODE_ON_BUTTON_2_PAGE_2 = true;
                     }
+                    BUTTON_CLICKED = None;
+                };
+            }
+            5 =>
+            {
+                //INVESTMENT WALLET BUTTON (REALTIME CURRENCY PAGE)
+                unsafe
+                {
+                    if PAGE_TO_RENDER == 1 && !IS_ON_WRITE_MODE_ON_BUTTON_1_PAGE_2 && !IS_ON_WRITE_MODE_ON_BUTTON_2_PAGE_2
+                    {
+                        println!("investment wallet button clicked");
+                        PAGE_TO_RENDER = 3;
+                    }
+
                     BUTTON_CLICKED = None;
                 };
             }

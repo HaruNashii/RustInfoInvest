@@ -1,19 +1,11 @@
 use sdl2::rect::Rect;
 use sdl2::pixels::Color;
 use sdl2::render::Texture;
+use crate::investment_wallet::{INVESTMENT_NAME, TOTAL_INVESTED_PER_INVESTMENT, YEAR_RETURN_VALUE_PER_INVESTMENT};
 use crate::sdl2_generators::gen_text;
-use crate::math::{maths, ONLINE_HISTORIC_RETURN_VALUE, RETURN_VALUE, TOTAL_INVESTED};
-use crate::input_handler::{USER_INPUT_BUTTON_1, USER_INPUT_BUTTON_2, IS_ON_WRITE_MODE_ON_BUTTON_1, IS_ON_WRITE_MODE_ON_BUTTON_2, IS_ON_WRITE_MODE_ON_BUTTON_1_PAGE_2, IS_ON_WRITE_MODE_ON_BUTTON_2_PAGE_2, USER_INPUT_BUTTON_1_PAGE_2, USER_INPUT_BUTTON_2_PAGE_2};
-use std::time::SystemTime;
-use std::sync::Once;
+use crate::math::{calculator_maths, realtime_currency_maths, ONLINE_HISTORIC_RETURN_VALUE, REALTIME_CURRENCY, REALTIME_SECS, RETURN_VALUE, RETURN_VALUE_REALTIME_PAGE, TOTAL_INVESTED, TOTAL_INVESTED_REALTIME_PAGE};
+use crate::input_handler::{IS_ON_WRITE_MODE_ON_BUTTON_1, IS_ON_WRITE_MODE_ON_BUTTON_1_PAGE_2, IS_ON_WRITE_MODE_ON_BUTTON_1_PAGE_3, IS_ON_WRITE_MODE_ON_BUTTON_2, IS_ON_WRITE_MODE_ON_BUTTON_2_PAGE_2, IS_ON_WRITE_MODE_ON_BUTTON_2_PAGE_3, IS_ON_WRITE_MODE_ON_BUTTON_3_PAGE_3, USER_INPUT_BUTTON_1, USER_INPUT_BUTTON_1_PAGE_2, USER_INPUT_BUTTON_1_PAGE_3, USER_INPUT_BUTTON_2, USER_INPUT_BUTTON_2_PAGE_2, USER_INPUT_BUTTON_2_PAGE_3, USER_INPUT_BUTTON_3_PAGE_3};
 
-static START: Once = Once::new();
-pub static mut CURRENT_TIME: Option<SystemTime> = None; 
-pub static mut RETURN_VALUE_REALTIME_PAGE: f64 = 12.15;
-pub static mut TOTAL_INVESTED_REALTIME_PAGE: f64 = 5000.0;
-static mut REALTIME_SECS: f64 = 0.0;
-static mut REALTIME_MILISECS: f64 = 0.0;
-static mut REALTIME_CURRENCY: f64 = 0.0;
 
 pub struct Page<'a>
 {
@@ -88,10 +80,10 @@ pub fn persistent_page() -> Page<'static>
 pub fn main_page() -> Page<'static>
 {
     //===================== variables =========================
-    let bg_color = Color::RGB(30, 30, 46);
+    let bg_color =           Color::RGB(30, 30, 46);
     let default_text_color = Color::RGB(255, 255, 255);
-    let subtext_color      = Color::RGB(186, 194, 222);
-    let ( one_year, one_month, one_day, one_hour, one_min, one_secs) = maths();
+    let subtext_color =      Color::RGB(186, 194, 222);
+    let ( one_year, one_month, one_day, one_hour, one_min, one_secs) = calculator_maths();
     
     unsafe 
     { 
@@ -183,41 +175,18 @@ pub fn main_page() -> Page<'static>
 #[allow(static_mut_refs)]
 pub fn realtime_currency_page() -> Page<'static>
 {
+    realtime_currency_maths();
+
+
     //===================== variables =========================
     let bg_color = Color::RGB(30, 30, 46);
     let default_text_color = Color::RGB(255, 255, 255);
     let subtext_color      = Color::RGB(186, 194, 222);
 
-
     unsafe
     {
         if USER_INPUT_BUTTON_1_PAGE_2.is_empty() { USER_INPUT_BUTTON_1_PAGE_2.push(' ') };
         if USER_INPUT_BUTTON_2_PAGE_2.is_empty() { USER_INPUT_BUTTON_2_PAGE_2.push(' ') };
-
-        // Move numbers one case to the right to fit the formula math (example = 1.0 -> 0.1)
-        let mut year_return_value: f64 = RETURN_VALUE_REALTIME_PAGE;
-        year_return_value /= 100.0;
-
-        let month_return_value  = f64::powf(1.0 + year_return_value,   1.00 / 12.00) - 1.0;
-        let day_return_value    = f64::powf(1.0 + month_return_value,  1.00 / 30.00) - 1.0;
-        let hour_return_value   = f64::powf(1.0 + day_return_value,    1.00 / 24.00) - 1.0;
-        let minute_return_value = f64::powf(1.0 + hour_return_value,   1.00 / 60.00) - 1.0;
-        let secs_return_value   = f64::powf(1.0 + minute_return_value, 1.00 / 60.00) - 1.0;
-        let milisecs_return_value   = f64::powf(1.0 + secs_return_value, 1.00 / 1000.00) - 1.0;
-
-        // Formulas
-        // formula = total_invested * (1 + return_value)^total_time_invested
-        REALTIME_SECS = REALTIME_CURRENCY * f64::powf(1.0 + secs_return_value,  1.0) - REALTIME_CURRENCY;
-        REALTIME_MILISECS = REALTIME_CURRENCY * f64::powf(1.0 + milisecs_return_value,  1.0) - REALTIME_CURRENCY;
-
-
-        START.call_once
-        (|| {
-            CURRENT_TIME = Some(SystemTime::now())
-        });
-
-        let milisecs_since_checked_current_time = CURRENT_TIME.unwrap().elapsed().unwrap().as_millis();
-        REALTIME_CURRENCY = TOTAL_INVESTED_REALTIME_PAGE + (REALTIME_MILISECS * milisecs_since_checked_current_time as f64);
     };
     
 
@@ -228,6 +197,8 @@ pub fn realtime_currency_page() -> Page<'static>
         (true, Color::RGB(203,   166, 247),   Rect::new(10, 125, 385, 50)),
         //receive input button 2
         (true, Color::RGB(203,   166, 247),   Rect::new(405, 125, 385, 50)),
+        //investment wallet
+        (true, Color::RGB(203,   166, 247),   Rect::new(10, 200, 385, 50)),
     ];
 
 
@@ -270,6 +241,7 @@ pub fn realtime_currency_page() -> Page<'static>
             //total invested text
             all_text.push(gen_text(23, (415, 133), format!("Total Invested: R${}", TOTAL_INVESTED_REALTIME_PAGE), default_text_color));
         }
+        all_text.push(gen_text(23, (20, 200), "Investment Wallet".to_string(), default_text_color));
     };
     
 
@@ -334,29 +306,78 @@ pub fn selic_page() -> Page<'static>
 
 
 
-pub fn config_page() -> Page<'static>
+#[allow(static_mut_refs)]
+pub fn investment_wallet_page() -> Page<'static>
 {
     //===================== variables =========================
     let bg_color = Color::RGB(30, 30, 46);
     let default_text_color = Color::RGB(255, 255, 255);
+    unsafe 
+    {
+        if USER_INPUT_BUTTON_1_PAGE_3.is_empty() { USER_INPUT_BUTTON_1_PAGE_3.push(' ') };
+        if USER_INPUT_BUTTON_2_PAGE_3.is_empty() { USER_INPUT_BUTTON_2_PAGE_3.push(' ') };
+        if USER_INPUT_BUTTON_3_PAGE_3.is_empty() { USER_INPUT_BUTTON_3_PAGE_3.push(' ') }; 
+    };
 
 
 
     //===================== buttons =========================
     let all_buttons = vec!
     [
-        //get online info
-        (true, Color::RGB(166,   227, 161),   Rect::new(20, 275, 200, 50)),
+        //back button
+        (true, Color::RGB(243, 139, 168), Rect::new(20, 20, 50, 50)),
+        //investment year return value button
+        (true, Color::RGB(203, 166, 247), Rect::new(20, 175, 350, 50)),
+        //total invested return value button
+        (true, Color::RGB(203, 166, 247), Rect::new(400, 175, 350, 50)),
+        //investment name button
+        (true, Color::RGB(203, 166, 247), Rect::new(20, 100, 730, 50)),
+        //add investment button
+        (true, Color::RGB(250, 179, 135), Rect::new(100, 20, 650, 50)),
     ];
 
 
 
     //===================== texts =========================
-    let all_text = vec!
+    let mut all_text = vec!
     [
         //example text
-        gen_text(20, (all_buttons[0].2.x + 10, all_buttons[0].2.y + 10),  "Sync With Online".to_string(), default_text_color),
+        gen_text(20, (all_buttons[0].2.x + 10, all_buttons[0].2.y + 10),  "<-".to_string(), default_text_color),
+        gen_text(20, (all_buttons[4].2.x + 10, all_buttons[4].2.y + 10),  "Add Investment".to_string(), default_text_color),
     ];
+    unsafe 
+    {
+        if IS_ON_WRITE_MODE_ON_BUTTON_1_PAGE_3
+        {
+            all_text.push(gen_text(20, (all_buttons[1].2.x + 10, all_buttons[1].2.y + 10),  format!("Return Value: {}", USER_INPUT_BUTTON_1_PAGE_3.clone()), default_text_color));
+        }
+
+        if IS_ON_WRITE_MODE_ON_BUTTON_2_PAGE_3
+        {
+            all_text.push(gen_text(20, (all_buttons[2].2.x + 10, all_buttons[2].2.y + 10),  format!("Total Invested: {}", USER_INPUT_BUTTON_2_PAGE_3.clone()), default_text_color));
+        }
+
+        if IS_ON_WRITE_MODE_ON_BUTTON_3_PAGE_3
+        {
+            all_text.push(gen_text(20, (all_buttons[3].2.x + 10, all_buttons[3].2.y + 10),  format!("Investment Name: {}", USER_INPUT_BUTTON_3_PAGE_3.clone()), default_text_color));
+        }
+
+
+        if !IS_ON_WRITE_MODE_ON_BUTTON_1_PAGE_3
+        {
+            all_text.push(gen_text(20, (all_buttons[1].2.x + 10, all_buttons[1].2.y + 10),  format!("Return Value: {}", YEAR_RETURN_VALUE_PER_INVESTMENT), default_text_color));
+        }
+
+        if !IS_ON_WRITE_MODE_ON_BUTTON_2_PAGE_3
+        {
+            all_text.push(gen_text(20, (all_buttons[2].2.x + 10, all_buttons[2].2.y + 10),  format!("Total Invested: {}", TOTAL_INVESTED_PER_INVESTMENT), default_text_color));
+        }
+
+        if !IS_ON_WRITE_MODE_ON_BUTTON_3_PAGE_3
+        {
+            all_text.push(gen_text(20, (all_buttons[3].2.x + 10, all_buttons[3].2.y + 10),  format!("Investment Name: {}", INVESTMENT_NAME.clone()), default_text_color));
+        }
+    }
 
 
 

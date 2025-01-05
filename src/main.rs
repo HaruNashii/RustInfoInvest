@@ -1,5 +1,5 @@
 use std::time::Duration;
-use crate::pages::{main_page, persistent_page, realtime_currency_page, selic_page, config_page};
+use crate::pages::{main_page, persistent_page, realtime_currency_page, selic_page, investment_wallet_page};
 use crate::window::{create_window, render_page};
 use crate::input_handler::handle_input;
 use crate::buttons::{PAGE_TO_RENDER, button_action};
@@ -11,6 +11,7 @@ pub mod window;
 pub mod input_handler;
 pub mod sdl2_generators;
 pub mod buttons;
+pub mod investment_wallet;
 
 
 
@@ -28,7 +29,7 @@ fn main()
         let realtime_currency_page = realtime_currency_page();
         let selic_page = selic_page();
         let persistent_page = persistent_page();
-        let config_page = config_page();
+        let investment_wallet_page = investment_wallet_page();
 
         match unsafe{PAGE_TO_RENDER}
         {
@@ -62,7 +63,9 @@ fn main()
             },
             3 =>
             {
-                render_page(config_page, None);
+                handle_input(investment_wallet_page.buttons.clone().unwrap());
+                button_action();
+                render_page(investment_wallet_page, None);
             }
             _=>{},
         }
