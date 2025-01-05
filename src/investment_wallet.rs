@@ -1,6 +1,11 @@
 use std::time::SystemTime;
 
 pub static mut ALL_INVESTMENT: Vec<(SystemTime, f64, f64, String)> = Vec::new();
+pub static mut ALL_INVESTMENT_RETURN: f64 = 0.0;
+pub static mut ALL_INVESTMENT_INVESTED: f64 = 0.0;
+pub static mut ALL_INVESTMENT_INVESTED_WITHOUT_RETURN: f64 = 0.0;
+pub static mut ALL_INVESTMENT_RETURN_PER_SECOND: Vec<f64> = Vec::new();
+pub static mut ALL_SUM_INVESTMENT_RETURN_PER_SECOND: f64 = 0.0;
 pub static mut YEAR_RETURN_VALUE_PER_INVESTMENT: f64 = 12.15;
 pub static mut TOTAL_INVESTED_PER_INVESTMENT: f64 = 5000.0;
 pub static mut INVESTMENT_NAME: String = String::new();
