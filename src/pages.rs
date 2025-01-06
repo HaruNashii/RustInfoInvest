@@ -109,7 +109,7 @@ pub fn main_page() -> Page<'static>
     let day_string: String    = format!("Return Per Day:    R$ {:.3}", one_day);
     let hour_string: String   = format!("Return Per Hour:   R$ {:.3}", one_hour);
     let minute_string: String = format!("Return Per Minute: R$ {:.4}", one_min);
-    let second_string: String = format!("Return Per Second: R$ {:.4}", one_secs);
+    let second_string: String = format!("Return Per Second: R$ {:.6}", one_secs);
     
     let mut all_text = vec!
     [
@@ -200,7 +200,7 @@ pub fn realtime_currency_page() -> Page<'static>
 
     //===================== texts =========================
     let realtime_currency_string: String = format!("Realtime Currency: R$ {:.7}", unsafe{REALTIME_CURRENCY});
-    let second_string: String = format!("Return Per Second: R$ {:.30}", unsafe{REALTIME_RETURN_PER_SECOND.to_string()});
+    let second_string: String = format!("Return Per Second: R$ {:.13}", unsafe{REALTIME_RETURN_PER_SECOND.to_string()});
     
     let all_text = vec!
     [
@@ -323,7 +323,7 @@ pub fn investment_wallet_page() -> Page<'static>
     [
         //example text
         gen_text(20, (all_buttons[0].2.x + 10, all_buttons[0].2.y + 10),  "<-".to_string(), default_text_color),
-        gen_text(20, (all_buttons[4].2.x + 10, all_buttons[4].2.y + 10),  "Add Investment".to_string(), default_text_color),
+        gen_text(20, (all_buttons[4].2.x + 245, all_buttons[4].2.y + 10),  "Add Investment".to_string(), default_text_color),
     ];
     unsafe 
     {

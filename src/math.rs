@@ -36,15 +36,14 @@ pub fn calculator_maths() -> (f64, f64, f64, f64, f64 ,f64)
         let total_invested = unsafe{TOTAL_INVESTED};
 
         // Move numbers one case to the right to fit the formula math (example = 1.0 -> 0.1)
-        let mut year_return_value: f64 = unsafe{RETURN_VALUE};
-        year_return_value /= 100.0;
+        let year_return_value: f64 = unsafe{RETURN_VALUE / 100.0};
 
         let month_return_value  = f64::powf(1.0 + year_return_value,   1.00 / 12.00) - 1.0;
         let day_return_value    = f64::powf(1.0 + month_return_value,  1.00 / 30.00) - 1.0;
         let hour_return_value   = f64::powf(1.0 + day_return_value,    1.00 / 24.00) - 1.0;
         let minute_return_value = f64::powf(1.0 + hour_return_value,   1.00 / 60.00) - 1.0;
         let secs_return_value   = f64::powf(1.0 + minute_return_value, 1.00 / 60.00) - 1.0;
-
+            
             // Formulas
             // formula = total_invested * (1 + return_value)^total_time_invested
             let formula_year: f64   = total_invested * f64::powf(1.0 + year_return_value,  years_invested) - total_invested;
@@ -87,8 +86,8 @@ pub fn realtime_currency_maths()
 
             let milisecs_since_checked_current_time = investment.0.elapsed().unwrap().as_millis();
 
-            let year_return_value: f64 = investment.1 / 100.0;
-            let secs_return_value = f64::powf(1.0 + year_return_value, 1.0 / (365.242 * 24.0 * 60.0 * 60.0)) - 1.0;
+            let year_return_value: f64 = investment.1 / 100.00;
+            let secs_return_value = f64::powf(1.0 + year_return_value, 1.00 / (360.0 * 24.00 * 60.00 * 60.00)) - 1.0;
             let milisecs_return_value = f64::powf(1.0 + secs_return_value, 1.0 / 1000.0) - 1.0;
 
             //outdated
