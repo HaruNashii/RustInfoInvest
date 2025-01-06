@@ -296,7 +296,7 @@ pub fn investment_wallet_page() -> Page<'static>
     for index in 0..(unsafe{ALL_INVESTMENTS.len()})
     {
         //investment background
-        all_rects.push((Color::RGB(24, 24, 37), Rect::new(20, 265 + (index * 45) as i32, 730, 40)));
+        all_rects.push((Color::RGB(24, 24, 37), Rect::new(20, 325 + (index * 45) as i32, 730, 40)));
     }
 
 
@@ -314,6 +314,8 @@ pub fn investment_wallet_page() -> Page<'static>
         (true, Color::RGB(203, 166, 247), Rect::new(20, 100, 730, 50)),
         //add investment button
         (true, Color::RGB(250, 179, 135), Rect::new(100, 20, 650, 50)),
+        //delete all investment button 
+        (true, Color::RGB(243, 139, 168), Rect::new(20, 250, 730, 50)),
     ];
 
 
@@ -324,6 +326,7 @@ pub fn investment_wallet_page() -> Page<'static>
         //example text
         gen_text(20, (all_buttons[0].2.x + 10, all_buttons[0].2.y + 10),  "<-".to_string(), default_text_color),
         gen_text(20, (all_buttons[4].2.x + 245, all_buttons[4].2.y + 10),  "Add Investment".to_string(), default_text_color),
+        gen_text(20, (all_buttons[4].2.x + 200, all_buttons[5].2.y + 10),  "Remove All Investments".to_string(), default_text_color),
     ];
     unsafe 
     {
@@ -366,7 +369,7 @@ pub fn investment_wallet_page() -> Page<'static>
             let total_invested = investment.2;
             let name = investment.3;
     
-            all_text.push(gen_text(18, (30, 275 + (index * 45) as i32),  format!("Name:{},   Rate:{}%,   Total Invested: R${}", name, year_return_value, total_invested), default_text_color));
+            all_text.push(gen_text(18, (30, 332 + (index * 45) as i32),  format!("Name:{}   Rate:{}%   Total Invested: R${}", name, year_return_value, total_invested), default_text_color));
         };
     }
 

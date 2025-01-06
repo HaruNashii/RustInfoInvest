@@ -3,7 +3,7 @@ use fantoccini::wd::Capabilities;
 use std::process::{Command, Stdio};
 use std::time::Duration;
 
-
+pub static mut PREVENT_KILL: bool = false;
 
 fn clean_string_from_vector(vector_of_string: Vec<String>) -> Vec<String>
 {   
@@ -56,10 +56,14 @@ fn clean_string_from_vector(vector_of_string: Vec<String>) -> Vec<String>
 
 
 
+#[allow(static_mut_refs)]
 #[tokio::main]
 pub async fn infos() -> Vec<String>
 //-> (Vec<String>, f64)
 {
+    // Prevent the app to be close while starting de webdriver, to prevent memory leaks
+    unsafe{PREVENT_KILL = true};
+
     // Start the Geckodriver WebDriver
     let web_driver = Command::new("geckodriver").stdout(Stdio::null()).stderr(Stdio::null()).spawn();
     std::thread::sleep(Duration::from_millis(500));
@@ -84,6 +88,7 @@ pub async fn infos() -> Vec<String>
     // Close the Client and the Geckodriver WebDriver
     client.close().await.unwrap();
     web_driver.unwrap().kill().unwrap();
+    unsafe{PREVENT_KILL = false};
 
     // Remove unecessary data from every string in the list_elements vector
     //let vector_to_send = clean_string_from_vector(list_elements.clone());

@@ -1,7 +1,7 @@
 use crate::input_handler::{IS_ON_WRITE_MODE_ON_BUTTON_1, IS_ON_WRITE_MODE_ON_BUTTON_2, IS_ON_WRITE_MODE_ON_BUTTON_1_PAGE_3, IS_ON_WRITE_MODE_ON_BUTTON_2_PAGE_3, IS_ON_WRITE_MODE_ON_BUTTON_3_PAGE_3, BUTTON_CLICKED};
 use crate::math::ONLINE_HISTORIC_RETURN_VALUE;
 use crate::getonlineinfo::infos;
-use crate::investment_wallet::add_investment;
+use crate::investment_wallet::{add_investment, ALL_INVESTMENTS};
 
 
 
@@ -34,6 +34,7 @@ pub fn button_action()
                         BUTTON_CLICKED = None;
                         PAGE_TO_RENDER = 1;
                     };
+                    BUTTON_CLICKED = None;
                 }
             }
 
@@ -54,6 +55,7 @@ pub fn button_action()
                         BUTTON_CLICKED = None;
                         PAGE_TO_RENDER = 1;
                     };
+                    BUTTON_CLICKED = None;
                 }
             }
 
@@ -74,6 +76,7 @@ pub fn button_action()
                         BUTTON_CLICKED = None;
                         PAGE_TO_RENDER = 2;
                     };
+                    BUTTON_CLICKED = None;
                 }
             }
 
@@ -109,7 +112,6 @@ pub fn button_action()
                         {
                             if ALLOW_QUERY
                             {
-                                println!("fetching...");
                                 ONLINE_HISTORIC_RETURN_VALUE = vec!["        Fetching Data, Please Wait...".to_string()];
                                 ALLOW_QUERY = false;
                                 let historic = infos();
@@ -118,6 +120,7 @@ pub fn button_action()
                             }
                         });
                     }
+                    BUTTON_CLICKED = None;
                 };
             }
 
@@ -138,7 +141,21 @@ pub fn button_action()
                         BUTTON_CLICKED = None;
                         IS_ON_WRITE_MODE_ON_BUTTON_2 = true;
                     }
+                    BUTTON_CLICKED = None;
                 };
+            }
+            5 =>
+            {
+                unsafe 
+                {
+                    //REMOVE ALL INVESTMENT BUTTON (INVESTMENT WALLET)
+                    if PAGE_TO_RENDER == 3 && !IS_ON_WRITE_MODE_ON_BUTTON_1_PAGE_3 && !IS_ON_WRITE_MODE_ON_BUTTON_2_PAGE_3 && !IS_ON_WRITE_MODE_ON_BUTTON_3_PAGE_3
+                    {
+                        BUTTON_CLICKED = None;
+                        ALL_INVESTMENTS.clear();
+                    }
+                    BUTTON_CLICKED = None;
+                }
             }
 
             _ => {}

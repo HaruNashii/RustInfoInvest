@@ -23,7 +23,7 @@ fn main()
 
     loop
     {
-        std::thread::sleep(Duration::from_millis(32));
+        std::thread::sleep(Duration::from_millis(33));
 
         let main_page = main_page();
         let realtime_currency_page = realtime_currency_page();

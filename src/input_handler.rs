@@ -4,6 +4,7 @@ use sdl2::event::Event;
 use sdl2::rect::Rect;
 use sdl2::pixels::Color;
 use std::process::exit;
+use crate::getonlineinfo::PREVENT_KILL;
 use crate::investment_wallet::{INVESTMENT_NAME, TOTAL_INVESTED_PER_INVESTMENT, RETURN_PER_INVESTMENT};
 use crate::window::SDL2_EVENT_PUMP;
 use crate::buttons::PAGE_TO_RENDER;
@@ -279,7 +280,7 @@ pub fn handle_input(buttons: Vec<(bool, Color, Rect)>)
                                 } 
                                 else 
                                 {
-                                    if PAGE_TO_RENDER != 3
+                                    if PAGE_TO_RENDER != 3 && !PREVENT_KILL
                                     {
                                         print!("\x1B[2J\x1B[1;1H");
                                         println!("bye bye :3");
