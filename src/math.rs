@@ -72,39 +72,41 @@ pub fn calculator_maths() -> (f64, f64, f64, f64, f64 ,f64)
 #[allow(static_mut_refs)]
 pub fn realtime_currency_maths()
 {
-    unsafe 
-    {
-        let mut realtime_currency_vector = Vec::new();
-        let mut return_value_per_second_vector = Vec::new();
-        let mut total_invested_vector = Vec::new();
-
-
-
-        for investment in ALL_INVESTMENTS.clone()
+    std::thread::spawn(||{
+        unsafe 
         {
-            total_invested_vector.push(investment.2);
-
-            let milisecs_since_checked_current_time = investment.0.elapsed().unwrap().as_millis();
-
-            let year_return_value: f64 = investment.1 / 100.00;
-            let secs_return_value = f64::powf(1.0 + year_return_value, 1.00 / (360.0 * 24.00 * 60.00 * 60.00)) - 1.0;
-            let milisecs_return_value = f64::powf(1.0 + secs_return_value, 1.0 / 1000.0) - 1.0;
-
-            //outdated
-            let realtime_milisecs = investment.2 * f64::powf(1.0 + milisecs_return_value,  1.0) - investment.2;
-
-            let holder_1 = investment.2 + (realtime_milisecs * milisecs_since_checked_current_time as f64);
-            let new_realtime_secs =     holder_1 * f64::powf(1.0 + secs_return_value,  1.0)     - holder_1;
-            let new_realtime_milisecs = holder_1 * f64::powf(1.0 + milisecs_return_value,  1.0) - holder_1;
-
-            realtime_currency_vector.push( holder_1 + (new_realtime_milisecs * milisecs_since_checked_current_time as f64));
-            return_value_per_second_vector.push(new_realtime_secs);
-        }
+            let mut realtime_currency_vector = Vec::new();
+            let mut return_value_per_second_vector = Vec::new();
+            let mut total_invested_vector = Vec::new();
 
 
 
-        REALTIME_CURRENCY = realtime_currency_vector.iter().sum(); 
-        REALTIME_TOTAL_INVESTED = total_invested_vector.iter().sum();
-        REALTIME_RETURN_PER_SECOND = return_value_per_second_vector.iter().sum();
-    };
+            for investment in ALL_INVESTMENTS.clone()
+            {
+                total_invested_vector.push(investment.2);
+
+                let milisecs_since_checked_current_time = investment.0.elapsed().unwrap().as_millis();
+
+                let year_return_value: f64 = investment.1 / 100.00;
+                let secs_return_value = f64::powf(1.0 + year_return_value, 1.00 / (360.0 * 24.00 * 60.00 * 60.00)) - 1.0;
+                let milisecs_return_value = f64::powf(1.0 + secs_return_value, 1.0 / 1000.0) - 1.0;
+
+                //outdated
+                let realtime_milisecs = investment.2 * f64::powf(1.0 + milisecs_return_value,  1.0) - investment.2;
+
+                let holder_1 = investment.2 + (realtime_milisecs * milisecs_since_checked_current_time as f64);
+                let new_realtime_secs =     holder_1 * f64::powf(1.0 + secs_return_value,  1.0)     - holder_1;
+                let new_realtime_milisecs = holder_1 * f64::powf(1.0 + milisecs_return_value,  1.0) - holder_1;
+
+                realtime_currency_vector.push( holder_1 + (new_realtime_milisecs * milisecs_since_checked_current_time as f64));
+                return_value_per_second_vector.push(new_realtime_secs);
+            }
+
+
+
+            REALTIME_CURRENCY = realtime_currency_vector.iter().sum(); 
+            REALTIME_TOTAL_INVESTED = total_invested_vector.iter().sum();
+            REALTIME_RETURN_PER_SECOND = return_value_per_second_vector.iter().sum();
+        };
+    });
 }
