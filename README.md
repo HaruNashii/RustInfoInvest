@@ -17,7 +17,7 @@
 
 
 - Investment Wallet Page
-![image](https://github.com/user-attachments/assets/4d9caa09-02b3-4859-ac25-cbf8dff0dcdf)
+![image](https://github.com/user-attachments/assets/08c8c0ff-34ec-4535-a440-18ede9ab9172)
 
 
 - Selic Historic Page
