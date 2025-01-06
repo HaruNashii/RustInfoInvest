@@ -4,7 +4,7 @@ use sdl2::event::Event;
 use sdl2::rect::Rect;
 use sdl2::pixels::Color;
 use std::process::exit;
-use crate::investment_wallet::{INVESTMENT_NAME, TOTAL_INVESTED_PER_INVESTMENT, YEAR_RETURN_VALUE_PER_INVESTMENT};
+use crate::investment_wallet::{INVESTMENT_NAME, TOTAL_INVESTED_PER_INVESTMENT, RETURN_PER_INVESTMENT};
 use crate::window::SDL2_EVENT_PUMP;
 use crate::buttons::PAGE_TO_RENDER;
 use crate::math::{RETURN_VALUE, TOTAL_INVESTED};
@@ -223,7 +223,7 @@ pub fn handle_input(buttons: Vec<(bool, Color, Rect)>)
                                 {
                                     if !USER_INPUT_BUTTON_1_PAGE_3.replace(" ", "").is_empty()
                                     {
-                                        YEAR_RETURN_VALUE_PER_INVESTMENT = USER_INPUT_BUTTON_1_PAGE_3.replace(" ", "").parse().unwrap();
+                                        RETURN_PER_INVESTMENT = USER_INPUT_BUTTON_1_PAGE_3.replace(" ", "").parse().unwrap();
                                     }
                                     USER_INPUT_BUTTON_1_PAGE_3.clear();
                                     IS_ON_WRITE_MODE_ON_BUTTON_1_PAGE_3 = false;

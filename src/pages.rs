@@ -1,7 +1,7 @@
 use sdl2::rect::Rect;
 use sdl2::pixels::Color;
 use sdl2::render::Texture;
-use crate::investment_wallet::{ALL_INVESTMENT, ALL_INVESTMENT_INVESTED, ALL_INVESTMENT_INVESTED_WITHOUT_RETURN, ALL_SUM_INVESTMENT_RETURN_PER_SECOND, INVESTMENT_NAME, TOTAL_INVESTED_PER_INVESTMENT, YEAR_RETURN_VALUE_PER_INVESTMENT};
+use crate::investment_wallet::{ALL_INVESTMENTS, INVESTMENT_NAME, REALTIME_CURRENCY, REALTIME_RETURN_PER_SECOND, REALTIME_TOTAL_INVESTED, RETURN_PER_INVESTMENT, TOTAL_INVESTED_PER_INVESTMENT};
 use crate::sdl2_generators::gen_text;
 use crate::math::{calculator_maths, realtime_currency_maths, ONLINE_HISTORIC_RETURN_VALUE, RETURN_VALUE, TOTAL_INVESTED};
 use crate::input_handler::{IS_ON_WRITE_MODE_ON_BUTTON_1, IS_ON_WRITE_MODE_ON_BUTTON_1_PAGE_3, IS_ON_WRITE_MODE_ON_BUTTON_2, IS_ON_WRITE_MODE_ON_BUTTON_2_PAGE_3, IS_ON_WRITE_MODE_ON_BUTTON_3_PAGE_3, USER_INPUT_BUTTON_1, USER_INPUT_BUTTON_1_PAGE_3, USER_INPUT_BUTTON_2, USER_INPUT_BUTTON_2_PAGE_3, USER_INPUT_BUTTON_3_PAGE_3};
@@ -199,8 +199,8 @@ pub fn realtime_currency_page() -> Page<'static>
 
 
     //===================== texts =========================
-    let realtime_currency_string: String = format!("Realtime Currency: R$ {:.7}", unsafe{ALL_INVESTMENT_INVESTED});
-    let second_string: String = format!("Return Per Second: R$ {:.10}", unsafe{ALL_SUM_INVESTMENT_RETURN_PER_SECOND.to_string()});
+    let realtime_currency_string: String = format!("Realtime Currency: R$ {:.7}", unsafe{REALTIME_CURRENCY});
+    let second_string: String = format!("Return Per Second: R$ {:.30}", unsafe{REALTIME_RETURN_PER_SECOND.to_string()});
     
     let all_text = vec!
     [
@@ -209,7 +209,7 @@ pub fn realtime_currency_page() -> Page<'static>
         //one sec text
         gen_text(18, (225, 350), second_string, subtext_color),
         //total invested text
-        gen_text(23, (415, 133), format!("Total Invested: R${}", unsafe{ALL_INVESTMENT_INVESTED_WITHOUT_RETURN}), default_text_color),
+        gen_text(23, (415, 133), format!("Total Invested: R${}", unsafe{REALTIME_TOTAL_INVESTED}), default_text_color),
         //investment wallet button text
         gen_text(23, (75, 133), "Investment Wallet".to_string(), default_text_color),
     ];
@@ -293,7 +293,7 @@ pub fn investment_wallet_page() -> Page<'static>
 
     //===================== rects =========================
     let mut all_rects = Vec::new();
-    for index in 0..(unsafe{ALL_INVESTMENT.len()})
+    for index in 0..(unsafe{ALL_INVESTMENTS.len()})
     {
         //investment background
         all_rects.push((Color::RGB(24, 24, 37), Rect::new(20, 265 + (index * 45) as i32, 730, 40)));
@@ -343,9 +343,11 @@ pub fn investment_wallet_page() -> Page<'static>
         }
 
 
+
+
         if !IS_ON_WRITE_MODE_ON_BUTTON_1_PAGE_3
         {
-            all_text.push(gen_text(20, (all_buttons[1].2.x + 10, all_buttons[1].2.y + 10),  format!("Return Value: {}%", YEAR_RETURN_VALUE_PER_INVESTMENT), default_text_color));
+            all_text.push(gen_text(20, (all_buttons[1].2.x + 10, all_buttons[1].2.y + 10),  format!("Return Value: {}%", RETURN_PER_INVESTMENT), default_text_color));
         }
 
         if !IS_ON_WRITE_MODE_ON_BUTTON_2_PAGE_3
@@ -358,7 +360,7 @@ pub fn investment_wallet_page() -> Page<'static>
             all_text.push(gen_text(20, (all_buttons[3].2.x + 10, all_buttons[3].2.y + 10),  format!("Investment Name: {}", INVESTMENT_NAME.clone()), default_text_color));
         }
 
-        for (index, investment) in ALL_INVESTMENT.clone().into_iter().enumerate()
+        for (index, investment) in ALL_INVESTMENTS.clone().into_iter().enumerate()
         {
             let year_return_value = investment.1;
             let total_invested = investment.2;
