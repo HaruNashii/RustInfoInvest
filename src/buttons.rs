@@ -104,7 +104,12 @@ pub fn button_action()
                     if PAGE_TO_RENDER == 2
                     {
                         BUTTON_CLICKED = None;
-                        ONLINE_HISTORIC_RETURN_VALUE = infos();
+                        std::thread::spawn(move||
+                        {
+                            ONLINE_HISTORIC_RETURN_VALUE = vec!["        Fetching Data, Please Wait...".to_string()];
+                            let historic = infos();
+                            ONLINE_HISTORIC_RETURN_VALUE = historic;
+                        });
                     }
                 };
             }
