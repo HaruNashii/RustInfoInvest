@@ -6,6 +6,7 @@ use crate::investment_wallet::add_investment;
 
 
 pub static mut PAGE_TO_RENDER: u8 = 0;
+pub static mut ALLOW_QUERY: bool = true;
 
 
 
@@ -106,9 +107,15 @@ pub fn button_action()
                         BUTTON_CLICKED = None;
                         std::thread::spawn(move||
                         {
-                            ONLINE_HISTORIC_RETURN_VALUE = vec!["        Fetching Data, Please Wait...".to_string()];
-                            let historic = infos();
-                            ONLINE_HISTORIC_RETURN_VALUE = historic;
+                            if ALLOW_QUERY
+                            {
+                                println!("fetching...");
+                                ONLINE_HISTORIC_RETURN_VALUE = vec!["        Fetching Data, Please Wait...".to_string()];
+                                ALLOW_QUERY = false;
+                                let historic = infos();
+                                ALLOW_QUERY = true;
+                                ONLINE_HISTORIC_RETURN_VALUE = historic;
+                            }
                         });
                     }
                 };

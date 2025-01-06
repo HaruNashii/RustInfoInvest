@@ -20,8 +20,8 @@ pub fn create_window()
 {
     let sdl_started = sdl2::init().unwrap();
     let video_system = sdl_started.video().unwrap();
-    let window = video_system.window("RustInfoInvest", 800, 600).position_centered().build().unwrap();
-    let canvas = window.into_canvas().accelerated().build().unwrap();
+    let window = video_system.window("RustInfoInvest", 800, 600).position_centered().allow_highdpi().build().unwrap();
+    let canvas = window.into_canvas().accelerated().present_vsync().build().unwrap();
     let texture_creator = canvas.texture_creator();
     let event_pump = sdl_started.event_pump().unwrap();
 
