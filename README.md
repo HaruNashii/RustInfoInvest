@@ -9,14 +9,19 @@
 <br/>
 
 ## **Showcase**
-![image](https://github.com/user-attachments/assets/665f34b9-690c-45c1-bdb0-cd117606db88)
+![image](https://github.com/user-attachments/assets/94e29748-749c-4ee9-a862-10b37085f503)
 <details> <summary>Others Pages</summary>
   
 - Realtime Currency Page
-![image](https://github.com/user-attachments/assets/083e13fe-f9b5-4964-afb2-7a1699883839)
+![image](https://github.com/user-attachments/assets/53df7ce0-e314-4c6f-92f9-dfb2fbac2f1c)
+
+
+- Investment Wallet Page
+![image](https://github.com/user-attachments/assets/4d9caa09-02b3-4859-ac25-cbf8dff0dcdf)
+
 
 - Selic Historic Page
-![image](https://github.com/user-attachments/assets/75c78493-349f-4d85-86b7-c9cf33bce357)
+![image](https://github.com/user-attachments/assets/921473c2-7eb5-46ae-a4f4-9a015be605e1)
 </details>
 
 <br/>
@@ -30,17 +35,10 @@
 <br/>
 <br/>
 
-## **Config**
-- To change the values of the calculator and the realtime currency you just need click in the value and type you desired value
-
-<br/>
-<br/>
-<br/>
-
 ## **Future Plans**
 - Better UI
 - Config Page
-- Set time in real-time page
+- Set date of investment in investment wallet page
 
 <br/>
 <br/>
