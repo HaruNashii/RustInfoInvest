@@ -291,6 +291,16 @@ pub fn investment_wallet_page() -> Page<'static>
 
 
 
+    //===================== rects =========================
+    let mut all_rects = Vec::new();
+    for index in 0..(unsafe{ALL_INVESTMENT.len()})
+    {
+        //investment background
+        all_rects.push((Color::RGB(24, 24, 37), Rect::new(20, 265 + (index * 45) as i32, 730, 40)));
+    }
+
+
+
     //===================== buttons =========================
     let all_buttons = vec!
     [
@@ -335,12 +345,12 @@ pub fn investment_wallet_page() -> Page<'static>
 
         if !IS_ON_WRITE_MODE_ON_BUTTON_1_PAGE_3
         {
-            all_text.push(gen_text(20, (all_buttons[1].2.x + 10, all_buttons[1].2.y + 10),  format!("Return Value: {}", YEAR_RETURN_VALUE_PER_INVESTMENT), default_text_color));
+            all_text.push(gen_text(20, (all_buttons[1].2.x + 10, all_buttons[1].2.y + 10),  format!("Return Value: {}%", YEAR_RETURN_VALUE_PER_INVESTMENT), default_text_color));
         }
 
         if !IS_ON_WRITE_MODE_ON_BUTTON_2_PAGE_3
         {
-            all_text.push(gen_text(20, (all_buttons[2].2.x + 10, all_buttons[2].2.y + 10),  format!("Total Invested: {}", TOTAL_INVESTED_PER_INVESTMENT), default_text_color));
+            all_text.push(gen_text(20, (all_buttons[2].2.x + 10, all_buttons[2].2.y + 10),  format!("Total Invested: R${}", TOTAL_INVESTED_PER_INVESTMENT), default_text_color));
         }
 
         if !IS_ON_WRITE_MODE_ON_BUTTON_3_PAGE_3
@@ -354,7 +364,7 @@ pub fn investment_wallet_page() -> Page<'static>
             let total_invested = investment.2;
             let name = investment.3;
     
-            all_text.push(gen_text(20, (20, 275 + (index * 30) as i32),  format!("Name:{},   Rate:{},   Total Invested:{}", name, year_return_value, total_invested), default_text_color));
+            all_text.push(gen_text(18, (30, 275 + (index * 45) as i32),  format!("Name:{},   Rate:{}%,   Total Invested: R${}", name, year_return_value, total_invested), default_text_color));
         };
     }
 
@@ -364,7 +374,7 @@ pub fn investment_wallet_page() -> Page<'static>
     Page 
     {
         background_color: Some(bg_color),
-        rects:   None,
+        rects:   Some( all_rects ),
         buttons: Some( all_buttons ),
         texts:   Some( all_text ),
         images:  None,
