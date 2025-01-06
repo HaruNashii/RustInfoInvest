@@ -269,27 +269,30 @@ pub fn handle_input(buttons: Vec<(bool, Color, Rect)>)
                                     USER_INPUT_BUTTON_2_PAGE_3.push(' ');
                                     USER_INPUT_BUTTON_3_PAGE_3.push(' ');
 
-                                    BUTTON_CLICKED = None;
                                     IS_ON_WRITE_MODE_ON_BUTTON_1 = false;
                                     IS_ON_WRITE_MODE_ON_BUTTON_2 = false;
 
                                     IS_ON_WRITE_MODE_ON_BUTTON_1_PAGE_3 = false;
                                     IS_ON_WRITE_MODE_ON_BUTTON_2_PAGE_3 = false;
-                                    IS_ON_WRITE_MODE_ON_BUTTON_2_PAGE_3 = false;
+                                    IS_ON_WRITE_MODE_ON_BUTTON_3_PAGE_3 = false;
+                                    BUTTON_CLICKED = None;
                                 } 
                                 else 
                                 {
-                                    if PAGE_TO_RENDER == 3
-                                    {
-                                        PAGE_TO_RENDER = 1;
-                                    }
-                                    else 
+                                    if PAGE_TO_RENDER != 3
                                     {
                                         print!("\x1B[2J\x1B[1;1H");
                                         println!("bye bye :3");
                                         exit(0);
                                     }
+
+                                    if PAGE_TO_RENDER == 3
+                                    {
+                                        PAGE_TO_RENDER = 1;
+                                    }
+                                    
                                 }
+
                             }
                        }
 

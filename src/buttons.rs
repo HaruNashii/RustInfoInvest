@@ -23,15 +23,15 @@ pub fn button_action()
                     //CALCULATOR BUTTON (PERSISTENT PAGE)
                     if !IS_ON_WRITE_MODE_ON_BUTTON_1  && !IS_ON_WRITE_MODE_ON_BUTTON_2 && PAGE_TO_RENDER != 3
                     {
-                        PAGE_TO_RENDER = 0;
                         BUTTON_CLICKED = None;
+                        PAGE_TO_RENDER = 0;
                     };
 
                     //BACK BUTTON (INVESTMENT WALLET PAGE)
                     if PAGE_TO_RENDER == 3 && !IS_ON_WRITE_MODE_ON_BUTTON_1_PAGE_3 && !IS_ON_WRITE_MODE_ON_BUTTON_2_PAGE_3 && !IS_ON_WRITE_MODE_ON_BUTTON_3_PAGE_3
                     {
-                        PAGE_TO_RENDER = 1;
                         BUTTON_CLICKED = None;
+                        PAGE_TO_RENDER = 1;
                     };
                 }
             }
@@ -43,15 +43,15 @@ pub fn button_action()
                     //USER INPUT 1 BUTTON (INVESTMENT WALLET PAGE) (YEAR RETURN VALUE)
                     if PAGE_TO_RENDER == 3 && !IS_ON_WRITE_MODE_ON_BUTTON_1_PAGE_3 && !IS_ON_WRITE_MODE_ON_BUTTON_2_PAGE_3 && !IS_ON_WRITE_MODE_ON_BUTTON_3_PAGE_3
                     {
-                        IS_ON_WRITE_MODE_ON_BUTTON_1_PAGE_3 = true;
                         BUTTON_CLICKED = None;
+                        IS_ON_WRITE_MODE_ON_BUTTON_1_PAGE_3 = true;
                     };
 
                     //REALTIME CURRENCY BUTTON (PERSISTENT PAGE)
                     if !IS_ON_WRITE_MODE_ON_BUTTON_1  && !IS_ON_WRITE_MODE_ON_BUTTON_2 && PAGE_TO_RENDER != 3
                     {
-                        PAGE_TO_RENDER = 1;
                         BUTTON_CLICKED = None;
+                        PAGE_TO_RENDER = 1;
                     };
                 }
             }
@@ -63,15 +63,15 @@ pub fn button_action()
                     //USER INPUT 2 BUTTON (INVESTMENT WALLET PAGE) (TOTAL INVESTED)
                     if PAGE_TO_RENDER == 3 && !IS_ON_WRITE_MODE_ON_BUTTON_1_PAGE_3 && !IS_ON_WRITE_MODE_ON_BUTTON_2_PAGE_3 && !IS_ON_WRITE_MODE_ON_BUTTON_3_PAGE_3
                     {
-                        IS_ON_WRITE_MODE_ON_BUTTON_2_PAGE_3 = true;
                         BUTTON_CLICKED = None;
+                        IS_ON_WRITE_MODE_ON_BUTTON_2_PAGE_3 = true;
                     };
 
                     //SELIC PAGE BUTTON
                     if !IS_ON_WRITE_MODE_ON_BUTTON_1  && !IS_ON_WRITE_MODE_ON_BUTTON_2 && PAGE_TO_RENDER != 3
                     {
-                        PAGE_TO_RENDER = 2;
                         BUTTON_CLICKED = None;
+                        PAGE_TO_RENDER = 2;
                     };
                 }
             }
@@ -83,32 +83,28 @@ pub fn button_action()
                     //USER INPUT 3 (INVESTMENT WALLET) (INVESTMENT NAME)
                     if PAGE_TO_RENDER == 3 && !IS_ON_WRITE_MODE_ON_BUTTON_1_PAGE_3 && !IS_ON_WRITE_MODE_ON_BUTTON_2_PAGE_3 && !IS_ON_WRITE_MODE_ON_BUTTON_3_PAGE_3
                     {
-                        IS_ON_WRITE_MODE_ON_BUTTON_3_PAGE_3 = true;
                         BUTTON_CLICKED = None;
+                        IS_ON_WRITE_MODE_ON_BUTTON_3_PAGE_3 = true;
                     }
 
                     //USER INPUT 1 (CALCULATOR PAGE) (YEAR RETURN VALUE)
-                    if PAGE_TO_RENDER == 0
-                    {
-                        if !IS_ON_WRITE_MODE_ON_BUTTON_1 && !IS_ON_WRITE_MODE_ON_BUTTON_2
-                        {
-                            IS_ON_WRITE_MODE_ON_BUTTON_1 = true;
-                            BUTTON_CLICKED = None;
-                        }
+                    if PAGE_TO_RENDER == 0 && !IS_ON_WRITE_MODE_ON_BUTTON_1 && !IS_ON_WRITE_MODE_ON_BUTTON_2 {
+                        BUTTON_CLICKED = None;
+                        IS_ON_WRITE_MODE_ON_BUTTON_1 = true;
                     }
                     
                     //INVESTMENT WALLET BUTTON (REALTIME CURRENCY PAGE)
                     if PAGE_TO_RENDER == 1 
                     {
-                        PAGE_TO_RENDER = 3;
                         BUTTON_CLICKED = None;
+                        PAGE_TO_RENDER = 3;
                     }
 
                     //SYNC ONLINE BUTTON (SELIC PAGE)
                     if PAGE_TO_RENDER == 2
                     {
-                        ONLINE_HISTORIC_RETURN_VALUE = infos();
                         BUTTON_CLICKED = None;
+                        ONLINE_HISTORIC_RETURN_VALUE = infos();
                     }
                 };
             }
@@ -120,16 +116,15 @@ pub fn button_action()
                     //ADD INVESTMENT BUTTON (INVESTMENT WALLET)
                     if PAGE_TO_RENDER == 3 && !IS_ON_WRITE_MODE_ON_BUTTON_1_PAGE_3 && !IS_ON_WRITE_MODE_ON_BUTTON_2_PAGE_3 && !IS_ON_WRITE_MODE_ON_BUTTON_3_PAGE_3
                     {
-                        println!("add investment button in investment wallet clicked");
-                        add_investment();
                         BUTTON_CLICKED = None;
+                        add_investment();
                     }
 
                     //USER INPUT 2 (CALCULATOR PAGE) (TOTAL INVESTED)
                     if PAGE_TO_RENDER == 0 && !IS_ON_WRITE_MODE_ON_BUTTON_1 && !IS_ON_WRITE_MODE_ON_BUTTON_2 
                     {
-                        IS_ON_WRITE_MODE_ON_BUTTON_2 = true;
                         BUTTON_CLICKED = None;
+                        IS_ON_WRITE_MODE_ON_BUTTON_2 = true;
                     }
                 };
             }

@@ -30,9 +30,8 @@ pub fn add_investment()
             )
        );
 
-       println!("{:?}", ALL_INVESTMENT);
        YEAR_RETURN_VALUE_PER_INVESTMENT = 12.15;
        TOTAL_INVESTED_PER_INVESTMENT = 5000.0;
-       INVESTMENT_NAME = String::new();
+       INVESTMENT_NAME.clear();
    };
 }
