@@ -9,7 +9,7 @@
 <br/>
 
 ## **Showcase**
-![image](https://github.com/user-attachments/assets/94e29748-749c-4ee9-a862-10b37085f503)
+![image](https://github.com/user-attachments/assets/4d25da61-d536-4c53-8c42-56cecbbfda21)
 <details> <summary>Others Pages</summary>
   
 - Realtime Currency Page
@@ -17,7 +17,7 @@
 
 
 - Investment Wallet Page
-![image](https://github.com/user-attachments/assets/08c8c0ff-34ec-4535-a440-18ede9ab9172)
+![image](https://github.com/user-attachments/assets/726ea787-50f7-4666-a166-b8e449e75710)
 
 
 - Selic Historic Page
@@ -30,6 +30,8 @@
 
 ## **Known Issues**
 - not good UI and UX
+- bad perfomance
+- messy code
 
 <br/>
 <br/>
@@ -38,6 +40,8 @@
 ## **Future Plans**
 - Better UI
 - Config Page
+- make the code right
+- make the code fast
 
 <br/>
 <br/>
