@@ -12,7 +12,7 @@ pub static mut INVESTMENT_NAME: String = String::new();
 
 pub static mut YEAR: i32 = 2025;
 pub static mut MONTH: u32 = 1;
-pub static mut DAY: u32 = 7;
+pub static mut DAY: u32 = 1;
 
 
 #[allow(static_mut_refs)]
