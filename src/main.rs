@@ -24,6 +24,7 @@ fn main()
     loop
     {
         std::thread::sleep(Duration::from_millis(33));
+        
 
         let persistent_page = persistent_page();
         match unsafe{PAGE_TO_RENDER}

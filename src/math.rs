@@ -3,7 +3,8 @@
 //---------------------------------------CRATES BACK-END-------------------------------//
 //-------------------------------------------------------------------------------------//
 //=====================================================================================//
-use crate::investment_wallet::{ALL_INVESTMENTS, REALTIME_CURRENCY, REALTIME_RETURN_PER_SECOND, REALTIME_TOTAL_INVESTED};
+use chrono::{DateTime, Local};
+use crate::investment_wallet::{MUTABLE_ALL_INVESTMENTS, ALL_INVESTMENTS, REALTIME_CURRENCY, REALTIME_RETURN_PER_SECOND, REALTIME_TOTAL_INVESTED};
 
 
 
@@ -18,7 +19,6 @@ use crate::investment_wallet::{ALL_INVESTMENTS, REALTIME_CURRENCY, REALTIME_RETU
 pub static mut RETURN_VALUE: f64 = 10.0;
 pub static mut TOTAL_INVESTED: f64 = 150000.0;
 pub static mut ONLINE_HISTORIC_RETURN_VALUE: Vec<String> = Vec::new();
-
 pub static mut YEARS_INVESTED: f64 = 1.0;
 pub static mut MONTHS_INVESTED: f64 = 1.0;
 pub static mut DAYS_INVESTED: f64 = 1.0;
@@ -67,41 +67,47 @@ pub fn calculator_maths() -> (f64, f64, f64, f64, f64 ,f64)
 
 #[allow(static_mut_refs)]
 pub fn realtime_currency_maths()
-{
-    std::thread::spawn(||{
+{ std::thread::spawn(||{
         unsafe 
         {
-            let mut realtime_currency_vector = Vec::new();
-            let mut return_value_per_second_vector = Vec::new();
             let mut total_invested_vector = Vec::new();
-
-
-
-            for investment in ALL_INVESTMENTS.clone()
+            for investment in &ALL_INVESTMENTS
             {
                 total_invested_vector.push(investment.2);
+            }
+            REALTIME_TOTAL_INVESTED = total_invested_vector.iter().sum();
 
-                let milisecs_since_checked_current_time = investment.0.elapsed().unwrap().as_millis();
 
-                let year_return_value: f64 = investment.1 / 100.00;
-                let secs_return_value = f64::powf(1.0 + year_return_value, 1.00 / (360.0 * 24.00 * 60.00 * 60.00)) - 1.0;
+
+            let mut return_value_per_second_vector = Vec::new();
+            let mut realtime_currency_vector = Vec::new();
+
+            for (investment_index, _) in MUTABLE_ALL_INVESTMENTS.iter().enumerate()
+            {
+
+                let investment_date: DateTime<Local> = ALL_INVESTMENTS[investment_index].0;
+                let duration = Local::now().signed_duration_since(investment_date);
+                let milisecs_passed = duration.num_milliseconds();
+
+                let year_return_value: f64 = MUTABLE_ALL_INVESTMENTS[investment_index].1 / 100.00;
+                let month_return_value  = f64::powf(1.0 + year_return_value,   1.00 / 12.00) - 1.0;
+                let day_return_value    = f64::powf(1.0 + month_return_value,  1.00 / 30.00) - 1.0;
+                let hour_return_value   = f64::powf(1.0 + day_return_value,    1.00 / 24.00) - 1.0;
+                let minute_return_value = f64::powf(1.0 + hour_return_value,   1.00 / 60.00) - 1.0;
+                let secs_return_value   = f64::powf(1.0 + minute_return_value, 1.00 / 60.00) - 1.0;
                 let milisecs_return_value = f64::powf(1.0 + secs_return_value, 1.0 / 1000.0) - 1.0;
 
-                //outdated
-                let realtime_milisecs = investment.2 * f64::powf(1.0 + milisecs_return_value,  1.0) - investment.2;
+                let realtime_secs = MUTABLE_ALL_INVESTMENTS[investment_index].2 * f64::powf(1.0 + secs_return_value,  1.0) - MUTABLE_ALL_INVESTMENTS[investment_index].2;
+                return_value_per_second_vector.push(realtime_secs);
 
-                let holder_1 = investment.2 + (realtime_milisecs * milisecs_since_checked_current_time as f64);
-                let new_realtime_secs =     holder_1 * f64::powf(1.0 + secs_return_value,  1.0)     - holder_1;
-                let new_realtime_milisecs = holder_1 * f64::powf(1.0 + milisecs_return_value,  1.0) - holder_1;
-
-                realtime_currency_vector.push( holder_1 + (new_realtime_milisecs * milisecs_since_checked_current_time as f64));
-                return_value_per_second_vector.push(new_realtime_secs);
+                let realtime_milisecs = MUTABLE_ALL_INVESTMENTS[investment_index].2 * f64::powf(1.0 + milisecs_return_value,  1.0) - MUTABLE_ALL_INVESTMENTS[investment_index].2;
+                MUTABLE_ALL_INVESTMENTS[investment_index].2 = ALL_INVESTMENTS[investment_index].2 + (realtime_milisecs * milisecs_passed as f64);
+                realtime_currency_vector.push(MUTABLE_ALL_INVESTMENTS[investment_index].2);
             }
 
 
 
-            REALTIME_CURRENCY = realtime_currency_vector.iter().sum(); 
-            REALTIME_TOTAL_INVESTED = total_invested_vector.iter().sum();
+            REALTIME_CURRENCY = realtime_currency_vector.iter().sum();
             REALTIME_RETURN_PER_SECOND = return_value_per_second_vector.iter().sum();
         };
     });

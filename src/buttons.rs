@@ -1,7 +1,7 @@
-use crate::input_handler::{BUTTON_CLICKED, IS_ON_WRITE_MODE_ON_BUTTON_1, IS_ON_WRITE_MODE_ON_BUTTON_1_PAGE_3, IS_ON_WRITE_MODE_ON_BUTTON_2, IS_ON_WRITE_MODE_ON_BUTTON_2_PAGE_3, IS_ON_WRITE_MODE_ON_BUTTON_3_PAGE_3, IS_ON_WRITE_MODE_ON_BUTTON_3, IS_ON_WRITE_MODE_ON_BUTTON_4, IS_ON_WRITE_MODE_ON_BUTTON_5, IS_ON_WRITE_MODE_ON_BUTTON_6, IS_ON_WRITE_MODE_ON_BUTTON_7, IS_ON_WRITE_MODE_ON_BUTTON_8};
+use crate::input_handler::{BUTTON_CLICKED, IS_ON_WRITE_MODE_ON_BUTTON_1, IS_ON_WRITE_MODE_ON_BUTTON_1_PAGE_3, IS_ON_WRITE_MODE_ON_BUTTON_2, IS_ON_WRITE_MODE_ON_BUTTON_2_PAGE_3, IS_ON_WRITE_MODE_ON_BUTTON_3, IS_ON_WRITE_MODE_ON_BUTTON_3_PAGE_3, IS_ON_WRITE_MODE_ON_BUTTON_4, IS_ON_WRITE_MODE_ON_BUTTON_4_PAGE_3, IS_ON_WRITE_MODE_ON_BUTTON_5, IS_ON_WRITE_MODE_ON_BUTTON_5_PAGE_3, IS_ON_WRITE_MODE_ON_BUTTON_6, IS_ON_WRITE_MODE_ON_BUTTON_6_PAGE_3, IS_ON_WRITE_MODE_ON_BUTTON_7, IS_ON_WRITE_MODE_ON_BUTTON_8};
 use crate::math::ONLINE_HISTORIC_RETURN_VALUE;
 use crate::getonlineinfo::infos;
-use crate::investment_wallet::{add_investment, ALL_INVESTMENTS};
+use crate::investment_wallet::{add_investment, ALL_INVESTMENTS, MUTABLE_ALL_INVESTMENTS};
 
 
 
@@ -153,6 +153,7 @@ pub fn button_action()
                     {
                         BUTTON_CLICKED = None;
                         ALL_INVESTMENTS.clear();
+                        MUTABLE_ALL_INVESTMENTS.clear();
                     }
 
                     if PAGE_TO_RENDER == 0 && !IS_ON_WRITE_MODE_ON_BUTTON_1 && !IS_ON_WRITE_MODE_ON_BUTTON_2&& !IS_ON_WRITE_MODE_ON_BUTTON_3 && !IS_ON_WRITE_MODE_ON_BUTTON_4 && !IS_ON_WRITE_MODE_ON_BUTTON_5 && !IS_ON_WRITE_MODE_ON_BUTTON_6 && !IS_ON_WRITE_MODE_ON_BUTTON_7 && !IS_ON_WRITE_MODE_ON_BUTTON_8 
@@ -167,6 +168,12 @@ pub fn button_action()
             {
                 unsafe 
                 {
+                    if PAGE_TO_RENDER == 3 && !IS_ON_WRITE_MODE_ON_BUTTON_1_PAGE_3 && !IS_ON_WRITE_MODE_ON_BUTTON_2_PAGE_3 && !IS_ON_WRITE_MODE_ON_BUTTON_3_PAGE_3 && !IS_ON_WRITE_MODE_ON_BUTTON_4_PAGE_3 && !IS_ON_WRITE_MODE_ON_BUTTON_5_PAGE_3 && !IS_ON_WRITE_MODE_ON_BUTTON_6_PAGE_3
+                    {
+                        BUTTON_CLICKED = None;
+                        IS_ON_WRITE_MODE_ON_BUTTON_4_PAGE_3 = true;
+                    };
+
                     if PAGE_TO_RENDER == 0 && !IS_ON_WRITE_MODE_ON_BUTTON_1 && !IS_ON_WRITE_MODE_ON_BUTTON_2&& !IS_ON_WRITE_MODE_ON_BUTTON_3 && !IS_ON_WRITE_MODE_ON_BUTTON_4 && !IS_ON_WRITE_MODE_ON_BUTTON_5 && !IS_ON_WRITE_MODE_ON_BUTTON_6 && !IS_ON_WRITE_MODE_ON_BUTTON_7 && !IS_ON_WRITE_MODE_ON_BUTTON_8 
                     {
                         BUTTON_CLICKED = None;
@@ -179,6 +186,12 @@ pub fn button_action()
             {
                 unsafe 
                 {
+                    if PAGE_TO_RENDER == 3 && !IS_ON_WRITE_MODE_ON_BUTTON_1_PAGE_3 && !IS_ON_WRITE_MODE_ON_BUTTON_2_PAGE_3 && !IS_ON_WRITE_MODE_ON_BUTTON_3_PAGE_3 && !IS_ON_WRITE_MODE_ON_BUTTON_4_PAGE_3 && !IS_ON_WRITE_MODE_ON_BUTTON_5_PAGE_3 && !IS_ON_WRITE_MODE_ON_BUTTON_6_PAGE_3
+                    {
+                        BUTTON_CLICKED = None;
+                        IS_ON_WRITE_MODE_ON_BUTTON_5_PAGE_3 = true;
+                    };
+
                     if PAGE_TO_RENDER == 0 && !IS_ON_WRITE_MODE_ON_BUTTON_1 && !IS_ON_WRITE_MODE_ON_BUTTON_2&& !IS_ON_WRITE_MODE_ON_BUTTON_3 && !IS_ON_WRITE_MODE_ON_BUTTON_4 && !IS_ON_WRITE_MODE_ON_BUTTON_5 && !IS_ON_WRITE_MODE_ON_BUTTON_6 && !IS_ON_WRITE_MODE_ON_BUTTON_7 && !IS_ON_WRITE_MODE_ON_BUTTON_8 
                     {
                         BUTTON_CLICKED = None;
@@ -191,6 +204,12 @@ pub fn button_action()
             {
                 unsafe 
                 {
+                    if PAGE_TO_RENDER == 3 && !IS_ON_WRITE_MODE_ON_BUTTON_1_PAGE_3 && !IS_ON_WRITE_MODE_ON_BUTTON_2_PAGE_3 && !IS_ON_WRITE_MODE_ON_BUTTON_3_PAGE_3 && !IS_ON_WRITE_MODE_ON_BUTTON_4_PAGE_3 && !IS_ON_WRITE_MODE_ON_BUTTON_5_PAGE_3 && !IS_ON_WRITE_MODE_ON_BUTTON_6_PAGE_3
+                    {
+                        BUTTON_CLICKED = None;
+                        IS_ON_WRITE_MODE_ON_BUTTON_6_PAGE_3 = true;
+                    };
+
                     if PAGE_TO_RENDER == 0 && !IS_ON_WRITE_MODE_ON_BUTTON_1 && !IS_ON_WRITE_MODE_ON_BUTTON_2&& !IS_ON_WRITE_MODE_ON_BUTTON_3 && !IS_ON_WRITE_MODE_ON_BUTTON_4 && !IS_ON_WRITE_MODE_ON_BUTTON_5 && !IS_ON_WRITE_MODE_ON_BUTTON_6 && !IS_ON_WRITE_MODE_ON_BUTTON_7 && !IS_ON_WRITE_MODE_ON_BUTTON_8 
                     {
                         BUTTON_CLICKED = None;
