@@ -38,7 +38,6 @@
 ## **Future Plans**
 - Better UI
 - Config Page
-- Set date of investment in investment wallet page
 
 <br/>
 <br/>
