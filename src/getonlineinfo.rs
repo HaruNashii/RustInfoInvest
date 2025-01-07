@@ -1,9 +1,17 @@
-use fantoccini::{ClientBuilder, Locator};
-use fantoccini::wd::Capabilities;
 use std::process::{Command, Stdio};
 use std::time::Duration;
+use fantoccini::{ClientBuilder, Locator};
+use fantoccini::wd::Capabilities;
+
+
+
+
 
 pub static mut PREVENT_KILL: bool = false;
+
+
+
+
 
 fn clean_string_from_vector(vector_of_string: Vec<String>) -> Vec<String>
 {   
@@ -14,45 +22,23 @@ fn clean_string_from_vector(vector_of_string: Vec<String>) -> Vec<String>
         let mut separeted_string = string.split_whitespace().collect::<Vec<&str>>();
         if separeted_string.len() == 7
         {
-            for _ in 0..3
-            {
-                separeted_string.remove(2);
-            }
+            for _ in 0..3 { separeted_string.remove(2); }
             separeted_string.remove(3);
         }
 
         if separeted_string.len() == 10
         {
-            for _ in 0..7
-            {
-                separeted_string.remove(2);
-            }
+            for _ in 0..7 { separeted_string.remove(2); }
         }
 
         let mut final_string = String::new();
-        for string in separeted_string
-        {
-            final_string.push_str( &format!("{}            ", string) );
-        }
+        for string in separeted_string { final_string.push_str( &format!("{}            ", string) ); }
 
         vector_of_clean_strings.push(final_string);
     }
 
     vector_of_clean_strings
 }
-
-
-
-
-
-//fn parse_to_f64(string: &str) -> f64
-//{
-//    let separeted_string = string.split_whitespace().collect::<Vec<&str>>();
-//    let last_string = separeted_string.last().unwrap();
-//    last_string.replace(",", ".").parse::<f64>().unwrap()
-//}
-
-
 
 
 
@@ -75,7 +61,7 @@ pub async fn infos() -> Vec<String>
     // Connect the Fantoccini client to the site of brazil governament that has the Selic tax values
     client.goto("https://www.bcb.gov.br/controleinflacao/historicotaxasjuros").await.unwrap();
 
-    // Get the last 10 Selic tax value
+    // Get the last 6 Selic tax value
     let list_lenght: u8 = 6;
     let mut list_elements: Vec<String> = Vec::new();
     for index in 1..(list_lenght + 1)
@@ -90,13 +76,5 @@ pub async fn infos() -> Vec<String>
     web_driver.unwrap().kill().unwrap();
     unsafe{PREVENT_KILL = false};
 
-    // Remove unecessary data from every string in the list_elements vector
-    //let vector_to_send = clean_string_from_vector(list_elements.clone());
-
-    // Parse the most recent Selic tax value to f64
-    //let f64_to_send = parse_to_f64(&vector_to_send[0]);
-
-    // Return the vectors of string and f64 
-    //(vector_to_send, f64_to_send) 
     clean_string_from_vector(list_elements.clone())
 }

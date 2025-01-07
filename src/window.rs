@@ -1,7 +1,7 @@
+use std::time::Duration;
 use sdl2::video::{WindowContext, Window};
 use sdl2::render::{TextureCreator, Canvas};
 use crate::pages::Page;
-use std::time::Duration;
 
 
 
@@ -24,18 +24,14 @@ pub fn create_window()
     let canvas = window.into_canvas().accelerated().present_vsync().build().unwrap();
     let texture_creator = canvas.texture_creator();
     let event_pump = sdl_started.event_pump().unwrap();
-
     unsafe 
     { 
         SDL2_CANVAS.push(canvas);
         SDL2_TEXTURE_CREATOR.push(texture_creator);
         SDL2_EVENT_PUMP.push(event_pump);
     };
-
     while unsafe{SDL2_EVENT_PUMP.is_empty()} { println!("waiting for event pump"); std::thread::sleep(Duration::from_millis(250)) };
 }
-
-
 
 
 
@@ -46,22 +42,16 @@ pub fn render_page(page: Page, persistent_page: Option<Page>)
     canvas.set_draw_color(page.background_color.unwrap());
     canvas.clear();
 
-        if let Some(rect_vector_of_tuple) = &page.rects { for tuple in rect_vector_of_tuple { canvas.set_draw_color(tuple.0); canvas.fill_rect(tuple.1).unwrap(); } }
+    if let Some(rect_vector_of_tuple) =    &page.rects   { for tuple in rect_vector_of_tuple    { canvas.set_draw_color(tuple.0); canvas.fill_rect(tuple.1).unwrap(); } }
+    if let Some(buttons_vector_of_tuple) = &page.buttons { for tuple in buttons_vector_of_tuple { if tuple.0 { canvas.set_draw_color(tuple.1); canvas.fill_rect(tuple.2).unwrap(); } } }
+    if let Some(texts_vector_of_tuple) =   &page.texts   { for tuple in texts_vector_of_tuple   { canvas.copy(&tuple.0, None, tuple.1).unwrap(); } }
 
-        if let Some(buttons_vector_of_tuple) = &page.buttons { for tuple in buttons_vector_of_tuple { if tuple.0 { canvas.set_draw_color(tuple.1); canvas.fill_rect(tuple.2).unwrap(); } } }
+    if let Some(persistent_elements) = persistent_page 
+    {
+        if let Some(rect_vector_of_tuple) =    &persistent_elements.rects   { for tuple in rect_vector_of_tuple    { canvas.set_draw_color(tuple.0); canvas.fill_rect(tuple.1).unwrap(); } }
+        if let Some(buttons_vector_of_tuple) = &persistent_elements.buttons { for tuple in buttons_vector_of_tuple { if tuple.0 { canvas.set_draw_color(tuple.1); canvas.fill_rect(tuple.2).unwrap(); } } }
+        if let Some(texts_vector_of_tuple) =   &persistent_elements.texts   { for tuple in texts_vector_of_tuple   { canvas.copy(&tuple.0, None, tuple.1).unwrap(); } }
+    }
 
-        if let Some(texts_vector_of_tuple) = &page.texts { for tuple in texts_vector_of_tuple { canvas.copy(&tuple.0, None, tuple.1).unwrap(); } }
-
-
-        //================================
-        
-        if let Some(persistent_elements) = persistent_page {
-            if let Some(rect_vector_of_tuple) = &persistent_elements.rects { for tuple in rect_vector_of_tuple { canvas.set_draw_color(tuple.0); canvas.fill_rect(tuple.1).unwrap(); } }
-
-            if let Some(buttons_vector_of_tuple) = &persistent_elements.buttons { for tuple in buttons_vector_of_tuple { if tuple.0 { canvas.set_draw_color(tuple.1); canvas.fill_rect(tuple.2).unwrap(); } } }
-
-            if let Some(texts_vector_of_tuple) = &persistent_elements.texts { for tuple in texts_vector_of_tuple { canvas.copy(&tuple.0, None, tuple.1).unwrap(); } }
-        }
-
-        canvas.present();
+    canvas.present();
 }
