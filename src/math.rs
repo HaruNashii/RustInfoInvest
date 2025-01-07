@@ -19,24 +19,22 @@ pub static mut RETURN_VALUE: f64 = 10.0;
 pub static mut TOTAL_INVESTED: f64 = 150000.0;
 pub static mut ONLINE_HISTORIC_RETURN_VALUE: Vec<String> = Vec::new();
 
+pub static mut YEARS_INVESTED: f64 = 1.0;
+pub static mut MONTHS_INVESTED: f64 = 1.0;
+pub static mut DAYS_INVESTED: f64 = 1.0;
+pub static mut HOURS_INVESTED: f64 = 1.0;
+pub static mut MINUTES_INVESTED: f64 = 1.0;
+pub static mut SECS_INVESTED: f64 = 1.0;
 
 
 
 
+#[allow(static_mut_refs)]
 pub fn calculator_maths() -> (f64, f64, f64, f64, f64 ,f64)
 {
-    let years_invested = 1.0;
-    let months_invested = 1.0;
-    let days_invested = 1.0;
-    let hours_invested = 1.0;
-    let minutes_invested = 1.0;
-    let secs_invested = 1.0;
-
-
-        let total_invested = unsafe{TOTAL_INVESTED};
-
-        // Move numbers one case to the right to fit the formula math (example = 1.0 -> 0.1)
-        let year_return_value: f64 = unsafe{RETURN_VALUE / 100.0};
+    let total_invested = unsafe{TOTAL_INVESTED};
+    // Move numbers one case to the right to fit the formula math (example = 1.0 -> 0.1)
+    let year_return_value: f64 = unsafe{RETURN_VALUE / 100.0};
 
         let month_return_value  = f64::powf(1.0 + year_return_value,   1.00 / 12.00) - 1.0;
         let day_return_value    = f64::powf(1.0 + month_return_value,  1.00 / 30.00) - 1.0;
@@ -44,15 +42,13 @@ pub fn calculator_maths() -> (f64, f64, f64, f64, f64 ,f64)
         let minute_return_value = f64::powf(1.0 + hour_return_value,   1.00 / 60.00) - 1.0;
         let secs_return_value   = f64::powf(1.0 + minute_return_value, 1.00 / 60.00) - 1.0;
             
-            // Formulas
             // formula = total_invested * (1 + return_value)^total_time_invested
-            let formula_year: f64   = total_invested * f64::powf(1.0 + year_return_value,  years_invested) - total_invested;
-            let formula_month: f64  = total_invested * f64::powf(1.0 + month_return_value, months_invested) - total_invested;
-            let formula_day: f64    = total_invested * f64::powf(1.0 + day_return_value,   days_invested) - total_invested;
-            let formula_hour: f64   = total_invested * f64::powf(1.0 + hour_return_value,  hours_invested) - total_invested;
-            let formula_minute: f64 = total_invested * f64::powf(1.0 + minute_return_value,  minutes_invested) - total_invested;
-            let formula_secs: f64   = total_invested * f64::powf(1.0 + secs_return_value,  secs_invested) - total_invested;
-
+            let formula_year: f64   = total_invested * f64::powf(1.0 + year_return_value,  unsafe{YEARS_INVESTED}) - total_invested;
+            let formula_month: f64  = total_invested * f64::powf(1.0 + month_return_value, unsafe{MONTHS_INVESTED}) - total_invested;
+            let formula_day: f64    = total_invested * f64::powf(1.0 + day_return_value,   unsafe{DAYS_INVESTED}) - total_invested;
+            let formula_hour: f64   = total_invested * f64::powf(1.0 + hour_return_value,  unsafe{HOURS_INVESTED}) - total_invested;
+            let formula_minute: f64 = total_invested * f64::powf(1.0 + minute_return_value,  unsafe{MINUTES_INVESTED}) - total_invested;
+            let formula_secs: f64   = total_invested * f64::powf(1.0 + secs_return_value,  unsafe{SECS_INVESTED}) - total_invested;
 
                 // Return Values
                 (

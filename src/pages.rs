@@ -3,8 +3,8 @@ use sdl2::pixels::Color;
 use sdl2::render::Texture;
 use crate::investment_wallet::{ALL_INVESTMENTS, INVESTMENT_NAME, REALTIME_CURRENCY, REALTIME_RETURN_PER_SECOND, REALTIME_TOTAL_INVESTED, RETURN_PER_INVESTMENT, TOTAL_INVESTED_PER_INVESTMENT};
 use crate::sdl2_generators::gen_text;
-use crate::math::{calculator_maths, realtime_currency_maths, ONLINE_HISTORIC_RETURN_VALUE, RETURN_VALUE, TOTAL_INVESTED};
-use crate::input_handler::{IS_ON_WRITE_MODE_ON_BUTTON_1, IS_ON_WRITE_MODE_ON_BUTTON_1_PAGE_3, IS_ON_WRITE_MODE_ON_BUTTON_2, IS_ON_WRITE_MODE_ON_BUTTON_2_PAGE_3, IS_ON_WRITE_MODE_ON_BUTTON_3_PAGE_3, USER_INPUT_BUTTON_1, USER_INPUT_BUTTON_1_PAGE_3, USER_INPUT_BUTTON_2, USER_INPUT_BUTTON_2_PAGE_3, USER_INPUT_BUTTON_3_PAGE_3};
+use crate::math::{calculator_maths, realtime_currency_maths, DAYS_INVESTED, HOURS_INVESTED, MINUTES_INVESTED, MONTHS_INVESTED, ONLINE_HISTORIC_RETURN_VALUE, RETURN_VALUE, SECS_INVESTED, TOTAL_INVESTED, YEARS_INVESTED};
+use crate::input_handler::{IS_ON_WRITE_MODE_ON_BUTTON_1, IS_ON_WRITE_MODE_ON_BUTTON_1_PAGE_3, IS_ON_WRITE_MODE_ON_BUTTON_2, IS_ON_WRITE_MODE_ON_BUTTON_2_PAGE_3, IS_ON_WRITE_MODE_ON_BUTTON_3, IS_ON_WRITE_MODE_ON_BUTTON_3_PAGE_3, IS_ON_WRITE_MODE_ON_BUTTON_4, IS_ON_WRITE_MODE_ON_BUTTON_5, IS_ON_WRITE_MODE_ON_BUTTON_6, IS_ON_WRITE_MODE_ON_BUTTON_7, IS_ON_WRITE_MODE_ON_BUTTON_8, USER_INPUT_BUTTON_1, USER_INPUT_BUTTON_1_PAGE_3, USER_INPUT_BUTTON_2, USER_INPUT_BUTTON_2_PAGE_3, USER_INPUT_BUTTON_3, USER_INPUT_BUTTON_3_PAGE_3, USER_INPUT_BUTTON_4, USER_INPUT_BUTTON_5, USER_INPUT_BUTTON_6, USER_INPUT_BUTTON_7, USER_INPUT_BUTTON_8};
 
 
 pub struct Page<'a>
@@ -77,18 +77,24 @@ pub fn persistent_page() -> Page<'static>
 
 
 #[allow(static_mut_refs)]
-pub fn main_page() -> Page<'static>
+pub fn calculator_page() -> Page<'static>
 {
     //===================== variables =========================
     let bg_color =           Color::RGB(30, 30, 46);
     let default_text_color = Color::RGB(255, 255, 255);
     let subtext_color =      Color::RGB(186, 194, 222);
-    let ( one_year, one_month, one_day, one_hour, one_min, one_secs) = calculator_maths();
+    let (one_year, one_month, one_day, one_hour, one_min, one_secs) = calculator_maths();
     
     unsafe 
     { 
         if USER_INPUT_BUTTON_1.is_empty() { USER_INPUT_BUTTON_1.push(' ') }; 
         if USER_INPUT_BUTTON_2.is_empty() { USER_INPUT_BUTTON_2.push(' ') }; 
+        if USER_INPUT_BUTTON_3.is_empty() { USER_INPUT_BUTTON_3.push(' ') }; 
+        if USER_INPUT_BUTTON_4.is_empty() { USER_INPUT_BUTTON_4.push(' ') }; 
+        if USER_INPUT_BUTTON_5.is_empty() { USER_INPUT_BUTTON_5.push(' ') }; 
+        if USER_INPUT_BUTTON_6.is_empty() { USER_INPUT_BUTTON_6.push(' ') }; 
+        if USER_INPUT_BUTTON_7.is_empty() { USER_INPUT_BUTTON_7.push(' ') }; 
+        if USER_INPUT_BUTTON_8.is_empty() { USER_INPUT_BUTTON_8.push(' ') }; 
     };
 
 
@@ -99,32 +105,76 @@ pub fn main_page() -> Page<'static>
         (true, Color::RGB(203,   166, 247),   Rect::new(10, 125, 385, 50)),
         //receive input button 2
         (true, Color::RGB(203,   166, 247),   Rect::new(405, 125, 385, 50)),
+
+        //year button
+        (true, Color::RGB(250,   179, 135),   Rect::new(345, 245, 40, 25)),
+        //month button
+        (true, Color::RGB(250,   179, 135),   Rect::new(345, 295, 40, 25)),
+        //day button
+        (true, Color::RGB(250,   179, 135),   Rect::new(345, 345, 40, 25)),
+        //hour button
+        (true, Color::RGB(250,   179, 135),   Rect::new(345, 395, 40, 25)),
+        //minute button
+        (true, Color::RGB(250,   179, 135),   Rect::new(345, 445, 40, 25)),
+        //secs button
+        (true, Color::RGB(250,   179, 135),   Rect::new(345, 495, 40, 25)),
     ];
     
 
 
     //===================== texts =========================
-    let year_string: String   = format!("Return Per Year:   R$ {:.2}", one_year);
-    let month_string: String  = format!("Return Per Month:  R$ {:.2}", one_month);
-    let day_string: String    = format!("Return Per Day:    R$ {:.3}", one_day);
-    let hour_string: String   = format!("Return Per Hour:   R$ {:.3}", one_hour);
-    let minute_string: String = format!("Return Per Minute: R$ {:.4}", one_min);
-    let second_string: String = format!("Return Per Second: R$ {:.6}", one_secs);
+    let year_string =   format!("Years:   R${:.2}", one_year);
+    let month_string =  format!("Months:  R${:.2}", one_month);
+    let day_string =    format!("Days:    R${:.2}", one_day);
+    let hour_string =   format!("Hours:   R${:.2}", one_hour);
+    let minute_string = format!("Minutes: R${:.2}", one_min);
+    let second_string = format!("Seconds: R${:.2}", one_secs);
+
+    let return_year_string = if unsafe{IS_ON_WRITE_MODE_ON_BUTTON_3} 
+    { format!("Return in {}", unsafe{USER_INPUT_BUTTON_3.clone()}) }
+    else
+    { format!("Return in {}", unsafe{YEARS_INVESTED.to_string()}) };
     
+    let return_month_string = if unsafe{IS_ON_WRITE_MODE_ON_BUTTON_4} 
+    { format!("Return in {}", unsafe{USER_INPUT_BUTTON_4.clone()}) }
+    else
+    { format!("Return in {}", unsafe{MONTHS_INVESTED.to_string()}) };
+
+    let return_day_string = if unsafe{IS_ON_WRITE_MODE_ON_BUTTON_5} 
+    { format!("Return in {}", unsafe{USER_INPUT_BUTTON_5.clone()}) }
+    else
+    { format!("Return in {}", unsafe{DAYS_INVESTED.to_string()}) };
+
+    let return_hour_string = if unsafe{IS_ON_WRITE_MODE_ON_BUTTON_6} 
+    { format!("Return in {}", unsafe{USER_INPUT_BUTTON_6.clone()}) }
+    else
+    { format!("Return in {}", unsafe{HOURS_INVESTED.to_string()}) };
+
+    let return_minute_string = if unsafe{IS_ON_WRITE_MODE_ON_BUTTON_7} 
+    { format!("Return in {}", unsafe{USER_INPUT_BUTTON_7.clone()}) }
+    else
+    { format!("Return in {}", unsafe{MINUTES_INVESTED.to_string()}) };
+
+    let return_second_string = if unsafe{IS_ON_WRITE_MODE_ON_BUTTON_8} 
+    { format!("Return in {}", unsafe{USER_INPUT_BUTTON_8.clone()}) }
+    else
+    { format!("Return in {}", unsafe{SECS_INVESTED.to_string()}) };
+
     let mut all_text = vec!
     [
-        //one year text
-        gen_text(20, (225, 245), year_string, subtext_color),
-        //one month text
-        gen_text(20, (225, 295), month_string, subtext_color),
-        //one day text
-        gen_text(20, (225, 345), day_string, subtext_color),
-        //one hour text
-        gen_text(20, (225, 395), hour_string, subtext_color),
-        //one min text
-        gen_text(20, (225, 445), minute_string, subtext_color),
-        //one sec text
-        gen_text(20, (225, 495), second_string, subtext_color),
+        gen_text(20, (226, 245), return_year_string, subtext_color),
+        gen_text(20, (226, 295), return_month_string, subtext_color),
+        gen_text(20, (226, 345), return_day_string, subtext_color),
+        gen_text(20, (226, 395), return_hour_string, subtext_color),
+        gen_text(20, (226, 445), return_minute_string, subtext_color),
+        gen_text(20, (226, 495), return_second_string, subtext_color),
+        
+        gen_text(20, (400, 245), year_string, subtext_color),
+        gen_text(20, (400, 295), month_string, subtext_color),
+        gen_text(20, (400, 345), day_string, subtext_color),
+        gen_text(20, (400, 395), hour_string, subtext_color),
+        gen_text(20, (400, 445), minute_string, subtext_color),
+        gen_text(20, (400, 495), second_string, subtext_color),
         //user input text
         gen_text(23, (274, 133), unsafe{USER_INPUT_BUTTON_1.clone()}, default_text_color),
         gen_text(23, (653, 133), unsafe{USER_INPUT_BUTTON_2.clone()}, default_text_color),

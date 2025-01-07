@@ -1,4 +1,4 @@
-use crate::input_handler::{IS_ON_WRITE_MODE_ON_BUTTON_1, IS_ON_WRITE_MODE_ON_BUTTON_2, IS_ON_WRITE_MODE_ON_BUTTON_1_PAGE_3, IS_ON_WRITE_MODE_ON_BUTTON_2_PAGE_3, IS_ON_WRITE_MODE_ON_BUTTON_3_PAGE_3, BUTTON_CLICKED};
+use crate::input_handler::{BUTTON_CLICKED, IS_ON_WRITE_MODE_ON_BUTTON_1, IS_ON_WRITE_MODE_ON_BUTTON_1_PAGE_3, IS_ON_WRITE_MODE_ON_BUTTON_2, IS_ON_WRITE_MODE_ON_BUTTON_2_PAGE_3, IS_ON_WRITE_MODE_ON_BUTTON_3_PAGE_3, IS_ON_WRITE_MODE_ON_BUTTON_3, IS_ON_WRITE_MODE_ON_BUTTON_4, IS_ON_WRITE_MODE_ON_BUTTON_5, IS_ON_WRITE_MODE_ON_BUTTON_6, IS_ON_WRITE_MODE_ON_BUTTON_7, IS_ON_WRITE_MODE_ON_BUTTON_8};
 use crate::math::ONLINE_HISTORIC_RETURN_VALUE;
 use crate::getonlineinfo::infos;
 use crate::investment_wallet::{add_investment, ALL_INVESTMENTS};
@@ -154,6 +154,72 @@ pub fn button_action()
                         BUTTON_CLICKED = None;
                         ALL_INVESTMENTS.clear();
                     }
+
+                    if PAGE_TO_RENDER == 0 && !IS_ON_WRITE_MODE_ON_BUTTON_1 && !IS_ON_WRITE_MODE_ON_BUTTON_2&& !IS_ON_WRITE_MODE_ON_BUTTON_3 && !IS_ON_WRITE_MODE_ON_BUTTON_4 && !IS_ON_WRITE_MODE_ON_BUTTON_5 && !IS_ON_WRITE_MODE_ON_BUTTON_6 && !IS_ON_WRITE_MODE_ON_BUTTON_7 && !IS_ON_WRITE_MODE_ON_BUTTON_8 
+                    {
+                        BUTTON_CLICKED = None;
+                        IS_ON_WRITE_MODE_ON_BUTTON_3 = true;
+                    };
+                    BUTTON_CLICKED = None;
+                }
+            }
+            6 => 
+            {
+                unsafe 
+                {
+                    if PAGE_TO_RENDER == 0 && !IS_ON_WRITE_MODE_ON_BUTTON_1 && !IS_ON_WRITE_MODE_ON_BUTTON_2&& !IS_ON_WRITE_MODE_ON_BUTTON_3 && !IS_ON_WRITE_MODE_ON_BUTTON_4 && !IS_ON_WRITE_MODE_ON_BUTTON_5 && !IS_ON_WRITE_MODE_ON_BUTTON_6 && !IS_ON_WRITE_MODE_ON_BUTTON_7 && !IS_ON_WRITE_MODE_ON_BUTTON_8 
+                    {
+                        BUTTON_CLICKED = None;
+                        IS_ON_WRITE_MODE_ON_BUTTON_4 = true;
+                    };
+                    BUTTON_CLICKED = None;
+                }
+            }
+            7 => 
+            {
+                unsafe 
+                {
+                    if PAGE_TO_RENDER == 0 && !IS_ON_WRITE_MODE_ON_BUTTON_1 && !IS_ON_WRITE_MODE_ON_BUTTON_2&& !IS_ON_WRITE_MODE_ON_BUTTON_3 && !IS_ON_WRITE_MODE_ON_BUTTON_4 && !IS_ON_WRITE_MODE_ON_BUTTON_5 && !IS_ON_WRITE_MODE_ON_BUTTON_6 && !IS_ON_WRITE_MODE_ON_BUTTON_7 && !IS_ON_WRITE_MODE_ON_BUTTON_8 
+                    {
+                        BUTTON_CLICKED = None;
+                        IS_ON_WRITE_MODE_ON_BUTTON_5 = true;
+                    };
+                    BUTTON_CLICKED = None;
+                }
+            }
+            8 => 
+            {
+                unsafe 
+                {
+                    if PAGE_TO_RENDER == 0 && !IS_ON_WRITE_MODE_ON_BUTTON_1 && !IS_ON_WRITE_MODE_ON_BUTTON_2&& !IS_ON_WRITE_MODE_ON_BUTTON_3 && !IS_ON_WRITE_MODE_ON_BUTTON_4 && !IS_ON_WRITE_MODE_ON_BUTTON_5 && !IS_ON_WRITE_MODE_ON_BUTTON_6 && !IS_ON_WRITE_MODE_ON_BUTTON_7 && !IS_ON_WRITE_MODE_ON_BUTTON_8 
+                    {
+                        BUTTON_CLICKED = None;
+                        IS_ON_WRITE_MODE_ON_BUTTON_6 = true;
+                    };
+                    BUTTON_CLICKED = None;
+                }
+            }
+            9 => 
+            {
+                unsafe 
+                {
+                    if PAGE_TO_RENDER == 0 && !IS_ON_WRITE_MODE_ON_BUTTON_1 && !IS_ON_WRITE_MODE_ON_BUTTON_2&& !IS_ON_WRITE_MODE_ON_BUTTON_3 && !IS_ON_WRITE_MODE_ON_BUTTON_4 && !IS_ON_WRITE_MODE_ON_BUTTON_5 && !IS_ON_WRITE_MODE_ON_BUTTON_6 && !IS_ON_WRITE_MODE_ON_BUTTON_7 && !IS_ON_WRITE_MODE_ON_BUTTON_8 
+                    {
+                        BUTTON_CLICKED = None;
+                        IS_ON_WRITE_MODE_ON_BUTTON_7 = true;
+                    };
+                    BUTTON_CLICKED = None;
+                }
+            }
+            10 => 
+            {
+                unsafe 
+                {
+                    if PAGE_TO_RENDER == 0 && !IS_ON_WRITE_MODE_ON_BUTTON_1 && !IS_ON_WRITE_MODE_ON_BUTTON_2&& !IS_ON_WRITE_MODE_ON_BUTTON_3 && !IS_ON_WRITE_MODE_ON_BUTTON_4 && !IS_ON_WRITE_MODE_ON_BUTTON_5 && !IS_ON_WRITE_MODE_ON_BUTTON_6 && !IS_ON_WRITE_MODE_ON_BUTTON_7 && !IS_ON_WRITE_MODE_ON_BUTTON_8 
+                    {
+                        BUTTON_CLICKED = None;
+                        IS_ON_WRITE_MODE_ON_BUTTON_8 = true;
+                    };
                     BUTTON_CLICKED = None;
                 }
             }
