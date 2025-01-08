@@ -28,13 +28,17 @@ pub fn add_investment()
     unsafe
     {
         if INVESTMENT_NAME.replace(" ", "").is_empty() { INVESTMENT_NAME = "Generic Investment".to_string(); }
+        let date: DateTime<Local> = Local::now();
+        let current_hour =   date.format("%H");
+        let current_minute = date.format("%M");
+        let current_second = date.format("%S");
 
-        ALL_INVESTMENTS.push         ( ( Local.with_ymd_and_hms(YEAR, MONTH, DAY, 0, 0, 0).unwrap(), RETURN_PER_INVESTMENT, TOTAL_INVESTED_PER_INVESTMENT, INVESTMENT_NAME.clone()));
-        MUTABLE_ALL_INVESTMENTS.push ( ( Local.with_ymd_and_hms(YEAR, MONTH, DAY, 0, 0, 0).unwrap(), RETURN_PER_INVESTMENT, TOTAL_INVESTED_PER_INVESTMENT, INVESTMENT_NAME.clone()));
+        MUTABLE_ALL_INVESTMENTS.push ( ( Local.with_ymd_and_hms(YEAR, MONTH, DAY, current_hour.to_string().parse().unwrap(), current_minute.to_string().parse().unwrap(), current_second.to_string().parse().unwrap()).unwrap(), RETURN_PER_INVESTMENT, TOTAL_INVESTED_PER_INVESTMENT, INVESTMENT_NAME.clone()));
+        ALL_INVESTMENTS.push         ( ( Local.with_ymd_and_hms(YEAR, MONTH, DAY, current_hour.to_string().parse().unwrap(), current_minute.to_string().parse().unwrap(), current_second.to_string().parse().unwrap()).unwrap(), RETURN_PER_INVESTMENT, TOTAL_INVESTED_PER_INVESTMENT, INVESTMENT_NAME.clone()));
 
-        YEAR = 2025;
-        MONTH = 1;
-        DAY = 1;
+        YEAR = Local::now().format("%Y").to_string().parse().unwrap();
+        MONTH = Local::now().format("%m").to_string().parse().unwrap();
+        DAY = Local::now().format("%d").to_string().parse().unwrap();
         RETURN_PER_INVESTMENT = 10.0;
         TOTAL_INVESTED_PER_INVESTMENT = 1000.0;
         INVESTMENT_NAME.clear();

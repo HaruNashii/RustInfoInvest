@@ -1,4 +1,7 @@
 use std::time::Duration;
+use chrono::Local;
+use investment_wallet::{DAY, MONTH, YEAR};
+
 use crate::
 {
     pages::{calculator_page, persistent_page, realtime_currency_page, selic_page, investment_wallet_page},
@@ -28,11 +31,19 @@ fn main()
 {
     create_window();
 
+    unsafe 
+    {
+        YEAR = Local::now().format("%Y").to_string().parse().unwrap();
+        MONTH = Local::now().format("%m").to_string().parse().unwrap();
+        DAY = Local::now().format("%d").to_string().parse().unwrap();
+    }
+
     loop
     {
         std::thread::sleep(Duration::from_millis(33));
 
         let persistent_page = persistent_page();
+
 
         match unsafe{PAGE_TO_RENDER}
         {

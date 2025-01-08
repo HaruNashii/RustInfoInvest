@@ -123,7 +123,7 @@ pub fn calculator_page() -> Page<'static>
     let day_string =    format!("Days:    R${:.2}", one_day);
     let hour_string =   format!("Hours:   R${:.4}", one_hour);
     let minute_string = format!("Minutes: R${:.5}", one_min);
-    let second_string = format!("Seconds: R${:.6}", one_secs);
+    let second_string = format!("Seconds: R${:.13}", one_secs);
     let return_year_string =   if unsafe{IS_ON_WRITE_MODE_ON_BUTTON_3} { format!("Return in {}", unsafe{USER_INPUT_BUTTON_3.clone()}) } else { format!("Return in {}", unsafe{YEARS_INVESTED.to_string()}) };
     let return_month_string =  if unsafe{IS_ON_WRITE_MODE_ON_BUTTON_4} { format!("Return in {}", unsafe{USER_INPUT_BUTTON_4.clone()}) } else { format!("Return in {}", unsafe{MONTHS_INVESTED.to_string()}) };
     let return_day_string =    if unsafe{IS_ON_WRITE_MODE_ON_BUTTON_5} { format!("Return in {}", unsafe{USER_INPUT_BUTTON_5.clone()}) } else { format!("Return in {}", unsafe{DAYS_INVESTED.to_string()}) };
