@@ -331,11 +331,11 @@ pub fn investment_wallet_page() -> Page<'static>
         if IS_ON_WRITE_MODE_ON_BUTTON_3_PAGE_3  { all_text.push(gen_text(18, (all_buttons[3].2.x + 10, all_buttons[3].2.y + 7),  format!("Investment Name: {}", USER_INPUT_BUTTON_3_PAGE_3.clone()), default_text_color)); }
         if !IS_ON_WRITE_MODE_ON_BUTTON_3_PAGE_3 { all_text.push(gen_text(18, (all_buttons[3].2.x + 10, all_buttons[3].2.y + 7),  format!("Investment Name: {}", INVESTMENT_NAME.clone()), default_text_color)); }
         if IS_ON_WRITE_MODE_ON_BUTTON_4_PAGE_3  { all_text.push(gen_text(18, (all_buttons[6].2.x + 10, all_buttons[6].2.y + 7),  format!("Year: {}", USER_INPUT_BUTTON_4_PAGE_3), default_text_color)); }
-        if !IS_ON_WRITE_MODE_ON_BUTTON_4_PAGE_3 { all_text.push(gen_text(18, (all_buttons[6].2.x + 10, all_buttons[6].2.y + 7),  format!("Year: {}", YEAR.to_string()), default_text_color)); }
+        if !IS_ON_WRITE_MODE_ON_BUTTON_4_PAGE_3 { all_text.push(gen_text(18, (all_buttons[6].2.x + 10, all_buttons[6].2.y + 7),  format!("Year: {}", YEAR), default_text_color)); }
         if IS_ON_WRITE_MODE_ON_BUTTON_5_PAGE_3  { all_text.push(gen_text(18, (all_buttons[7].2.x + 10, all_buttons[7].2.y + 7),  format!("Month: {}", USER_INPUT_BUTTON_5_PAGE_3), default_text_color)); }
-        if !IS_ON_WRITE_MODE_ON_BUTTON_5_PAGE_3 { all_text.push(gen_text(18, (all_buttons[7].2.x + 10, all_buttons[7].2.y + 7),  format!("Month: {}", MONTH.to_string()), default_text_color)); }
+        if !IS_ON_WRITE_MODE_ON_BUTTON_5_PAGE_3 { all_text.push(gen_text(18, (all_buttons[7].2.x + 10, all_buttons[7].2.y + 7),  format!("Month: {}", MONTH), default_text_color)); }
         if IS_ON_WRITE_MODE_ON_BUTTON_6_PAGE_3  { all_text.push(gen_text(18, (all_buttons[8].2.x + 10, all_buttons[8].2.y + 7),  format!("Day: {}", USER_INPUT_BUTTON_6_PAGE_3), default_text_color)); }
-        if !IS_ON_WRITE_MODE_ON_BUTTON_6_PAGE_3 { all_text.push(gen_text(18, (all_buttons[8].2.x + 10, all_buttons[8].2.y + 7),  format!("Day {}", DAY.to_string()), default_text_color)); }
+        if !IS_ON_WRITE_MODE_ON_BUTTON_6_PAGE_3 { all_text.push(gen_text(18, (all_buttons[8].2.x + 10, all_buttons[8].2.y + 7),  format!("Day {}", DAY), default_text_color)); }
         //investment summary text
         for (index, investment) in ALL_INVESTMENTS.clone().into_iter().enumerate()
         {

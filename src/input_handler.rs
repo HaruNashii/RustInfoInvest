@@ -58,6 +58,7 @@ pub static mut BUTTON_CLICKED: Option<usize> = None;
 
 
 #[allow(static_mut_refs)]
+#[allow(clippy::suspicious_else_formatting)]
 pub fn handle_input(buttons: Vec<(bool, Color, Rect)>)
 {   
     let event_pump = unsafe{&mut SDL2_EVENT_PUMP[0]};
@@ -105,29 +106,29 @@ pub fn handle_input(buttons: Vec<(bool, Color, Rect)>)
                     if text == "0" || text == "1" || text == "2" || text == "3" || text == "4" || text == "5" || text == "6" || text == "7" || text == "8" || text == "9" || text == "."
                     {
                         // PAGE 1
-                        if IS_ON_WRITE_MODE_ON_BUTTON_1 && USER_INPUT_BUTTON_1.replace(" ", "").len() < 6  { if (USER_INPUT_BUTTON_1.replace(" ", "").is_empty() && text == ".") || (USER_INPUT_BUTTON_1.contains('.') && text == ".") {continue;}; USER_INPUT_BUTTON_1 = USER_INPUT_BUTTON_1.replace(" ", ""); USER_INPUT_BUTTON_1.push_str(&text); }
-                        if IS_ON_WRITE_MODE_ON_BUTTON_2 && USER_INPUT_BUTTON_2.replace(" ", "").len() < 10 { if (USER_INPUT_BUTTON_2.replace(" ", "").is_empty() && text == ".") || (USER_INPUT_BUTTON_2.contains('.') && text == ".") {continue;}; USER_INPUT_BUTTON_2 = USER_INPUT_BUTTON_2.replace(" ", ""); USER_INPUT_BUTTON_2.push_str(&text); }
-                        if IS_ON_WRITE_MODE_ON_BUTTON_9 && USER_INPUT_BUTTON_9.replace(" ", "").len() < 10 { if (USER_INPUT_BUTTON_9.replace(" ", "").is_empty() && text == ".") || (USER_INPUT_BUTTON_9.contains('.') && text == ".") {continue;}; USER_INPUT_BUTTON_9 = USER_INPUT_BUTTON_9.replace(" ", ""); USER_INPUT_BUTTON_9.push_str(&text); }
+                        if IS_ON_WRITE_MODE_ON_BUTTON_1 && USER_INPUT_BUTTON_1.replace(" ", "").len() < 6  { if text == "." && USER_INPUT_BUTTON_1.replace(" ", "").is_empty() || USER_INPUT_BUTTON_1.contains('.') {continue;}; USER_INPUT_BUTTON_1 = USER_INPUT_BUTTON_1.replace(" ", ""); USER_INPUT_BUTTON_1.push_str(&text); }
+                        if IS_ON_WRITE_MODE_ON_BUTTON_2 && USER_INPUT_BUTTON_2.replace(" ", "").len() < 10 { if text == "." && USER_INPUT_BUTTON_2.replace(" ", "").is_empty() || USER_INPUT_BUTTON_2.contains('.') {continue;}; USER_INPUT_BUTTON_2 = USER_INPUT_BUTTON_2.replace(" ", ""); USER_INPUT_BUTTON_2.push_str(&text); }
+                        if IS_ON_WRITE_MODE_ON_BUTTON_9 && USER_INPUT_BUTTON_9.replace(" ", "").len() < 10 { if text == "." && USER_INPUT_BUTTON_9.replace(" ", "").is_empty() || USER_INPUT_BUTTON_9.contains('.') {continue;}; USER_INPUT_BUTTON_9 = USER_INPUT_BUTTON_9.replace(" ", ""); USER_INPUT_BUTTON_9.push_str(&text); }
                         
                         // PAGE 3
-                        if IS_ON_WRITE_MODE_ON_BUTTON_1_PAGE_3 && USER_INPUT_BUTTON_1_PAGE_3.replace(" ", "").len() < 6  { if (USER_INPUT_BUTTON_1_PAGE_3.replace(" ", "").is_empty() && text == ".") || (USER_INPUT_BUTTON_1_PAGE_3.contains('.') && text == ".") {continue}; USER_INPUT_BUTTON_1_PAGE_3.push_str(&text); }
-                        if IS_ON_WRITE_MODE_ON_BUTTON_2_PAGE_3 && USER_INPUT_BUTTON_2_PAGE_3.replace(" ", "").len() < 10 { if (USER_INPUT_BUTTON_2_PAGE_3.replace(" ", "").is_empty() && text == ".") || (USER_INPUT_BUTTON_2_PAGE_3.contains('.') && text == ".") {continue}; USER_INPUT_BUTTON_2_PAGE_3.push_str(&text); }
+                        if IS_ON_WRITE_MODE_ON_BUTTON_1_PAGE_3 && USER_INPUT_BUTTON_1_PAGE_3.replace(" ", "").len() < 6  { if text == "." && USER_INPUT_BUTTON_1_PAGE_3.replace(" ", "").is_empty() || USER_INPUT_BUTTON_1_PAGE_3.contains('.') {continue}; USER_INPUT_BUTTON_1_PAGE_3.push_str(&text); };
+                        if IS_ON_WRITE_MODE_ON_BUTTON_2_PAGE_3 && USER_INPUT_BUTTON_2_PAGE_3.replace(" ", "").len() < 10 { if text == "." && USER_INPUT_BUTTON_2_PAGE_3.replace(" ", "").is_empty() || USER_INPUT_BUTTON_2_PAGE_3.contains('.') {continue}; USER_INPUT_BUTTON_2_PAGE_3.push_str(&text); };
                     }
 
                     if text == "0" || text == "1" || text == "2" || text == "3" || text == "4" || text == "5" || text == "6" || text == "7" || text == "8" || text == "9"
                     {
                         // PAGE 1
-                        if IS_ON_WRITE_MODE_ON_BUTTON_3 && USER_INPUT_BUTTON_3.replace(" ", "").len() < 3 { USER_INPUT_BUTTON_3 = USER_INPUT_BUTTON_3.replace(" ", ""); USER_INPUT_BUTTON_3.push_str(&text); }
-                        if IS_ON_WRITE_MODE_ON_BUTTON_4 && USER_INPUT_BUTTON_4.replace(" ", "").len() < 3 { USER_INPUT_BUTTON_4 = USER_INPUT_BUTTON_4.replace(" ", ""); USER_INPUT_BUTTON_4.push_str(&text); }
-                        if IS_ON_WRITE_MODE_ON_BUTTON_5 && USER_INPUT_BUTTON_5.replace(" ", "").len() < 3 { USER_INPUT_BUTTON_5 = USER_INPUT_BUTTON_5.replace(" ", ""); USER_INPUT_BUTTON_5.push_str(&text); }
-                        if IS_ON_WRITE_MODE_ON_BUTTON_6 && USER_INPUT_BUTTON_6.replace(" ", "").len() < 3 { USER_INPUT_BUTTON_6 = USER_INPUT_BUTTON_6.replace(" ", ""); USER_INPUT_BUTTON_6.push_str(&text); }
-                        if IS_ON_WRITE_MODE_ON_BUTTON_7 && USER_INPUT_BUTTON_7.replace(" ", "").len() < 3 { USER_INPUT_BUTTON_7 = USER_INPUT_BUTTON_7.replace(" ", ""); USER_INPUT_BUTTON_7.push_str(&text); }
-                        if IS_ON_WRITE_MODE_ON_BUTTON_8 && USER_INPUT_BUTTON_8.replace(" ", "").len() < 3 { USER_INPUT_BUTTON_8 = USER_INPUT_BUTTON_8.replace(" ", ""); USER_INPUT_BUTTON_8.push_str(&text); }
+                        if IS_ON_WRITE_MODE_ON_BUTTON_3 && USER_INPUT_BUTTON_3.chars().filter(|c| !c.is_whitespace()).collect::<Vec<char>>().len() < 3 { USER_INPUT_BUTTON_3 = USER_INPUT_BUTTON_3.chars().filter(|c| !c.is_whitespace()).collect(); USER_INPUT_BUTTON_3.push_str(&text); }
+                        if IS_ON_WRITE_MODE_ON_BUTTON_4 && USER_INPUT_BUTTON_4.chars().filter(|c| !c.is_whitespace()).collect::<Vec<char>>().len() < 3 { USER_INPUT_BUTTON_4 = USER_INPUT_BUTTON_4.chars().filter(|c| !c.is_whitespace()).collect(); USER_INPUT_BUTTON_4.push_str(&text); }
+                        if IS_ON_WRITE_MODE_ON_BUTTON_5 && USER_INPUT_BUTTON_5.chars().filter(|c| !c.is_whitespace()).collect::<Vec<char>>().len() < 3 { USER_INPUT_BUTTON_5 = USER_INPUT_BUTTON_5.chars().filter(|c| !c.is_whitespace()).collect(); USER_INPUT_BUTTON_5.push_str(&text); }
+                        if IS_ON_WRITE_MODE_ON_BUTTON_6 && USER_INPUT_BUTTON_6.chars().filter(|c| !c.is_whitespace()).collect::<Vec<char>>().len() < 3 { USER_INPUT_BUTTON_6 = USER_INPUT_BUTTON_6.chars().filter(|c| !c.is_whitespace()).collect(); USER_INPUT_BUTTON_6.push_str(&text); }
+                        if IS_ON_WRITE_MODE_ON_BUTTON_7 && USER_INPUT_BUTTON_7.chars().filter(|c| !c.is_whitespace()).collect::<Vec<char>>().len() < 3 { USER_INPUT_BUTTON_7 = USER_INPUT_BUTTON_7.chars().filter(|c| !c.is_whitespace()).collect(); USER_INPUT_BUTTON_7.push_str(&text); }
+                        if IS_ON_WRITE_MODE_ON_BUTTON_8 && USER_INPUT_BUTTON_8.chars().filter(|c| !c.is_whitespace()).collect::<Vec<char>>().len() < 3 { USER_INPUT_BUTTON_8 = USER_INPUT_BUTTON_8.chars().filter(|c| !c.is_whitespace()).collect(); USER_INPUT_BUTTON_8.push_str(&text); }
 
                         // PAGE 3
-                        if IS_ON_WRITE_MODE_ON_BUTTON_4_PAGE_3 && USER_INPUT_BUTTON_4_PAGE_3.replace("", "").len() < 4 { USER_INPUT_BUTTON_4_PAGE_3 = USER_INPUT_BUTTON_4_PAGE_3.replace(" ", ""); USER_INPUT_BUTTON_4_PAGE_3.push_str(&text); }
-                        if IS_ON_WRITE_MODE_ON_BUTTON_5_PAGE_3 && USER_INPUT_BUTTON_5_PAGE_3.replace("", "").len() < 2 { USER_INPUT_BUTTON_5_PAGE_3 = USER_INPUT_BUTTON_5_PAGE_3.replace(" ", ""); USER_INPUT_BUTTON_5_PAGE_3.push_str(&text); if !USER_INPUT_BUTTON_5_PAGE_3.replace(" ", "").is_empty() && USER_INPUT_BUTTON_5_PAGE_3.replace(" ", "").parse::<i32>().unwrap() > 12 || USER_INPUT_BUTTON_5_PAGE_3.replace(" ", "").len() < 2 && text == "0" { USER_INPUT_BUTTON_5_PAGE_3.pop(); } }
-                        if IS_ON_WRITE_MODE_ON_BUTTON_6_PAGE_3 && USER_INPUT_BUTTON_6_PAGE_3.replace("", "").len() < 2 { USER_INPUT_BUTTON_6_PAGE_3 = USER_INPUT_BUTTON_6_PAGE_3.replace(" ", ""); USER_INPUT_BUTTON_6_PAGE_3.push_str(&text); if !USER_INPUT_BUTTON_6_PAGE_3.replace(" ", "").is_empty() && USER_INPUT_BUTTON_6_PAGE_3.replace(" ", "").parse::<i32>().unwrap() > 31 || USER_INPUT_BUTTON_6_PAGE_3.replace(" ", "").len() < 2 && text == "0" { USER_INPUT_BUTTON_6_PAGE_3.pop(); } }
+                        if IS_ON_WRITE_MODE_ON_BUTTON_4_PAGE_3 && USER_INPUT_BUTTON_4_PAGE_3.chars().filter(|c| !c.is_whitespace()).collect::<Vec<char>>().len() < 4 { USER_INPUT_BUTTON_4_PAGE_3 = USER_INPUT_BUTTON_4_PAGE_3.chars().filter(|c| !c.is_whitespace()).collect(); USER_INPUT_BUTTON_4_PAGE_3.push_str(&text); }
+                        if IS_ON_WRITE_MODE_ON_BUTTON_6_PAGE_3 && USER_INPUT_BUTTON_6_PAGE_3.chars().filter(|c| !c.is_whitespace()).collect::<Vec<char>>().len() < 2 { USER_INPUT_BUTTON_6_PAGE_3 = USER_INPUT_BUTTON_6_PAGE_3.chars().filter(|c| !c.is_whitespace()).collect(); USER_INPUT_BUTTON_6_PAGE_3.push_str(&text); if !USER_INPUT_BUTTON_6_PAGE_3.replace(" ", "").is_empty() && USER_INPUT_BUTTON_6_PAGE_3.replace(" ", "").parse::<i32>().unwrap() > 31 || USER_INPUT_BUTTON_6_PAGE_3.replace(" ", "").len() < 2 && text == "0" { USER_INPUT_BUTTON_6_PAGE_3.pop(); } }
+                        if IS_ON_WRITE_MODE_ON_BUTTON_5_PAGE_3 && USER_INPUT_BUTTON_5_PAGE_3.chars().filter(|c| !c.is_whitespace()).collect::<Vec<char>>().len() < 2 { USER_INPUT_BUTTON_5_PAGE_3 = USER_INPUT_BUTTON_5_PAGE_3.chars().filter(|c| !c.is_whitespace()).collect(); USER_INPUT_BUTTON_5_PAGE_3.push_str(&text); if !USER_INPUT_BUTTON_5_PAGE_3.replace(" ", "").is_empty() && USER_INPUT_BUTTON_5_PAGE_3.replace(" ", "").parse::<i32>().unwrap() > 12 || USER_INPUT_BUTTON_5_PAGE_3.replace(" ", "").len() < 2 && text == "0" { USER_INPUT_BUTTON_5_PAGE_3.pop(); } }
                     }
                     
                     //PAGE 3
