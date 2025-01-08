@@ -106,13 +106,13 @@ pub fn handle_input(buttons: Vec<(bool, Color, Rect)>)
                     if text == "0" || text == "1" || text == "2" || text == "3" || text == "4" || text == "5" || text == "6" || text == "7" || text == "8" || text == "9" || text == "."
                     {
                         // PAGE 1
-                        if IS_ON_WRITE_MODE_ON_BUTTON_1 && USER_INPUT_BUTTON_1.replace(" ", "").len() < 6  { if text == "." && USER_INPUT_BUTTON_1.replace(" ", "").is_empty() || USER_INPUT_BUTTON_1.contains('.') {continue;}; USER_INPUT_BUTTON_1 = USER_INPUT_BUTTON_1.replace(" ", ""); USER_INPUT_BUTTON_1.push_str(&text); }
-                        if IS_ON_WRITE_MODE_ON_BUTTON_2 && USER_INPUT_BUTTON_2.replace(" ", "").len() < 10 { if text == "." && USER_INPUT_BUTTON_2.replace(" ", "").is_empty() || USER_INPUT_BUTTON_2.contains('.') {continue;}; USER_INPUT_BUTTON_2 = USER_INPUT_BUTTON_2.replace(" ", ""); USER_INPUT_BUTTON_2.push_str(&text); }
-                        if IS_ON_WRITE_MODE_ON_BUTTON_9 && USER_INPUT_BUTTON_9.replace(" ", "").len() < 10 { if text == "." && USER_INPUT_BUTTON_9.replace(" ", "").is_empty() || USER_INPUT_BUTTON_9.contains('.') {continue;}; USER_INPUT_BUTTON_9 = USER_INPUT_BUTTON_9.replace(" ", ""); USER_INPUT_BUTTON_9.push_str(&text); }
+                        if IS_ON_WRITE_MODE_ON_BUTTON_1 && USER_INPUT_BUTTON_1.replace(" ", "").len() < 6  { if text == "." && (USER_INPUT_BUTTON_1.replace(" ", "").is_empty() || USER_INPUT_BUTTON_1.contains('.')) {continue;}; USER_INPUT_BUTTON_1 = USER_INPUT_BUTTON_1.replace(" ", ""); USER_INPUT_BUTTON_1.push_str(&text); }
+                        if IS_ON_WRITE_MODE_ON_BUTTON_2 && USER_INPUT_BUTTON_2.replace(" ", "").len() < 10 { if text == "." && (USER_INPUT_BUTTON_2.replace(" ", "").is_empty() || USER_INPUT_BUTTON_2.contains('.')) {continue;}; USER_INPUT_BUTTON_2 = USER_INPUT_BUTTON_2.replace(" ", ""); USER_INPUT_BUTTON_2.push_str(&text); }
+                        if IS_ON_WRITE_MODE_ON_BUTTON_9 && USER_INPUT_BUTTON_9.replace(" ", "").len() < 10 { if text == "." && (USER_INPUT_BUTTON_9.replace(" ", "").is_empty() || USER_INPUT_BUTTON_9.contains('.')) {continue;}; USER_INPUT_BUTTON_9 = USER_INPUT_BUTTON_9.replace(" ", ""); USER_INPUT_BUTTON_9.push_str(&text); }
                         
                         // PAGE 3
-                        if IS_ON_WRITE_MODE_ON_BUTTON_1_PAGE_3 && USER_INPUT_BUTTON_1_PAGE_3.replace(" ", "").len() < 6  { if text == "." && USER_INPUT_BUTTON_1_PAGE_3.replace(" ", "").is_empty() || USER_INPUT_BUTTON_1_PAGE_3.contains('.') {continue}; USER_INPUT_BUTTON_1_PAGE_3.push_str(&text); };
-                        if IS_ON_WRITE_MODE_ON_BUTTON_2_PAGE_3 && USER_INPUT_BUTTON_2_PAGE_3.replace(" ", "").len() < 10 { if text == "." && USER_INPUT_BUTTON_2_PAGE_3.replace(" ", "").is_empty() || USER_INPUT_BUTTON_2_PAGE_3.contains('.') {continue}; USER_INPUT_BUTTON_2_PAGE_3.push_str(&text); };
+                        if IS_ON_WRITE_MODE_ON_BUTTON_1_PAGE_3 && USER_INPUT_BUTTON_1_PAGE_3.replace(" ", "").len() < 6  { if text == "." && (USER_INPUT_BUTTON_1_PAGE_3.replace(" ", "").is_empty() || USER_INPUT_BUTTON_1_PAGE_3.contains('.')) {continue}; USER_INPUT_BUTTON_1_PAGE_3.push_str(&text); };
+                        if IS_ON_WRITE_MODE_ON_BUTTON_2_PAGE_3 && USER_INPUT_BUTTON_2_PAGE_3.replace(" ", "").len() < 10 { if text == "." && (USER_INPUT_BUTTON_2_PAGE_3.replace(" ", "").is_empty() || USER_INPUT_BUTTON_2_PAGE_3.contains('.')) {continue}; USER_INPUT_BUTTON_2_PAGE_3.push_str(&text); };
                     }
 
                     if text == "0" || text == "1" || text == "2" || text == "3" || text == "4" || text == "5" || text == "6" || text == "7" || text == "8" || text == "9"
