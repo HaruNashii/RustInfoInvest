@@ -6,15 +6,15 @@ use crate::investment_wallet::{MUTABLE_ALL_INVESTMENTS, ALL_INVESTMENTS, REALTIM
 
 
 //CALCULATOR PAGE
-pub static mut RETURN_VALUE: f64 = 10.0;
-pub static mut TOTAL_INVESTED: f64 = 1000.0;
 pub static mut ONLINE_HISTORIC_RETURN_VALUE: Vec<String> = Vec::new();
-pub static mut YEARS_INVESTED: f64 = 1.0;
-pub static mut MONTHS_INVESTED: f64 = 1.0;
-pub static mut DAYS_INVESTED: f64 = 1.0;
-pub static mut HOURS_INVESTED: f64 = 1.0;
-pub static mut MINUTES_INVESTED: f64 = 1.0;
-pub static mut SECS_INVESTED: f64 = 1.0;
+pub static mut TOTAL_INVESTED: f64 =       1000.0;
+pub static mut RETURN_VALUE: f64 =         10.0;
+pub static mut YEARS_INVESTED: f64 =       1.0;
+pub static mut MONTHS_INVESTED: f64 =      1.0;
+pub static mut DAYS_INVESTED: f64 =        1.0;
+pub static mut HOURS_INVESTED: f64 =       1.0;
+pub static mut MINUTES_INVESTED: f64 =     1.0;
+pub static mut SECS_INVESTED: f64 =        1.0;
 pub static mut MONTHLY_CONTRIBUTION: f64 = 0.0;
 
 

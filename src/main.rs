@@ -47,6 +47,7 @@ fn main()
                 button_action();
                 render_page(main_page, Some(persistent_page));
             },
+
             1 =>
             {
                 let realtime_currency_page = realtime_currency_page();
@@ -57,6 +58,7 @@ fn main()
                 button_action();
                 render_page(realtime_currency_page, Some(persistent_page));
             },
+
             2 =>
             {
                 let selic_page = selic_page();
@@ -67,6 +69,7 @@ fn main()
                 button_action();
                 render_page(selic_page, Some(persistent_page));
             },
+
             3 =>
             {
                 let investment_wallet_page = investment_wallet_page();
@@ -74,6 +77,7 @@ fn main()
                 button_action();
                 render_page(investment_wallet_page, None);
             }
+
             _=>{},
         }
     }
