@@ -1,8 +1,5 @@
 # **RustInfoInvest**
-> A Very Simple And Configurable Compound Interest Calculator With Online Selic Rate Values, Writed In Rust. 
-
-> [!IMPORTANT]
-> This APP is under development and currently it's not a serious project, this app is not optimized, but the compound interest formula is correct!
+> A Very Simple And Configurable Compound Interest Calculator With Online Selic Rate Values And Realtime Currency View, Writed In Rust. 
 
 <br/>
 <br/>
@@ -30,7 +27,7 @@
 <br/>
 
 ## **Known Issues**
-- not good UI and UX
+- can't resize the window
 - bad perfomance
 - messy code
 
@@ -39,8 +36,7 @@
 <br/>
 
 ## **Future Plans**
-- Better UI
-- Config Page
+- resizable window
 - make the code right
 - make the code fast
 
