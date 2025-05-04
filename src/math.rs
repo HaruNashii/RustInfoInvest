@@ -74,11 +74,12 @@ pub fn realtime_currency_maths()
                 let year_rate = investment.1 / 100.0;
 
                         //CALCULATOR FORMULA
-                        let month_return_value  = f64::powf(1.0 + year_rate,   1.00 / 12.00) - 1.0;
-                        let day_return_value    = f64::powf(1.0 + month_return_value,  1.00 / 30.00) - 1.0;
-                        let hour_return_value   = f64::powf(1.0 + day_return_value,    1.00 / 24.00) - 1.0;
-                        let minute_return_value = f64::powf(1.0 + hour_return_value,   1.00 / 60.00) - 1.0;
-                        let secs_return_value   = f64::powf(1.0 + minute_return_value, 1.00 / 60.00) - 1.0;
+                        //let month_return_value  = f64::powf(1.0 + year_rate,   1.00 / 12.00) - 1.0;
+                        //let day_return_value    = f64::powf(1.0 + month_return_value,  1.00 / 30.00) - 1.0;
+                        //let hour_return_value   = f64::powf(1.0 + day_return_value,    1.00 / 24.00) - 1.0;
+                        //let minute_return_value = f64::powf(1.0 + hour_return_value,   1.00 / 60.00) - 1.0;
+                        //let secs_return_value   = f64::powf(1.0 + minute_return_value, 1.00 / 60.00) - 1.0;
+                        let secs_return_value = (1.0 + year_rate).powf(1.0 / (365.00 * 24.00 * 60.00 * 60.00)) - 1.0;
 
                         let seconds_elapsed: f64 = Local::now().signed_duration_since(investment.0).num_seconds() as f64;
                         let investment_total_invested = investment.2;

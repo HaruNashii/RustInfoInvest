@@ -93,6 +93,14 @@ pub fn calculator_page() -> Page<'static>
         if USER_INPUT_BUTTON_8.is_empty() { USER_INPUT_BUTTON_8.push(' ') }; 
         if USER_INPUT_BUTTON_9.is_empty() { USER_INPUT_BUTTON_9.push(' ') }; 
     };
+    
+    //===================== rects =========================
+    let all_rects = vec! 
+    [
+        //total invested + income background
+        (Color::RGB(250, 179, 135), Rect::new(10, 215, 385, 40)),
+        (Color::RGB(250, 179, 135), Rect::new(405, 215, 385, 40)),
+    ];
 
     //===================== buttons =========================
     let all_buttons = vec!
@@ -102,17 +110,17 @@ pub fn calculator_page() -> Page<'static>
         //receive input button 2
         (true, Color::RGB(203,   166, 247),   Rect::new(10, 160, 780, 40), 5),
         //year button
-        (true, Color::RGB(250,   179, 135),   Rect::new(345, 245, 40, 25), 6),
+        (true, Color::RGB(17,   17, 27),   Rect::new(345, 275, 40, 25), 6),
         //month button
-        (true, Color::RGB(250,   179, 135),   Rect::new(345, 295, 40, 25), 7),
+        (true, Color::RGB(17, 17, 27),   Rect::new(345, 325, 40, 25), 7),
         //day button
-        (true, Color::RGB(250,   179, 135),   Rect::new(345, 345, 40, 25), 8),
+        (true, Color::RGB(17, 17, 27),   Rect::new(345, 375, 40, 25), 8),
         //hour button
-        (true, Color::RGB(250,   179, 135),   Rect::new(345, 395, 40, 25), 9),
+        (true, Color::RGB(17, 17, 27),   Rect::new(345, 425, 40, 25), 9),
         //minute button
-        (true, Color::RGB(250,   179, 135),   Rect::new(345, 445, 40, 25), 10),
+        (true, Color::RGB(17, 17, 27),   Rect::new(345, 475, 40, 25), 10),
         //secs button
-        (true, Color::RGB(250,   179, 135),   Rect::new(345, 495, 40, 25), 11),
+        (true, Color::RGB(17, 17, 27),   Rect::new(345, 525, 40, 25), 11),
         //receive input button 3
         (true, Color::RGB(203,   166, 247),   Rect::new(405, 105, 385, 40), 12),
     ];
@@ -130,22 +138,26 @@ pub fn calculator_page() -> Page<'static>
     let return_hour_string =   if unsafe{IS_ON_WRITE_MODE_ON_BUTTON_6} { format!("Return in {}", unsafe{USER_INPUT_BUTTON_6.clone()}) } else { format!("Return in {}", unsafe{HOURS_INVESTED.to_string()}) };
     let return_minute_string = if unsafe{IS_ON_WRITE_MODE_ON_BUTTON_7} { format!("Return in {}", unsafe{USER_INPUT_BUTTON_7.clone()}) } else { format!("Return in {}", unsafe{MINUTES_INVESTED.to_string()}) };
     let return_second_string = if unsafe{IS_ON_WRITE_MODE_ON_BUTTON_8} { format!("Return in {}", unsafe{USER_INPUT_BUTTON_8.clone()}) } else { format!("Return in {}", unsafe{SECS_INVESTED.to_string()}) };
+    let total_with_year_income_string = format!("Total in years Income: R${:.2}", unsafe{TOTAL_INVESTED + one_year});
+    let total_with_month_income_string = format!("Total in months Income: R${:.2}", unsafe{TOTAL_INVESTED + one_month});
 
     let mut all_text = vec!
     [
-        gen_text(20, (226, 245), return_year_string, subtext_color),
-        gen_text(20, (226, 295), return_month_string, subtext_color),
-        gen_text(20, (226, 345), return_day_string, subtext_color),
-        gen_text(20, (226, 395), return_hour_string, subtext_color),
-        gen_text(20, (226, 445), return_minute_string, subtext_color),
-        gen_text(20, (226, 495), return_second_string, subtext_color),
+        gen_text(20, (226, 275), return_year_string, subtext_color),
+        gen_text(20, (226, 325), return_month_string, subtext_color),
+        gen_text(20, (226, 375), return_day_string, subtext_color),
+        gen_text(20, (226, 425), return_hour_string, subtext_color),
+        gen_text(20, (226, 475), return_minute_string, subtext_color),
+        gen_text(20, (226, 525), return_second_string, subtext_color),
         //user input text
-        gen_text(20, (400, 245), year_string, subtext_color),
-        gen_text(20, (400, 295), month_string, subtext_color),
-        gen_text(20, (400, 345), day_string, subtext_color),
-        gen_text(20, (400, 395), hour_string, subtext_color),
-        gen_text(20, (400, 445), minute_string, subtext_color),
-        gen_text(20, (400, 495), second_string, subtext_color),
+        gen_text(20, (400, 275), year_string, subtext_color),
+        gen_text(20, (400, 325), month_string, subtext_color),
+        gen_text(20, (400, 375), day_string, subtext_color),
+        gen_text(20, (400, 425), hour_string, subtext_color),
+        gen_text(20, (400, 475), minute_string, subtext_color),
+        gen_text(20, (400, 525), second_string, subtext_color),
+        gen_text(16, (20, 224), total_with_year_income_string, default_text_color),
+        gen_text(16, (415, 224), total_with_month_income_string, default_text_color),
     ];
     unsafe
     {
@@ -158,13 +170,14 @@ pub fn calculator_page() -> Page<'static>
         //monthly contribution text
         if IS_ON_WRITE_MODE_ON_BUTTON_9  { all_text.push(gen_text(18, (all_buttons[8].2.x + 10, all_buttons[8].2.y + 7), format!("Monthly Contribution: R${}", USER_INPUT_BUTTON_9), default_text_color)); }
         if !IS_ON_WRITE_MODE_ON_BUTTON_9 { all_text.push(gen_text(18, (all_buttons[8].2.x + 10, all_buttons[8].2.y + 7), format!("Monthly Contribution: R${}", MONTHLY_CONTRIBUTION), default_text_color)); }
+        //total invested + income
     };
     
     //===================== page creation =========================
     Page 
     {
         background_color: Some(bg_color),
-        rects:   None,
+        rects:   Some( all_rects ),
         buttons: Some( all_buttons  ),
         texts:   Some( all_text ),
         images:  None,
