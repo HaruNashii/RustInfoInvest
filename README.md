@@ -54,5 +54,5 @@
 <br/>
 
 ## **Downloading And Running**
-- after downloading the dependencies, you can run the app with:
+- after downloading the dependencies, you can run the app while on the root folder of the project with:
 - ```cargo run --release```
