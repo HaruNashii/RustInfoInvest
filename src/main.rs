@@ -44,47 +44,49 @@ fn main()
 
         let persistent_page = persistent_page();
 
-
         match unsafe{PAGE_TO_RENDER}
         {
             0 => 
             {
-                let main_page = calculator_page();
+                //LOAD CALCULATOR PAGE
+                let calculator_page = calculator_page();
                 let mut all_buttons = Vec::new();
                 all_buttons.append(&mut persistent_page.buttons.clone().unwrap());
-                all_buttons.append(&mut main_page.buttons.clone().unwrap());
-                handle_input(all_buttons);
-
+                all_buttons.append(&mut calculator_page.buttons.clone().unwrap());
+                handle_input(&all_buttons);
                 button_action();
-                render_page(main_page, Some(persistent_page));
+                render_page(calculator_page, Some(persistent_page));
             },
 
             1 =>
             {
+                //LOAD REALTIME CURRENCY PAGE
                 let realtime_currency_page = realtime_currency_page();
                 let mut all_buttons = Vec::new();
                 all_buttons.append(&mut persistent_page.buttons.clone().unwrap());
                 all_buttons.append(&mut realtime_currency_page.buttons.clone().unwrap());
-                handle_input(all_buttons);
+                handle_input(&all_buttons);
                 button_action();
                 render_page(realtime_currency_page, Some(persistent_page));
             },
 
             2 =>
             {
+                //LOAD SELIC PAGE
                 let selic_page = selic_page();
                 let mut all_buttons = Vec::new();
                 all_buttons.append(&mut persistent_page.buttons.clone().unwrap());
                 all_buttons.append(&mut selic_page.buttons.clone().unwrap());
-                handle_input(all_buttons);
+                handle_input(&all_buttons);
                 button_action();
                 render_page(selic_page, Some(persistent_page));
             },
 
             3 =>
             {
+                //LOAD WALLET PAGE
                 let investment_wallet_page = investment_wallet_page();
-                handle_input(investment_wallet_page.buttons.clone().unwrap());
+                handle_input(&investment_wallet_page.buttons.clone().unwrap());
                 button_action();
                 render_page(investment_wallet_page, None);
             }

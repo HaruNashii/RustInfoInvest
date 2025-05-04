@@ -17,7 +17,7 @@ pub struct Page<'a>
 {
     pub background_color: Option<Color>,
     pub rects:   Option<Vec< (Color, Rect) >>,
-    pub buttons: Option<Vec< (bool, Color, Rect) >>,
+    pub buttons: Option<Vec< (bool, Color, Rect, u16) >>,
     pub texts:   Option<Vec< (Texture<'a>, Rect) >>,
     pub images:  Option<Vec< (Texture<'a>, Rect) >>,
 }
@@ -42,11 +42,11 @@ pub fn persistent_page() -> Page<'static>
     let all_buttons = vec!
     [
         //main page button
-        (true, Color::RGB(243, 139, 168), Rect::new(75, 10, 200, 75)),
+        (true, Color::RGB(243, 139, 168), Rect::new(75, 10, 200, 75), 1),
         //secound page button
-        (true, Color::RGB(243, 139, 168), Rect::new(300, 10, 200, 75)),
+        (true, Color::RGB(243, 139, 168), Rect::new(300, 10, 200, 75), 2),
         //selic page button
-        (true, Color::RGB(243, 139, 168), Rect::new(525, 10, 200, 75)),
+        (true, Color::RGB(243, 139, 168), Rect::new(525, 10, 200, 75), 3),
     ];
 
     //===================== texts =========================
@@ -98,23 +98,23 @@ pub fn calculator_page() -> Page<'static>
     let all_buttons = vec!
     [
         //receive input button 1
-        (true, Color::RGB(203,   166, 247),   Rect::new(10, 105, 385, 40)),
+        (true, Color::RGB(203,   166, 247),   Rect::new(10, 105, 385, 40), 4),
         //receive input button 2
-        (true, Color::RGB(203,   166, 247),   Rect::new(10, 160, 780, 40)),
+        (true, Color::RGB(203,   166, 247),   Rect::new(10, 160, 780, 40), 5),
         //year button
-        (true, Color::RGB(250,   179, 135),   Rect::new(345, 245, 40, 25)),
+        (true, Color::RGB(250,   179, 135),   Rect::new(345, 245, 40, 25), 6),
         //month button
-        (true, Color::RGB(250,   179, 135),   Rect::new(345, 295, 40, 25)),
+        (true, Color::RGB(250,   179, 135),   Rect::new(345, 295, 40, 25), 7),
         //day button
-        (true, Color::RGB(250,   179, 135),   Rect::new(345, 345, 40, 25)),
+        (true, Color::RGB(250,   179, 135),   Rect::new(345, 345, 40, 25), 8),
         //hour button
-        (true, Color::RGB(250,   179, 135),   Rect::new(345, 395, 40, 25)),
+        (true, Color::RGB(250,   179, 135),   Rect::new(345, 395, 40, 25), 9),
         //minute button
-        (true, Color::RGB(250,   179, 135),   Rect::new(345, 445, 40, 25)),
+        (true, Color::RGB(250,   179, 135),   Rect::new(345, 445, 40, 25), 10),
         //secs button
-        (true, Color::RGB(250,   179, 135),   Rect::new(345, 495, 40, 25)),
+        (true, Color::RGB(250,   179, 135),   Rect::new(345, 495, 40, 25), 11),
         //receive input button 3
-        (true, Color::RGB(203,   166, 247),   Rect::new(405, 105, 385, 40)),
+        (true, Color::RGB(203,   166, 247),   Rect::new(405, 105, 385, 40), 12),
     ];
     
     //===================== texts =========================
@@ -194,7 +194,7 @@ pub fn realtime_currency_page() -> Page<'static>
     let all_buttons = vec!
     [
         //investment wallet
-        (true, Color::RGB(203,   166, 247),   Rect::new(10, 105, 385, 40)),
+        (true, Color::RGB(203,   166, 247),   Rect::new(10, 105, 385, 40), 13),
     ];
 
     //===================== texts =========================
@@ -237,7 +237,7 @@ pub fn selic_page() -> Page<'static>
     let all_buttons = vec!
     [
         //sync online info button
-        (true, Color::RGB(203, 166, 247), Rect::new(300, 125, 213, 50)),
+        (true, Color::RGB(203, 166, 247), Rect::new(300, 125, 213, 50), 14),
     ];
 
     //===================== texts =========================
@@ -294,24 +294,24 @@ pub fn investment_wallet_page() -> Page<'static>
     let all_buttons = vec!
     [
         //back button
-        (true, Color::RGB(243, 139, 168), Rect::new(20, 20, 50, 40)),
+        (true, Color::RGB(243, 139, 168), Rect::new(20, 20, 50, 40), 15),
         //investment year return value button
-        (true, Color::RGB(203, 166, 247), Rect::new(20, 200, 350, 40)),
+        (true, Color::RGB(203, 166, 247), Rect::new(20, 200, 350, 40), 16),
         //total invested return value button
-        (true, Color::RGB(203, 166, 247), Rect::new(400, 200, 350, 40)),
+        (true, Color::RGB(203, 166, 247), Rect::new(400, 200, 350, 40), 17),
         //investment name button
-        (true, Color::RGB(203, 166, 247), Rect::new(20, 140, 730, 40)),
+        (true, Color::RGB(203, 166, 247), Rect::new(20, 140, 730, 40), 18),
         //add investment button
-        (true, Color::RGB(250, 179, 135), Rect::new(100, 20, 650, 40)),
+        (true, Color::RGB(250, 179, 135), Rect::new(100, 20, 650, 40), 19),
         //delete all investment button 
-        (true, Color::RGB(243, 139, 168), Rect::new(20, 80, 730, 40)),
+        (true, Color::RGB(243, 139, 168), Rect::new(20, 80, 730, 40), 20),
 
         //year button 
-        (true, Color::RGB(243, 139, 168), Rect::new(20, 260, 230, 40)),
+        (true, Color::RGB(243, 139, 168), Rect::new(20, 260, 230, 40), 21),
         //month button 
-        (true, Color::RGB(243, 139, 168), Rect::new(270, 260, 230, 40)),
+        (true, Color::RGB(243, 139, 168), Rect::new(270, 260, 230, 40), 22),
         //day button 
-        (true, Color::RGB(243, 139, 168), Rect::new(520, 260, 230, 40)),
+        (true, Color::RGB(243, 139, 168), Rect::new(520, 260, 230, 40), 23),
     ];
 
     //===================== texts =========================

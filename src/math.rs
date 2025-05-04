@@ -71,38 +71,33 @@ pub fn realtime_currency_maths()
 
             for (investment_index, investment) in ALL_INVESTMENTS.iter().enumerate() 
             {
-                let investment_year_rate = investment.1 / 100.0;
-                let investment_total_invested = investment.2;
-                let investment_date = investment.0;
-                let seconds_elapsed: f64 = Local::now().signed_duration_since(investment_date).num_seconds() as f64;
-
-                        //CHAT GPT FORMULA (most accurate)
-                        let investment_second_rate = (investment.1 / (360.000 * 24.000 * 60.000 * 60.000)) / 100.000;
-                        MUTABLE_ALL_INVESTMENTS[investment_index].2 = investment_total_invested * f64::powf(1.0 + investment_second_rate, seconds_elapsed);
+                let year_rate = investment.1 / 100.0;
 
                         //CALCULATOR FORMULA
-                        let month_return_value  = f64::powf(1.0 + investment_year_rate,           1.00 /   12.00) - 1.0;
-                        let day_return_value    = f64::powf(1.0 + month_return_value,             1.00 /   30.00) - 1.0;
-                        let hour_return_value   = f64::powf(1.0 + day_return_value,               1.00 /   24.00) - 1.0;
-                        let minute_return_value = f64::powf(1.0 + hour_return_value,              1.00 /   60.00) - 1.0;
-                        let secs_return_value   = f64::powf(1.0 + minute_return_value,            1.00 /   60.00) - 1.0;
-                        let formula_secs_1        = f64::powf(1.0 + secs_return_value,            1.00)           - 1.0;
-                        let formula_secs = MUTABLE_ALL_INVESTMENTS[investment_index].2 * f64::powf(1.0 + formula_secs_1, 1.00) - MUTABLE_ALL_INVESTMENTS[investment_index].2;
+                        let month_return_value  = f64::powf(1.0 + year_rate,   1.00 / 12.00) - 1.0;
+                        let day_return_value    = f64::powf(1.0 + month_return_value,  1.00 / 30.00) - 1.0;
+                        let hour_return_value   = f64::powf(1.0 + day_return_value,    1.00 / 24.00) - 1.0;
+                        let minute_return_value = f64::powf(1.0 + hour_return_value,   1.00 / 60.00) - 1.0;
+                        let secs_return_value   = f64::powf(1.0 + minute_return_value, 1.00 / 60.00) - 1.0;
 
-                        //LOCAL FORMULA    
-                        //let secs_return_value = f64::powf(1.0 + investment_year_rate, 1.00 / (365.00 * 24.00 * 60.00 * 60.00)) - 1.0;
-                        //let formula_secs =    f64::powf(1.0 + secs_return_value,    1.00) - 1.0;
-                        //let return_per_secs = MUTABLE_ALL_INVESTMENTS[investment_index].2 * f64::powf(1.0 + formula_secs, 1.00) - MUTABLE_ALL_INVESTMENTS[investment_index].2;
-                        //MUTABLE_ALL_INVESTMENTS[investment_index].2 = investment_total_invested + (return_per_secs * seconds_elapsed);
+                        let seconds_elapsed: f64 = Local::now().signed_duration_since(investment.0).num_seconds() as f64;
+                        let investment_total_invested = investment.2;
+                        let return_per_sec: f64 =                     MUTABLE_ALL_INVESTMENTS[investment_index].2 * f64::powf(1.0 + secs_return_value, 1.0) - MUTABLE_ALL_INVESTMENTS[investment_index].2;
+                        MUTABLE_ALL_INVESTMENTS[investment_index].2 = investment_total_invested * f64::powf(1.0 + secs_return_value, seconds_elapsed);
 
-                        //DEBUG FORMULAS
-                        //println!("time passed = D: {} H: {} \ninvested = {} \nteste = {}", day_passed, hours_passed, investment_total_invested, formula_millis);
-                        //println!("return per secs: {}", formula_secs);
+                        //DEBUG FORMULA
+                        //println!("=================");
+                        //println!("seconds elapsed = {}", seconds_elapsed);
+                        //println!("yearly return value = {}", year_rate);
+                        //println!("seconds return value = {}", secs_return_value);
+                        //println!("total invested = {}", investment_total_invested);
+                        //println!("return per secs: {}", return_per_sec);
+                        //println!("=================");
                 
                 //REALTIME CURRENCY
                 realtime_currency_vector.push(MUTABLE_ALL_INVESTMENTS[investment_index].2);
                 //RETURN PER SECOND
-                return_value_per_second_vector.push(formula_secs);
+                return_value_per_second_vector.push(return_per_sec);
             }
 
             REALTIME_CURRENCY = realtime_currency_vector.iter().sum();

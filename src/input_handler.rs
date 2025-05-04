@@ -59,7 +59,7 @@ pub static mut BUTTON_CLICKED: Option<usize> = None;
 
 #[allow(static_mut_refs)]
 #[allow(clippy::suspicious_else_formatting)]
-pub fn handle_input(buttons: Vec<(bool, Color, Rect)>)
+pub fn handle_input(buttons: &Vec<(bool, Color, Rect, u16)>)
 {   
     let event_pump = unsafe{&mut SDL2_EVENT_PUMP[0]};
     for event in event_pump.poll_iter() 
@@ -74,11 +74,11 @@ pub fn handle_input(buttons: Vec<(bool, Color, Rect)>)
                 unsafe 
                 {
                     IS_HOVERING_BUTTON = false;
-                    for (index, object) in buttons.iter().enumerate()
+                    for object in buttons
                     {
                         if x >= object.2.x && x <= object.2.x + object.2.w && y >= object.2.y && y <= object.2.y + object.2.h
                         {
-                                BUTTON_BEING_HOVERED = index; 
+                                BUTTON_BEING_HOVERED = object.3 as usize; 
                                 IS_HOVERING_BUTTON = true;
                         }
                     };
@@ -263,7 +263,12 @@ pub fn handle_input(buttons: Vec<(bool, Color, Rect)>)
                  }
             }
 
-            Event::Quit { .. } => {},
+            Event::Quit { .. } => 
+            { 
+                print!("\x1B[2J\x1B[1;1H");
+                println!("bye bye :3");
+                exit(0); 
+            },
             _ => {},
         }
     }
