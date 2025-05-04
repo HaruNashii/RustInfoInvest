@@ -27,6 +27,7 @@
 <br/>
 
 ## **Known Issues**
+- realtime currency value not being 100% accurate
 - can't resize the window
 - bad perfomance
 - messy code
