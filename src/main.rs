@@ -19,7 +19,7 @@ pub mod getonlineinfo;
 pub mod pages;
 pub mod window;
 pub mod input_handler;
-pub mod sdl2_generators;
+pub mod sdl3_generators;
 pub mod buttons;
 pub mod investment_wallet;
 

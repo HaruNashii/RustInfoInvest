@@ -1,16 +1,21 @@
 use std::process::exit;
-use sdl2::mouse::MouseButton;
-use sdl2::keyboard::Keycode;
-use sdl2::event::Event;
-use sdl2::rect::Rect;
-use sdl2::pixels::Color;
+
+use sdl3::
+{
+    mouse::MouseButton,
+    keyboard::Keycode,
+    event::Event,
+    rect::Rect,
+    pixels::Color,
+};
+
 use crate::
 { 
     buttons::PAGE_TO_RENDER,
     getonlineinfo::PREVENT_KILL, 
     investment_wallet::{DAY, INVESTMENT_NAME, MONTH, RETURN_PER_INVESTMENT, TOTAL_INVESTED_PER_INVESTMENT, YEAR}, 
     math::{DAYS_INVESTED, HOURS_INVESTED, MINUTES_INVESTED, MONTHS_INVESTED, MONTHLY_CONTRIBUTION, RETURN_VALUE, SECS_INVESTED, TOTAL_INVESTED, YEARS_INVESTED}, 
-    window::SDL2_EVENT_PUMP
+    window::SDL3_EVENT_PUMP
 };
 
 
@@ -61,7 +66,7 @@ pub static mut BUTTON_CLICKED: Option<usize> = None;
 #[allow(clippy::suspicious_else_formatting)]
 pub fn handle_input(buttons: &Vec<(bool, Color, Rect, u16)>)
 {   
-    let event_pump = unsafe{&mut SDL2_EVENT_PUMP[0]};
+    let event_pump = unsafe{&mut SDL3_EVENT_PUMP[0]};
     for event in event_pump.poll_iter() 
     {
         match event 
@@ -76,7 +81,7 @@ pub fn handle_input(buttons: &Vec<(bool, Color, Rect, u16)>)
                     IS_HOVERING_BUTTON = false;
                     for object in buttons
                     {
-                        if x >= object.2.x && x <= object.2.x + object.2.w && y >= object.2.y && y <= object.2.y + object.2.h
+                        if x >= object.2.x as f32 && x <= (object.2.x + object.2.w) as f32 && y >= object.2.y as f32 && y <= (object.2.y + object.2.h) as f32
                         {
                                 BUTTON_BEING_HOVERED = object.3 as usize; 
                                 IS_HOVERING_BUTTON = true;

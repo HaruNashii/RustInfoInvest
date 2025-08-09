@@ -1,15 +1,15 @@
 use std::time::Duration;
-use sdl2::video::{WindowContext, Window};
-use sdl2::render::{TextureCreator, Canvas};
+use sdl3::render::{TextureCreator, Canvas};
+use sdl3::video::{WindowContext, Window};
 use crate::pages::Page;
 
 
 
 
 
-pub static mut SDL2_CANVAS: Vec<Canvas<Window>> = Vec::new();
-pub static mut SDL2_TEXTURE_CREATOR: Vec<TextureCreator<WindowContext>> = Vec::new();
-pub static mut SDL2_EVENT_PUMP: Vec<sdl2::EventPump> = Vec::new();
+pub static mut SDL3_CANVAS: Vec<Canvas<Window>> = Vec::new();
+pub static mut SDL3_TEXTURE_CREATOR: Vec<TextureCreator<WindowContext>> = Vec::new();
+pub static mut SDL3_EVENT_PUMP: Vec<sdl3::EventPump> = Vec::new();
 
 
 
@@ -18,19 +18,22 @@ pub static mut SDL2_EVENT_PUMP: Vec<sdl2::EventPump> = Vec::new();
 #[allow(static_mut_refs)]
 pub fn create_window()
 {
-    let sdl_started = sdl2::init().unwrap();
+    let sdl_started = sdl3::init().unwrap();
     let video_system = sdl_started.video().unwrap();
-    let window = video_system.window("RustInfoInvest", 800, 600).position_centered().allow_highdpi().build().unwrap();
-    let canvas = window.into_canvas().accelerated().present_vsync().build().unwrap();
+    let window = video_system.window("RustInfoInvest", 800, 600).position_centered().build().unwrap();
+    video_system.text_input().start(&window);
+    let canvas = window.into_canvas();
     let texture_creator = canvas.texture_creator();
     let event_pump = sdl_started.event_pump().unwrap();
+    
+
     unsafe 
     { 
-        SDL2_CANVAS.push(canvas);
-        SDL2_TEXTURE_CREATOR.push(texture_creator);
-        SDL2_EVENT_PUMP.push(event_pump);
+        SDL3_CANVAS.push(canvas);
+        SDL3_TEXTURE_CREATOR.push(texture_creator);
+        SDL3_EVENT_PUMP.push(event_pump);
     };
-    while unsafe{SDL2_EVENT_PUMP.is_empty()} { println!("waiting for event pump"); std::thread::sleep(Duration::from_millis(250)) };
+    while unsafe{SDL3_EVENT_PUMP.is_empty()} { println!("waiting for event pump"); std::thread::sleep(Duration::from_millis(250)) };
 }
 
 
@@ -38,7 +41,7 @@ pub fn create_window()
 #[allow(static_mut_refs)]
 pub fn render_page(page: Page, persistent_page: Option<Page>)
 {
-    let canvas = unsafe {&mut SDL2_CANVAS[0]};
+    let canvas = unsafe {&mut SDL3_CANVAS[0]};
     canvas.set_draw_color(page.background_color.unwrap());
     canvas.clear();
 
