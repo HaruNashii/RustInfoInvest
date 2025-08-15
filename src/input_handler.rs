@@ -2,11 +2,7 @@ use std::process::exit;
 
 use sdl3::
 {
-    mouse::MouseButton,
-    keyboard::Keycode,
-    event::Event,
-    rect::Rect,
-    pixels::Color,
+    event::Event, keyboard::Keycode, mouse::MouseButton, pixels::Color, rect::Rect, EventPump
 };
 
 use crate::
@@ -15,7 +11,6 @@ use crate::
     getonlineinfo::PREVENT_KILL, 
     investment_wallet::{DAY, INVESTMENT_NAME, MONTH, RETURN_PER_INVESTMENT, TOTAL_INVESTED_PER_INVESTMENT, YEAR}, 
     math::{DAYS_INVESTED, HOURS_INVESTED, MINUTES_INVESTED, MONTHS_INVESTED, MONTHLY_CONTRIBUTION, RETURN_VALUE, SECS_INVESTED, TOTAL_INVESTED, YEARS_INVESTED}, 
-    window::SDL3_EVENT_PUMP
 };
 
 
@@ -64,9 +59,8 @@ pub static mut BUTTON_CLICKED: Option<usize> = None;
 
 #[allow(static_mut_refs)]
 #[allow(clippy::suspicious_else_formatting)]
-pub fn handle_input(buttons: &Vec<(bool, Color, Rect, u16)>)
+pub fn handle_input(buttons: &Vec<(bool, Color, Rect, u16)>, event_pump: &mut EventPump)
 {   
-    let event_pump = unsafe{&mut SDL3_EVENT_PUMP[0]};
     for event in event_pump.poll_iter() 
     {
         match event 

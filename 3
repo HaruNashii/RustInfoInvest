@@ -1,0 +1,19 @@
+use sdl3::rect::Rect;
+use sdl3::pixels::Color;
+use sdl3::render::{Texture, TextureCreator};
+use sdl3::video::WindowContext;
+
+
+
+
+
+pub fn gen_text<'a>(texture_creator: &&'a TextureCreator<WindowContext>, font_size: f32, pos: (i32, i32), content: String, font_color: Color) -> (Texture<'a>, Rect)
+{
+    let ttf_context = sdl3::ttf::init().unwrap();
+    let font = ttf_context.load_font("fonts/JetBrainsMono-Bold.ttf", font_size).unwrap();
+    let surface = font.render(&content).blended(font_color).unwrap();
+    let texture = texture_creator.create_texture_from_surface(&surface).unwrap();
+    let rect = Rect::new(pos.0, pos.1, surface.width(), surface.height());
+
+    (texture, rect)
+}

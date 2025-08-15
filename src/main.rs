@@ -29,7 +29,7 @@ pub mod investment_wallet;
 
 fn main() 
 {
-    let mut canvas = create_window();
+    let (mut canvas, mut event_pump) = create_window();
 
     unsafe 
     {
@@ -53,7 +53,7 @@ fn main()
                 let mut all_buttons = Vec::new();
                 all_buttons.append(&mut persistent_page.buttons.clone().unwrap());
                 all_buttons.append(&mut calculator_page.buttons.clone().unwrap());
-                handle_input(&all_buttons);
+                handle_input(&all_buttons, &mut event_pump);
                 button_action();
                 render_page(calculator_page, Some(persistent_page), &mut canvas);
             },
@@ -65,7 +65,7 @@ fn main()
                 let mut all_buttons = Vec::new();
                 all_buttons.append(&mut persistent_page.buttons.clone().unwrap());
                 all_buttons.append(&mut realtime_currency_page.buttons.clone().unwrap());
-                handle_input(&all_buttons);
+                handle_input(&all_buttons, &mut event_pump);
                 button_action();
                 render_page(realtime_currency_page, Some(persistent_page), &mut canvas);
             },
@@ -77,7 +77,7 @@ fn main()
                 let mut all_buttons = Vec::new();
                 all_buttons.append(&mut persistent_page.buttons.clone().unwrap());
                 all_buttons.append(&mut selic_page.buttons.clone().unwrap());
-                handle_input(&all_buttons);
+                handle_input(&all_buttons, &mut event_pump);
                 button_action();
                 render_page(selic_page, Some(persistent_page), &mut canvas);
             },
@@ -86,7 +86,7 @@ fn main()
             {
                 //LOAD WALLET PAGE
                 let investment_wallet_page = investment_wallet_page();
-                handle_input(&investment_wallet_page.buttons.clone().unwrap());
+                handle_input(&investment_wallet_page.buttons.clone().unwrap(), &mut event_pump);
                 button_action();
                 render_page(investment_wallet_page, None, &mut canvas);
             }

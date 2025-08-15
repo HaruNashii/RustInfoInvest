@@ -1,6 +1,6 @@
-use std::time::Duration;
 use sdl3::render::{TextureCreator, Canvas};
 use sdl3::video::{WindowContext, Window};
+use sdl3::EventPump;
 use crate::pages::Page;
 
 
@@ -8,14 +8,13 @@ use crate::pages::Page;
 
 
 pub static mut SDL3_TEXTURE_CREATOR: Vec<TextureCreator<WindowContext>> = Vec::new();
-pub static mut SDL3_EVENT_PUMP: Vec<sdl3::EventPump> = Vec::new();
 
 
 
 
 
 #[allow(static_mut_refs)]
-pub fn create_window() -> Canvas<Window>
+pub fn create_window() -> (Canvas<Window>, EventPump)
 {
     let sdl_started = sdl3::init().unwrap();
     let video_system = sdl_started.video().unwrap();
@@ -29,11 +28,9 @@ pub fn create_window() -> Canvas<Window>
     unsafe 
     { 
         SDL3_TEXTURE_CREATOR.push(texture_creator);
-        SDL3_EVENT_PUMP.push(event_pump);
     };
-    while unsafe{SDL3_EVENT_PUMP.is_empty()} { println!("waiting for event pump"); std::thread::sleep(Duration::from_millis(250)) };
 
-    canvas
+    (canvas, event_pump)
 }
 
 
