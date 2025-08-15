@@ -29,7 +29,7 @@ pub mod investment_wallet;
 
 fn main() 
 {
-    create_window();
+    let mut canvas = create_window();
 
     unsafe 
     {
@@ -40,7 +40,7 @@ fn main()
 
     loop
     {
-        std::thread::sleep(Duration::from_millis(33));
+        std::thread::sleep(Duration::from_millis(32));
 
         let persistent_page = persistent_page();
 
@@ -55,7 +55,7 @@ fn main()
                 all_buttons.append(&mut calculator_page.buttons.clone().unwrap());
                 handle_input(&all_buttons);
                 button_action();
-                render_page(calculator_page, Some(persistent_page));
+                render_page(calculator_page, Some(persistent_page), &mut canvas);
             },
 
             1 =>
@@ -67,7 +67,7 @@ fn main()
                 all_buttons.append(&mut realtime_currency_page.buttons.clone().unwrap());
                 handle_input(&all_buttons);
                 button_action();
-                render_page(realtime_currency_page, Some(persistent_page));
+                render_page(realtime_currency_page, Some(persistent_page), &mut canvas);
             },
 
             2 =>
@@ -79,7 +79,7 @@ fn main()
                 all_buttons.append(&mut selic_page.buttons.clone().unwrap());
                 handle_input(&all_buttons);
                 button_action();
-                render_page(selic_page, Some(persistent_page));
+                render_page(selic_page, Some(persistent_page), &mut canvas);
             },
 
             3 =>
@@ -88,7 +88,7 @@ fn main()
                 let investment_wallet_page = investment_wallet_page();
                 handle_input(&investment_wallet_page.buttons.clone().unwrap());
                 button_action();
-                render_page(investment_wallet_page, None);
+                render_page(investment_wallet_page, None, &mut canvas);
             }
 
             _=>{},

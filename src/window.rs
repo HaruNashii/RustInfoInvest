@@ -7,7 +7,6 @@ use crate::pages::Page;
 
 
 
-pub static mut SDL3_CANVAS: Vec<Canvas<Window>> = Vec::new();
 pub static mut SDL3_TEXTURE_CREATOR: Vec<TextureCreator<WindowContext>> = Vec::new();
 pub static mut SDL3_EVENT_PUMP: Vec<sdl3::EventPump> = Vec::new();
 
@@ -16,7 +15,7 @@ pub static mut SDL3_EVENT_PUMP: Vec<sdl3::EventPump> = Vec::new();
 
 
 #[allow(static_mut_refs)]
-pub fn create_window()
+pub fn create_window() -> Canvas<Window>
 {
     let sdl_started = sdl3::init().unwrap();
     let video_system = sdl_started.video().unwrap();
@@ -29,19 +28,19 @@ pub fn create_window()
 
     unsafe 
     { 
-        SDL3_CANVAS.push(canvas);
         SDL3_TEXTURE_CREATOR.push(texture_creator);
         SDL3_EVENT_PUMP.push(event_pump);
     };
     while unsafe{SDL3_EVENT_PUMP.is_empty()} { println!("waiting for event pump"); std::thread::sleep(Duration::from_millis(250)) };
+
+    canvas
 }
 
 
 
 #[allow(static_mut_refs)]
-pub fn render_page(page: Page, persistent_page: Option<Page>)
+pub fn render_page(page: Page, persistent_page: Option<Page>, canvas: &mut Canvas<Window>)
 {
-    let canvas = unsafe {&mut SDL3_CANVAS[0]};
     canvas.set_draw_color(page.background_color.unwrap());
     canvas.clear();
 
