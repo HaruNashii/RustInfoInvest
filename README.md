@@ -27,9 +27,7 @@
 <br/>
 
 ## **Known Issues**
-- realtime currency value not being 100% accurate
 - can't resize the window
-- bad perfomance
 - messy code
 
 <br/>
@@ -46,9 +44,9 @@
 <br/>
 
 ## **Dependencies**
-- you will need sdl2, sdl2_ttf, pkg-config and geckodriver packages,
+- you will need sdl3, sdl3_ttf, pkg-config and geckodriver packages,
 - on Arch Linux: 
-- ```sudo pacman -S sdl2 sdl2_ttf pkg-config geckodriver```
+- ```sudo pacman -S pkg-config geckodriver```
 
 <br/>
 <br/>

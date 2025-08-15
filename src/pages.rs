@@ -212,7 +212,7 @@ pub fn realtime_currency_page() -> Page<'static>
 
     //===================== texts =========================
     let realtime_currency_string: String = format!("Realtime Currency: R$ {:.7}", unsafe{REALTIME_CURRENCY});
-    let second_string: String = format!("Return Per Second: R$ {:.13}", unsafe{REALTIME_RETURN_PER_SECOND.to_string()});
+    let second_string: String = format!("Return Per Days: R$ {:.5}", unsafe{REALTIME_RETURN_PER_SECOND.to_string()});
     let all_text = vec!
     [
         //realtime curreny text
