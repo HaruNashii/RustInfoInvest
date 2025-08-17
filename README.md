@@ -44,9 +44,9 @@
 <br/>
 
 ## **Dependencies**
-- you will need sdl3, sdl3_ttf, pkg-config and geckodriver packages,
+- you will need pkg-config, base-devel, cmake and geckodriver packages,
 - on Arch Linux: 
-- ```sudo pacman -S pkg-config geckodriver```
+- ```sudo pacman -S pkg-config base-devel cmake geckodriver```
 
 <br/>
 <br/>
