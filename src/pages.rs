@@ -4,9 +4,9 @@ use sdl3::pixels::Color;
 use sdl3::render::Texture;
 use crate::
 { 
-    input_handler::{IS_ON_WRITE_MODE_ON_BUTTON_1, IS_ON_WRITE_MODE_ON_BUTTON_1_PAGE_3, IS_ON_WRITE_MODE_ON_BUTTON_2, IS_ON_WRITE_MODE_ON_BUTTON_2_PAGE_3, IS_ON_WRITE_MODE_ON_BUTTON_3, IS_ON_WRITE_MODE_ON_BUTTON_3_PAGE_3, IS_ON_WRITE_MODE_ON_BUTTON_4, IS_ON_WRITE_MODE_ON_BUTTON_4_PAGE_3, IS_ON_WRITE_MODE_ON_BUTTON_5, IS_ON_WRITE_MODE_ON_BUTTON_5_PAGE_3, IS_ON_WRITE_MODE_ON_BUTTON_6, IS_ON_WRITE_MODE_ON_BUTTON_6_PAGE_3, IS_ON_WRITE_MODE_ON_BUTTON_7, IS_ON_WRITE_MODE_ON_BUTTON_8, IS_ON_WRITE_MODE_ON_BUTTON_9, USER_INPUT_BUTTON_1, USER_INPUT_BUTTON_1_PAGE_3, USER_INPUT_BUTTON_2, USER_INPUT_BUTTON_2_PAGE_3, USER_INPUT_BUTTON_3, USER_INPUT_BUTTON_3_PAGE_3, USER_INPUT_BUTTON_4, USER_INPUT_BUTTON_4_PAGE_3, USER_INPUT_BUTTON_5, USER_INPUT_BUTTON_5_PAGE_3, USER_INPUT_BUTTON_6, USER_INPUT_BUTTON_6_PAGE_3, USER_INPUT_BUTTON_7, USER_INPUT_BUTTON_8, USER_INPUT_BUTTON_9}, 
+    input_handler::{IS_ON_WRITE_MODE, IS_ON_WRITE_MODE_ON_BUTTON_1_PAGE_3, IS_ON_WRITE_MODE_ON_BUTTON_2_PAGE_3, IS_ON_WRITE_MODE_ON_BUTTON_3_PAGE_3, IS_ON_WRITE_MODE_ON_BUTTON_4_PAGE_3, IS_ON_WRITE_MODE_ON_BUTTON_5_PAGE_3, IS_ON_WRITE_MODE_ON_BUTTON_6_PAGE_3, USER_INPUT, USER_INPUT_BUTTON_1_PAGE_3, USER_INPUT_BUTTON_2_PAGE_3, USER_INPUT_BUTTON_3_PAGE_3, USER_INPUT_BUTTON_4_PAGE_3, USER_INPUT_BUTTON_5_PAGE_3, USER_INPUT_BUTTON_6_PAGE_3}, 
     investment_wallet::{ALL_INVESTMENTS, DAY, INVESTMENT_NAME, MONTH, REALTIME_CURRENCY, REALTIME_RETURN_PER_SECOND, REALTIME_TOTAL_INVESTED, RETURN_PER_INVESTMENT, TOTAL_INVESTED_PER_INVESTMENT, YEAR}, 
-    math::{calculator_maths, realtime_currency_maths, DAYS_INVESTED, HOURS_INVESTED, MINUTES_INVESTED, MONTHS_INVESTED, MONTHLY_CONTRIBUTION, ONLINE_HISTORIC_RETURN_VALUE, RETURN_VALUE, SECS_INVESTED, TOTAL_INVESTED, YEARS_INVESTED}, 
+    math::{calculator_maths, realtime_currency_maths, DAYS_INVESTED, HOURS_INVESTED, MINUTES_INVESTED, MONTHLY_CONTRIBUTION, MONTHS_INVESTED, ONLINE_HISTORIC_RETURN_VALUE, RETURN_VALUE, SECS_INVESTED, TOTAL_INVESTED, YEARS_INVESTED}, 
     sdl3_generators::gen_text
 };
 
@@ -82,18 +82,6 @@ pub fn calculator_page() -> Page<'static>
     let default_text_color = Color::RGB(255, 255, 255);
     let subtext_color =      Color::RGB(186, 194, 222);
     let (one_year, one_month, one_day, one_hour, one_min, one_secs) = calculator_maths();
-    unsafe 
-    { 
-        if USER_INPUT_BUTTON_1.is_empty() { USER_INPUT_BUTTON_1.push(' ') }; 
-        if USER_INPUT_BUTTON_2.is_empty() { USER_INPUT_BUTTON_2.push(' ') }; 
-        if USER_INPUT_BUTTON_3.is_empty() { USER_INPUT_BUTTON_3.push(' ') }; 
-        if USER_INPUT_BUTTON_4.is_empty() { USER_INPUT_BUTTON_4.push(' ') }; 
-        if USER_INPUT_BUTTON_5.is_empty() { USER_INPUT_BUTTON_5.push(' ') }; 
-        if USER_INPUT_BUTTON_6.is_empty() { USER_INPUT_BUTTON_6.push(' ') }; 
-        if USER_INPUT_BUTTON_7.is_empty() { USER_INPUT_BUTTON_7.push(' ') }; 
-        if USER_INPUT_BUTTON_8.is_empty() { USER_INPUT_BUTTON_8.push(' ') }; 
-        if USER_INPUT_BUTTON_9.is_empty() { USER_INPUT_BUTTON_9.push(' ') }; 
-    };
     
     //===================== rects =========================
     let all_rects = vec! 
@@ -133,45 +121,61 @@ pub fn calculator_page() -> Page<'static>
     let hour_string =   format!("Hours:   R${:.4}", one_hour);
     let minute_string = format!("Minutes: R${:.5}", one_min);
     let second_string = format!("Seconds: R${:.6}", one_secs);
-    let return_year_string =   if unsafe{IS_ON_WRITE_MODE_ON_BUTTON_3} { format!("Return in {}", unsafe{USER_INPUT_BUTTON_3.clone()}) } else { format!("Return in {}", unsafe{YEARS_INVESTED.to_string()}) };
-    let return_month_string =  if unsafe{IS_ON_WRITE_MODE_ON_BUTTON_4} { format!("Return in {}", unsafe{USER_INPUT_BUTTON_4.clone()}) } else { format!("Return in {}", unsafe{MONTHS_INVESTED.to_string()}) };
-    let return_day_string =    if unsafe{IS_ON_WRITE_MODE_ON_BUTTON_5} { format!("Return in {}", unsafe{USER_INPUT_BUTTON_5.clone()}) } else { format!("Return in {}", unsafe{DAYS_INVESTED.to_string()}) };
-    let return_hour_string =   if unsafe{IS_ON_WRITE_MODE_ON_BUTTON_6} { format!("Return in {}", unsafe{USER_INPUT_BUTTON_6.clone()}) } else { format!("Return in {}", unsafe{HOURS_INVESTED.to_string()}) };
-    let return_minute_string = if unsafe{IS_ON_WRITE_MODE_ON_BUTTON_7} { format!("Return in {}", unsafe{USER_INPUT_BUTTON_7.clone()}) } else { format!("Return in {}", unsafe{MINUTES_INVESTED.to_string()}) };
-    let return_second_string = if unsafe{IS_ON_WRITE_MODE_ON_BUTTON_8} { format!("Return in {}", unsafe{USER_INPUT_BUTTON_8.clone()}) } else { format!("Return in {}", unsafe{SECS_INVESTED.to_string()}) };
+
+    
+    
+    
+    
+    
+    
+
+
     let total_with_year_income_string = format!("Total in years Income: R${:.2}", unsafe{TOTAL_INVESTED + one_year});
     let total_with_month_income_string = format!("Total in months Income: R${:.2}", unsafe{TOTAL_INVESTED + one_month});
 
     let mut all_text = vec!
     [
-        gen_text(20.0, (226, 275), return_year_string, subtext_color),
-        gen_text(20.0, (226, 325), return_month_string, subtext_color),
-        gen_text(20.0, (226, 375), return_day_string, subtext_color),
-        gen_text(20.0, (226, 425), return_hour_string, subtext_color),
-        gen_text(20.0, (226, 475), return_minute_string, subtext_color),
-        gen_text(20.0, (226, 525), return_second_string, subtext_color),
-        //user input text
+        gen_text(16.0, (20, 224), total_with_year_income_string, default_text_color),
+        gen_text(16.0, (415, 224), total_with_month_income_string, default_text_color),
         gen_text(20.0, (400, 275), year_string, subtext_color),
         gen_text(20.0, (400, 325), month_string, subtext_color),
         gen_text(20.0, (400, 375), day_string, subtext_color),
         gen_text(20.0, (400, 425), hour_string, subtext_color),
         gen_text(20.0, (400, 475), minute_string, subtext_color),
         gen_text(20.0, (400, 525), second_string, subtext_color),
-        gen_text(16.0, (20, 224), total_with_year_income_string, default_text_color),
-        gen_text(16.0, (415, 224), total_with_month_income_string, default_text_color),
     ];
     unsafe
     {
         //year return value text
-        if IS_ON_WRITE_MODE_ON_BUTTON_1  { all_text.push(gen_text(18.0, (all_buttons[0].2.x + 10, all_buttons[0].2.y + 7), format!("Year Return Value: {}%", USER_INPUT_BUTTON_1), default_text_color)); }
-        if !IS_ON_WRITE_MODE_ON_BUTTON_1 { all_text.push(gen_text(18.0, (all_buttons[0].2.x + 10, all_buttons[0].2.y + 7), format!("Year Return Value: {}%", RETURN_VALUE), default_text_color)); }
-        //total invested text
-        if IS_ON_WRITE_MODE_ON_BUTTON_2  { all_text.push(gen_text(18.0, (all_buttons[1].2.x + 10, all_buttons[1].2.y + 7), format!("Total Invested: R${}", USER_INPUT_BUTTON_2), default_text_color)); }
-        if !IS_ON_WRITE_MODE_ON_BUTTON_2 { all_text.push(gen_text(18.0, (all_buttons[1].2.x + 10, all_buttons[1].2.y + 7), format!("Total Invested: R${}", TOTAL_INVESTED), default_text_color)); }
-        //monthly contribution text
-        if IS_ON_WRITE_MODE_ON_BUTTON_9  { all_text.push(gen_text(18.0, (all_buttons[8].2.x + 10, all_buttons[8].2.y + 7), format!("Monthly Contribution: R${}", USER_INPUT_BUTTON_9), default_text_color)); }
-        if !IS_ON_WRITE_MODE_ON_BUTTON_9 { all_text.push(gen_text(18.0, (all_buttons[8].2.x + 10, all_buttons[8].2.y + 7), format!("Monthly Contribution: R${}", MONTHLY_CONTRIBUTION), default_text_color)); }
-        //total invested + income
+        if IS_ON_WRITE_MODE.0 
+        {
+            match IS_ON_WRITE_MODE.1
+            {
+                Some(4) =>  { all_text.push(gen_text(18.0, (all_buttons[0].2.x + 10, all_buttons[0].2.y + 7), format!("Year Return Value: {}%", USER_INPUT), default_text_color)); },
+                Some(5) =>  { all_text.push(gen_text(18.0, (all_buttons[1].2.x + 10, all_buttons[1].2.y + 7), format!("Total Invested: R${}",   USER_INPUT), default_text_color)); },
+                Some(6) =>  { all_text.push(gen_text(20.0, (226, 275), format!("Return in {}", USER_INPUT), subtext_color)); },
+                Some(7) =>  { all_text.push(gen_text(20.0, (226, 325), format!("Return in {}", USER_INPUT), subtext_color)); },
+                Some(8) =>  { all_text.push(gen_text(20.0, (226, 375), format!("Return in {}", USER_INPUT), subtext_color)); },
+                Some(9) =>  { all_text.push(gen_text(20.0, (226, 425), format!("Return in {}", USER_INPUT), subtext_color)); },
+                Some(10) => { all_text.push(gen_text(20.0, (226, 475), format!("Return in {}", USER_INPUT), subtext_color)); },
+                Some(11) => { all_text.push(gen_text(20.0, (226, 525), format!("Return in {}", USER_INPUT), subtext_color)); },
+                Some(12) => { all_text.push(gen_text(18.0, (all_buttons[8].2.x + 10, all_buttons[8].2.y + 7), format!("Monthly Contribution: R${}", USER_INPUT), default_text_color)); },
+                _=> {},
+            };
+        }
+        else 
+        { 
+            all_text.push(gen_text(18.0, (all_buttons[0].2.x + 10, all_buttons[0].2.y + 7), format!("Year Return Value: {}%", RETURN_VALUE), default_text_color)); 
+            all_text.push(gen_text(18.0, (all_buttons[1].2.x + 10, all_buttons[1].2.y + 7), format!("Total Invested: R${}", TOTAL_INVESTED), default_text_color));
+            all_text.push(gen_text(20.0, (226, 275), format!("Return in {}", MONTHS_INVESTED.to_string()  ), subtext_color) );
+            all_text.push(gen_text(20.0, (226, 325), format!("Return in {}", YEARS_INVESTED.to_string()   ), subtext_color) );
+            all_text.push(gen_text(20.0, (226, 375), format!("Return in {}", DAYS_INVESTED.to_string()    ), subtext_color) );
+            all_text.push(gen_text(20.0, (226, 425), format!("Return in {}", HOURS_INVESTED.to_string()   ), subtext_color) );
+            all_text.push(gen_text(20.0, (226, 475), format!("Return in {}", MINUTES_INVESTED.to_string() ), subtext_color) );
+            all_text.push(gen_text(20.0, (226, 525), format!("Return in {}", SECS_INVESTED.to_string()    ), subtext_color) );
+            all_text.push(gen_text(18.0, (all_buttons[8].2.x + 10, all_buttons[8].2.y + 7), format!("Monthly Contribution: R${}", MONTHLY_CONTRIBUTION), default_text_color));
+        };
+
     };
     
     //===================== page creation =========================
@@ -305,15 +309,6 @@ pub fn investment_wallet_page() -> Page<'static>
     //===================== variables =========================
     let bg_color = Color::RGB(30, 30, 46);
     let default_text_color = Color::RGB(255, 255, 255);
-    unsafe 
-    {
-        if USER_INPUT_BUTTON_1_PAGE_3.is_empty() { USER_INPUT_BUTTON_1_PAGE_3.push(' ') };
-        if USER_INPUT_BUTTON_2_PAGE_3.is_empty() { USER_INPUT_BUTTON_2_PAGE_3.push(' ') };
-        if USER_INPUT_BUTTON_3_PAGE_3.is_empty() { USER_INPUT_BUTTON_3_PAGE_3.push(' ') }; 
-        if USER_INPUT_BUTTON_4_PAGE_3.is_empty() { USER_INPUT_BUTTON_4_PAGE_3.push(' ') }; 
-        if USER_INPUT_BUTTON_5_PAGE_3.is_empty() { USER_INPUT_BUTTON_5_PAGE_3.push(' ') }; 
-        if USER_INPUT_BUTTON_6_PAGE_3.is_empty() { USER_INPUT_BUTTON_6_PAGE_3.push(' ') }; 
-    };
 
     //===================== rects =========================
     let mut all_rects = Vec::new();
