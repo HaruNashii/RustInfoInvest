@@ -1,3 +1,4 @@
+use std::process::Command;
 use sdl3::rect::Rect;
 use sdl3::pixels::Color;
 use sdl3::render::Texture;
@@ -246,20 +247,39 @@ pub fn selic_page() -> Page<'static>
     let default_text_color = Color::RGB(255, 255, 255);
     let subtext_color = Color::RGB(186, 194, 222);
 
+    //===================== check if geckodriver is available ========================= 
+    let geckodriver_available: bool = Command::new("which").arg("geckodriver").output().map(|o| o.status.success()).unwrap_or(false);
+    let firefox_available: bool = Command::new("which").arg("firefox").output().map(|o| o.status.success()).unwrap_or(false);
+
+
     //===================== buttons =========================
-    let all_buttons = vec!
-    [
-        //sync online info button
-        (true, Color::RGB(203, 166, 247), Rect::new(300, 125, 213, 50), 14),
-    ];
+    let mut all_buttons = Vec::new();
+    if geckodriver_available && firefox_available
+    {
+        all_buttons.push((true, Color::RGB(203, 166, 247), Rect::new(300, 125, 213, 50), 14));
+    };
+
 
     //===================== texts =========================
-    let mut all_text = vec!
-    [
+    let mut all_text = Vec::new();
+    if geckodriver_available && firefox_available
+    {
         //sync online info button text
-        gen_text(20.0, (all_buttons[0].2.x + 10, all_buttons[0].2.y + 10),  "Sync With Online".to_string(), default_text_color),
-        gen_text(25.0, (125, 205), "Number          Date         Selic Tax".to_string(), subtext_color),
-    ];
+        all_text.push(gen_text(20.0, (all_buttons[0].2.x + 10, all_buttons[0].2.y + 10),  "Sync With Online".to_string(), default_text_color));
+        all_text.push(gen_text(25.0, (125, 205), "Number          Date         Selic Tax".to_string(), subtext_color));
+    };
+    
+    if !geckodriver_available
+    {
+        all_text.push(gen_text(26.0, (40, 275), "Geckodriver Not Available, Please Install It.".to_string(), default_text_color));
+    };
+
+    if !firefox_available
+    {
+        all_text.push(gen_text(26.0, (75, 325), "Firefox Not Available, Please Install It.".to_string(), default_text_color));
+    };
+
+
     for (index, string) in unsafe{ONLINE_HISTORIC_RETURN_VALUE.iter().enumerate()}
     {
         let text = gen_text(20.0, (145, 300 + (40 * index as i32)),  string.to_string(), subtext_color);
@@ -304,7 +324,7 @@ pub fn investment_wallet_page() -> Page<'static>
     }
     
     //===================== buttons =========================
-    let all_buttons = vec!
+    let mut all_buttons = vec!
     [
         //back button
         (true, Color::RGB(243, 139, 168), Rect::new(20, 20, 50, 40), 15),
@@ -326,6 +346,11 @@ pub fn investment_wallet_page() -> Page<'static>
         //day button 
         (true, Color::RGB(243, 139, 168), Rect::new(520, 260, 230, 40), 23),
     ];
+
+    for (index, rect) in all_rects.iter().enumerate()
+    {
+        all_buttons.push( (true, Color::RGB(243, 139, 168), Rect::new(680, rect.1.y, 70, rect.1.h as u32), (index + 1000) as u16) );
+    }
 
     //===================== texts =========================
     let mut all_text = vec!
@@ -357,6 +382,11 @@ pub fn investment_wallet_page() -> Page<'static>
             let total_invested = investment.2;
             let name = investment.3;
             all_text.push(gen_text(10.0, (30, 327 + (index * 40) as i32),  format!("Name:{}   Rate:{}%   Total Invested: R${}   Date: {}", name, year_return_value, total_invested, date), default_text_color));
+        };
+
+        for rect in &all_rects
+        {
+            all_text.push( gen_text(14.0, (690, rect.1.y + 5), "Remove".to_string(), default_text_color) );
         };
     }
 

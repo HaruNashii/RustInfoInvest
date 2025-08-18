@@ -181,6 +181,17 @@ pub fn button_action()
                 if PAGE_TO_RENDER == 3 && !IS_ON_WRITE_MODE_ON_BUTTON_1_PAGE_3 && !IS_ON_WRITE_MODE_ON_BUTTON_2_PAGE_3 && !IS_ON_WRITE_MODE_ON_BUTTON_3_PAGE_3 && !IS_ON_WRITE_MODE_ON_BUTTON_4_PAGE_3 && !IS_ON_WRITE_MODE_ON_BUTTON_5_PAGE_3 && !IS_ON_WRITE_MODE_ON_BUTTON_6_PAGE_3 { BUTTON_CLICKED = None; IS_ON_WRITE_MODE_ON_BUTTON_6_PAGE_3 = true; };
                 BUTTON_CLICKED = None;
             }
+
+            Some(x) =>
+            {
+                if x >= 1000
+                {
+                    //(INVESTMENT WALLET) INVESTMENT REMOVE BUTTON
+                    ALL_INVESTMENTS.remove(x - 1000);
+                    BUTTON_CLICKED = None;
+                }
+            }
+
             _=> {},
         }
     }
