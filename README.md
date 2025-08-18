@@ -45,9 +45,9 @@
 <br/>
 
 ## **Dependencies**
-- you will need pkg-config, base-devel, cmake and geckodriver packages,
+- you will need pkg-config, base-devel, cmake, geckodriver and firefox packages,
 - on Arch Linux: 
-- ```sudo pacman -S pkg-config base-devel cmake geckodriver```
+- ```sudo pacman -Sy pkg-config base-devel cmake geckodriver firefox```
 
 <br/>
 <br/>
