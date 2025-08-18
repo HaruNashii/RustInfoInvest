@@ -6,20 +6,20 @@
 <br/>
 
 ## **Showcase**
-![image](https://github.com/user-attachments/assets/aaae884f-cc3a-48bd-9b40-86f1afce2607)
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/40825d0d-c4be-461c-8f21-4e5168540b8c" />
 <details> <summary>Others Pages</summary>
 
   
 - Realtime Currency Page
-![image](https://github.com/user-attachments/assets/8bbe14fd-a0df-4fc6-bbd5-243cc4d15aa4)
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/cdc837dc-6566-4ad2-a81c-cc36c9c4bf3e" />
 
 
 - Investment Wallet Page
-![image](https://github.com/user-attachments/assets/d9fe6c98-5797-463f-9de0-a33cf84d7e99)
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/426737c6-ef7a-45d8-a563-4b040589b169" />
 
 
 - Selic Historic Page
-![image](https://github.com/user-attachments/assets/d9493d19-8313-4db8-9a49-29ce006a635e)
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/e271d895-0ac6-41a2-8720-feb6eca3634f" />
 </details>
 
 <br/>
