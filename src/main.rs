@@ -4,10 +4,7 @@ use investment_wallet::{DAY, MONTH, YEAR};
 
 use crate::
 {
-    pages::{calculator_page, persistent_page, realtime_currency_page, selic_page, investment_wallet_page},
-    window::{create_window, render_page},
-    input_handler::handle_input,
-    buttons::{PAGE_TO_RENDER, button_action},
+    buttons::{button_action, PAGE_TO_RENDER}, input_handler::handle_input, investment_wallet::INVESTMENT_NAME, pages::{calculator_page, investment_wallet_page, persistent_page, realtime_currency_page, selic_page}, window::{create_window, render_page}
 };
 
 
@@ -36,6 +33,7 @@ fn main()
         YEAR = Local::now().format("%Y").to_string().parse().unwrap();
         MONTH = Local::now().format("%m").to_string().parse().unwrap();
         DAY = Local::now().format("%d").to_string().parse().unwrap();
+        INVESTMENT_NAME = "Generic Investment".to_string();
     }
 
     loop

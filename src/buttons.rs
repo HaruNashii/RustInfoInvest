@@ -190,7 +190,7 @@ pub fn button_action()
 
                 Some(x) =>
                 {
-                    if x >= 1000
+                    if x >= 1000 && !ALL_INVESTMENTS.is_empty()
                     {
                         //(INVESTMENT WALLET) INVESTMENT REMOVE BUTTON
                         ALL_INVESTMENTS.remove(x - 1000);

@@ -42,5 +42,6 @@ pub fn add_investment()
         RETURN_PER_INVESTMENT = 10.0;
         TOTAL_INVESTED_PER_INVESTMENT = 1000.0;
         INVESTMENT_NAME.clear();
+        INVESTMENT_NAME = "Generic Investment".to_string();
    };
 }
