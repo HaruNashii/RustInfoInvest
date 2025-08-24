@@ -41,6 +41,7 @@ fn main()
         std::thread::sleep(Duration::from_millis(32));
 
         let persistent_page = persistent_page();
+        let window_scale: (u32, u32) = (canvas.window().size().0, canvas.window().size().1);
 
         match unsafe{PAGE_TO_RENDER}
         {
@@ -51,7 +52,7 @@ fn main()
                 let mut all_buttons = Vec::new();
                 all_buttons.append(&mut persistent_page.buttons.clone().unwrap());
                 all_buttons.append(&mut calculator_page.buttons.clone().unwrap());
-                handle_input(&all_buttons, &mut event_pump);
+                handle_input(&all_buttons, &mut event_pump, window_scale);
                 button_action();
                 render_page(calculator_page, Some(persistent_page), &mut canvas);
             },
@@ -63,7 +64,7 @@ fn main()
                 let mut all_buttons = Vec::new();
                 all_buttons.append(&mut persistent_page.buttons.clone().unwrap());
                 all_buttons.append(&mut realtime_currency_page.buttons.clone().unwrap());
-                handle_input(&all_buttons, &mut event_pump);
+                handle_input(&all_buttons, &mut event_pump, window_scale);
                 button_action();
                 render_page(realtime_currency_page, Some(persistent_page), &mut canvas);
             },
@@ -75,7 +76,7 @@ fn main()
                 let mut all_buttons = Vec::new();
                 all_buttons.append(&mut persistent_page.buttons.clone().unwrap());
                 all_buttons.append(&mut selic_page.buttons.clone().unwrap());
-                handle_input(&all_buttons, &mut event_pump);
+                handle_input(&all_buttons, &mut event_pump, window_scale);
                 button_action();
                 render_page(selic_page, Some(persistent_page), &mut canvas);
             },
@@ -84,7 +85,7 @@ fn main()
             {
                 //LOAD WALLET PAGE
                 let investment_wallet_page = investment_wallet_page();
-                handle_input(&investment_wallet_page.buttons.clone().unwrap(), &mut event_pump);
+                handle_input(&investment_wallet_page.buttons.clone().unwrap(), &mut event_pump, window_scale);
                 button_action();
                 render_page(investment_wallet_page, None, &mut canvas);
             }

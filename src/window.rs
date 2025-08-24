@@ -1,6 +1,8 @@
 use std::path::Path;
+use sdl3::rect::Rect;
 use sdl3::render::{TextureCreator, Canvas};
 use sdl3::surface::Surface;
+use sdl3::sys::render::SDL_LOGICAL_PRESENTATION_STRETCH;
 use sdl3::video::{WindowContext, Window};
 use sdl3::EventPump;
 use crate::pages::Page;
@@ -8,7 +10,7 @@ use crate::pages::Page;
 
 
 
-
+pub static mut WINDOW_SIZE: (u32, u32) = (0, 0);
 pub static mut SDL3_TEXTURE_CREATOR: Vec<TextureCreator<WindowContext>> = Vec::new();
 
 
@@ -20,34 +22,38 @@ pub fn create_window() -> (Canvas<Window>, EventPump)
 {
     let sdl_started = sdl3::init().unwrap();
     let video_system = sdl_started.video().unwrap();
-    let mut window = video_system.window("RustInfoInvest", 800, 600).position_centered().build().unwrap();
+    let mut window = video_system.window("RustInfoInvest", 800, 600).resizable().position_centered().build().unwrap();
     
     // set window logo
     let icon_path = Path::new("assets/icon/RustInfoInvest_LOGO_WITHOUT_BG.bmp");
     let icon_surface = Surface::load_bmp(icon_path).unwrap();
     window.set_icon(icon_surface);
+    window.set_minimum_size(800, 600).unwrap();
 
     video_system.text_input().start(&window);
-    let canvas = window.into_canvas();
+    let mut canvas = window.into_canvas();
     let texture_creator = canvas.texture_creator();
     let event_pump = sdl_started.event_pump().unwrap();
-    
 
     unsafe 
     { 
         SDL3_TEXTURE_CREATOR.push(texture_creator);
     };
 
+    canvas.set_logical_size(canvas.window().size().0, canvas.window().size().1, SDL_LOGICAL_PRESENTATION_STRETCH).unwrap();
+    canvas.set_viewport(Rect::new(0, 0, canvas.window().size().0, canvas.window().size().1));
+
     (canvas, event_pump)
 }
 
 
 
-#[allow(static_mut_refs)]
 pub fn render_page(page: Page, persistent_page: Option<Page>, canvas: &mut Canvas<Window>)
 {
     canvas.set_draw_color(page.background_color.unwrap());
     canvas.clear();
+
+
 
     if let Some(rect_vector_of_tuple) =    &page.rects   { for tuple in rect_vector_of_tuple    { canvas.set_draw_color(tuple.0); canvas.fill_rect(tuple.1).unwrap(); } }
     if let Some(buttons_vector_of_tuple) = &page.buttons { for tuple in buttons_vector_of_tuple { if tuple.0 { canvas.set_draw_color(tuple.1); canvas.fill_rect(tuple.2).unwrap(); } } }

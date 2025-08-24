@@ -22,11 +22,8 @@ pub static mut BUTTON_BEING_HOVERED: Option<usize> = None;
 pub static mut BUTTON_CLICKED: Option<usize> = None;
 
 
-
-
-
 #[allow(static_mut_refs)]
-pub fn handle_input(buttons: &Vec<(bool, Color, Rect, u16)>, event_pump: &mut EventPump)
+pub fn handle_input(buttons: &Vec<(bool, Color, Rect, u16)>, event_pump: &mut EventPump, window_scale: (u32, u32))
 {   
     for event in event_pump.poll_iter() 
     {
@@ -37,14 +34,19 @@ pub fn handle_input(buttons: &Vec<(bool, Color, Rect, u16)>, event_pump: &mut Ev
             //================================================================================================#
             Event::MouseMotion { x, y, .. } => 
             {
+
                 unsafe 
                 {
                     if !IS_ON_WRITE_MODE.0 
                     { 
-                        BUTTON_BEING_HOVERED = None;
+                        BUTTON_BEING_HOVERED = None; 
+
+                        let x_scaled = x * (800.0 / window_scale.0 as f32);
+                        let y_scaled = y * (600.0 / window_scale.1 as f32);
+
                         for object in buttons
                         {
-                            if x >= object.2.x as f32 && x <= (object.2.x + object.2.w) as f32 && y >= object.2.y as f32 && y <= (object.2.y + object.2.h) as f32
+                            if x_scaled >= object.2.x as f32 && x_scaled <= (object.2.x + object.2.w) as f32 && y_scaled >= object.2.y as f32 && y_scaled <= (object.2.y + object.2.h) as f32
                             {
                                 BUTTON_BEING_HOVERED = Some(object.3 as usize); 
                             }
@@ -173,6 +175,7 @@ pub fn handle_input(buttons: &Vec<(bool, Color, Rect, u16)>, event_pump: &mut Ev
                 println!("bye bye :3");
                 exit(0); 
             },
+
             _ => {},
         }
     }

@@ -38,7 +38,6 @@
 
 ## **Future Plans**
 - make font be build direct into the app
-- resizable window
 - make the code right
 - make the code fast
 
