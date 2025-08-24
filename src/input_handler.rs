@@ -18,7 +18,7 @@ use crate::
 
 pub static mut USER_INPUT: String = String::new();
 pub static mut IS_ON_WRITE_MODE: (bool, Option<u16>) = (false, None);
-pub static mut BUTTON_BEING_HOVERED: usize = 0;
+pub static mut BUTTON_BEING_HOVERED: Option<usize> = None;
 pub static mut IS_HOVERING_BUTTON: bool = false;
 pub static mut BUTTON_CLICKED: Option<usize> = None;
 
@@ -41,11 +41,12 @@ pub fn handle_input(buttons: &Vec<(bool, Color, Rect, u16)>, event_pump: &mut Ev
                 unsafe 
                 {
                     IS_HOVERING_BUTTON = false;
+                    if !IS_ON_WRITE_MODE.0 { BUTTON_BEING_HOVERED = None };
                     for object in buttons
                     {
-                        if x >= object.2.x as f32 && x <= (object.2.x + object.2.w) as f32 && y >= object.2.y as f32 && y <= (object.2.y + object.2.h) as f32
+                        if x >= object.2.x as f32 && x <= (object.2.x + object.2.w) as f32 && y >= object.2.y as f32 && y <= (object.2.y + object.2.h) as f32 && !IS_ON_WRITE_MODE.0
                         {
-                                BUTTON_BEING_HOVERED = object.3 as usize; 
+                                BUTTON_BEING_HOVERED = Some(object.3 as usize); 
                                 IS_HOVERING_BUTTON = true;
                         }
                     };
@@ -58,9 +59,9 @@ pub fn handle_input(buttons: &Vec<(bool, Color, Rect, u16)>, event_pump: &mut Ev
             {
                 unsafe 
                 {
-                    if IS_HOVERING_BUTTON 
+                    if IS_HOVERING_BUTTON && !IS_ON_WRITE_MODE.0
                     {
-                        BUTTON_CLICKED = Some(BUTTON_BEING_HOVERED);
+                        if let Some(result) = BUTTON_BEING_HOVERED {BUTTON_CLICKED = Some(result)};
                     }
                 }
             }
