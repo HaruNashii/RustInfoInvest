@@ -1,4 +1,6 @@
+use std::path::Path;
 use sdl3::render::{TextureCreator, Canvas};
+use sdl3::surface::Surface;
 use sdl3::video::{WindowContext, Window};
 use sdl3::EventPump;
 use crate::pages::Page;
@@ -18,7 +20,13 @@ pub fn create_window() -> (Canvas<Window>, EventPump)
 {
     let sdl_started = sdl3::init().unwrap();
     let video_system = sdl_started.video().unwrap();
-    let window = video_system.window("RustInfoInvest", 800, 600).position_centered().build().unwrap();
+    let mut window = video_system.window("RustInfoInvest", 800, 600).position_centered().build().unwrap();
+    
+    // set window logo
+    let icon_path = Path::new("assets/icon/RustInfoInvest_LOGO_WITHOUT_BG.bmp");
+    let icon_surface = Surface::load_bmp(icon_path).unwrap();
+    window.set_icon(icon_surface);
+
     video_system.text_input().start(&window);
     let canvas = window.into_canvas();
     let texture_creator = canvas.texture_creator();

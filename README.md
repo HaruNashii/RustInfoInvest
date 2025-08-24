@@ -1,4 +1,6 @@
-# **RustInfoInvest**
+<img align="center" width="1024" height="1024" alt="RustInfoInvest_LOGO_WITHOUT_BG" src="https://github.com/user-attachments/assets/824c3bcd-fb24-4494-a849-9668ff6919c9" />
+
+# RustInfoInvest
 > A Very Simple And Configurable Compound Interest Calculator With Online Selic Rate Values And Realtime Currency View, Writed In Rust. 
 
 <br/>
