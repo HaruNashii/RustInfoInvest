@@ -29,7 +29,6 @@
 <br/>
 
 ## **Known Issues**
-- can't resize the window
 - messy code
 
 <br/>
@@ -37,7 +36,6 @@
 <br/>
 
 ## **Future Plans**
-- make font be build direct into the app
 - make the code right
 - make the code fast
 
