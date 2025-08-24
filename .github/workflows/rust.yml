@@ -16,9 +16,11 @@ jobs:
 
     steps:
     - uses: actions/checkout@v4
+    - name: Install Necessary Packages
+      run: apt install pkg-config cmake libsdl3 libsdl3-ttf libsdl3-image build-essential
     - name: Build
-      run: cargo build --verbose
+      run: cargo build
     - name: Check Clippy
       run: cargo clippy
     - name: Run tests
-      run: cargo test --verbose
+      run: cargo test
