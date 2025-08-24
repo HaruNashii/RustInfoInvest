@@ -39,13 +39,16 @@ pub fn handle_input(buttons: &Vec<(bool, Color, Rect, u16)>, event_pump: &mut Ev
             {
                 unsafe 
                 {
-                    if !IS_ON_WRITE_MODE.0 { BUTTON_BEING_HOVERED = None };
-                    for object in buttons
-                    {
-                        if x >= object.2.x as f32 && x <= (object.2.x + object.2.w) as f32 && y >= object.2.y as f32 && y <= (object.2.y + object.2.h) as f32 && !IS_ON_WRITE_MODE.0
+                    if !IS_ON_WRITE_MODE.0 
+                    { 
+                        BUTTON_BEING_HOVERED = None;
+                        for object in buttons
                         {
+                            if x >= object.2.x as f32 && x <= (object.2.x + object.2.w) as f32 && y >= object.2.y as f32 && y <= (object.2.y + object.2.h) as f32
+                            {
                                 BUTTON_BEING_HOVERED = Some(object.3 as usize); 
-                        }
+                            }
+                        };
                     };
                 };
             }
@@ -107,10 +110,9 @@ pub fn handle_input(buttons: &Vec<(bool, Color, Rect, u16)>, event_pump: &mut Ev
             {
                 unsafe 
                 {
-                    if let Some(4..24) = IS_ON_WRITE_MODE.1
-                    {
-                        if !USER_INPUT.is_empty() { USER_INPUT.pop(); };
-                        if USER_INPUT.len() == 1 { USER_INPUT.insert(0, ' '); USER_INPUT.pop(); } 
+                    if IS_ON_WRITE_MODE.0 && !USER_INPUT.is_empty() 
+                    { 
+                        USER_INPUT.pop();
                     };
                 }
             }
@@ -134,7 +136,7 @@ pub fn handle_input(buttons: &Vec<(bool, Color, Rect, u16)>, event_pump: &mut Ev
                         Some(12) => { if !USER_INPUT.replace(" ", "").is_empty() { MONTHLY_CONTRIBUTION =          USER_INPUT.replace(" ", "").parse().unwrap(); } USER_INPUT.clear(); IS_ON_WRITE_MODE = (false, None); },
                         Some(16) => { if !USER_INPUT.replace(" ", "").is_empty() { RETURN_PER_INVESTMENT =         USER_INPUT.replace(" ", "").parse().unwrap(); } USER_INPUT.clear(); IS_ON_WRITE_MODE = (false, None); },
                         Some(17) => { if !USER_INPUT.replace(" ", "").is_empty() { TOTAL_INVESTED_PER_INVESTMENT = USER_INPUT.replace(" ", "").parse().unwrap(); } USER_INPUT.clear(); IS_ON_WRITE_MODE = (false, None); },
-                        Some(18) => { if !USER_INPUT.replace(" ", "").is_empty() { INVESTMENT_NAME =               USER_INPUT.clone();                           } USER_INPUT.clear(); IS_ON_WRITE_MODE = (false, None); },
+                        Some(18) => { if !USER_INPUT.replace(" ", "").is_empty() { INVESTMENT_NAME =               USER_INPUT.to_string();                       } USER_INPUT.clear(); IS_ON_WRITE_MODE = (false, None); },
                         Some(21) => { if !USER_INPUT.replace(" ", "").is_empty() { YEAR =                          USER_INPUT.replace(" ", "").parse().unwrap(); } USER_INPUT.clear(); IS_ON_WRITE_MODE = (false, None); },
                         Some(22) => { if !USER_INPUT.replace(" ", "").is_empty() { MONTH =                         USER_INPUT.replace(" ", "").parse().unwrap(); } USER_INPUT.clear(); IS_ON_WRITE_MODE = (false, None); },
                         Some(23) => { if !USER_INPUT.replace(" ", "").is_empty() { DAY =                           USER_INPUT.replace(" ", "").parse().unwrap(); } USER_INPUT.clear(); IS_ON_WRITE_MODE = (false, None); },
