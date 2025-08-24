@@ -46,9 +46,9 @@
 <br/>
 
 ## **Dependencies**
-- you will need pkg-config, base-devel, cmake, geckodriver and firefox packages,
+- you will need ttf-jetbrains-mono, pkg-config, base-devel, cmake, geckodriver and firefox packages,
 - on Arch Linux: 
-- ```sudo pacman -Sy pkg-config base-devel cmake geckodriver firefox```
+- ```sudo pacman -Sy ttf-jetbrains-mono pkg-config base-devel cmake geckodriver firefox```
 
 <br/>
 <br/>
