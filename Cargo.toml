@@ -2,6 +2,13 @@
 name = "RustInfoInvest"
 version = "0.1.0"
 edition = "2021"
+build = "src/build.rs"
+
+[profile.dev]
+incremental = true
+
+[profile.release]
+incremental = false
 
 [dependencies]
 chrono = "0.4.41"

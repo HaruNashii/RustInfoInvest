@@ -1,4 +1,4 @@
-use std::path::Path;
+use std::env;
 use sdl3::rect::Rect;
 use sdl3::render::{TextureCreator, Canvas};
 use sdl3::surface::Surface;
@@ -25,7 +25,8 @@ pub fn create_window() -> (Canvas<Window>, EventPump)
     let mut window = video_system.window("RustInfoInvest", 800, 600).resizable().position_centered().build().unwrap();
     
     // set window logo
-    let icon_path = Path::new("assets/icon/RustInfoInvest_LOGO_WITHOUT_BG.bmp");
+    let home_path = env::home_dir().unwrap().display().to_string();
+    let icon_path = format!("{}/.local/share/icons/RustInfoInvest_LOGO_WITHOUT_BG.bmp", home_path).replace(" ", "");
     let icon_surface = Surface::load_bmp(icon_path).unwrap();
     window.set_icon(icon_surface);
     window.set_minimum_size(800, 600).unwrap();
