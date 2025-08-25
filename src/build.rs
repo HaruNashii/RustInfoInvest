@@ -26,7 +26,10 @@ fn main()
     let out_dir = PathBuf::from(env::var("OUT_DIR").unwrap());
     let target_dir = out_dir.ancestors().nth(3).unwrap().to_path_buf();
     let lib_destination = target_dir.join(PathBuf::from(local_lib_path).file_name().expect("Failed to get filename"),);
-    fs::copy(local_lib_path, lib_destination).expect("Failed to copy SDL_ttf library");
+    if !fs::exists(&lib_destination).unwrap()
+    {
+        fs::copy(local_lib_path, lib_destination).expect("Failed to copy SDL_ttf library");
+    }
     println!("SDL3 Library Copied Sucessfuly");
 
     println!("cargo:rerun-if-changed={}", local_lib_path);
