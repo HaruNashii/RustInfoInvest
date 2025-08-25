@@ -41,9 +41,9 @@ pub fn handle_input(buttons: &Vec<(bool, Color, Rect, u16)>, event_pump: &mut Ev
                     { 
                         BUTTON_BEING_HOVERED = None; 
 
-                        let x_scaled = x * (800.0 / window_scale.0 as f32);
-                        let y_scaled = y * (600.0 / window_scale.1 as f32);
-
+                        let x_scaled = x * (1920.00 / window_scale.0 as f32);
+                        let y_scaled = y * (1080.00 / window_scale.1 as f32);
+                        
                         for object in buttons
                         {
                             if x_scaled >= object.2.x as f32 && x_scaled <= (object.2.x + object.2.w) as f32 && y_scaled >= object.2.y as f32 && y_scaled <= (object.2.y + object.2.h) as f32

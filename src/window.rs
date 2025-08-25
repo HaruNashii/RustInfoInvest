@@ -10,7 +10,6 @@ use crate::pages::Page;
 
 
 
-pub static mut WINDOW_SIZE: (u32, u32) = (0, 0);
 pub static mut SDL3_TEXTURE_CREATOR: Vec<TextureCreator<WindowContext>> = Vec::new();
 
 
@@ -22,7 +21,7 @@ pub fn create_window() -> (Canvas<Window>, EventPump)
 {
     let sdl_started = sdl3::init().unwrap();
     let video_system = sdl_started.video().unwrap();
-    let mut window = video_system.window("RustInfoInvest", 800, 600).resizable().position_centered().build().unwrap();
+    let mut window = video_system.window("RustInfoInvest", 1920, 1080).resizable().position_centered().build().unwrap();
     
     // set window logo
     let home_path = env::home_dir().unwrap().display().to_string();
@@ -41,7 +40,7 @@ pub fn create_window() -> (Canvas<Window>, EventPump)
         SDL3_TEXTURE_CREATOR.push(texture_creator);
     };
 
-    canvas.set_logical_size(canvas.window().size().0, canvas.window().size().1, SDL_LOGICAL_PRESENTATION_STRETCH).unwrap();
+    canvas.set_logical_size(1920, 1080, SDL_LOGICAL_PRESENTATION_STRETCH).unwrap();
     canvas.set_viewport(Rect::new(0, 0, canvas.window().size().0, canvas.window().size().1));
 
     (canvas, event_pump)
