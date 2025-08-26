@@ -32,7 +32,7 @@
 <br/>
 
 ## **Known Issues**
-- window being blurry when resized
+- hard to read when window is small
 - messy code
 
 <br/>

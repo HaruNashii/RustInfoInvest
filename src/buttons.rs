@@ -1,9 +1,12 @@
+use sdl3::{pixels::Color, rect::Rect};
+
 use crate::
 { 
     getonlineinfo::infos, 
-    input_handler::{BUTTON_CLICKED, IS_ON_WRITE_MODE},
+    input_handler::{BUTTON_BEING_HOVERED, BUTTON_CLICKED, IS_ON_WRITE_MODE},
     investment_wallet::{add_investment, ALL_INVESTMENTS, MUTABLE_ALL_INVESTMENTS}, 
-    math::ONLINE_HISTORIC_RETURN_VALUE
+    math::ONLINE_HISTORIC_RETURN_VALUE,
+    pages::COLOR_CHANGE_WHEN_SELECTED,
 };
 
 
@@ -12,6 +15,29 @@ use crate::
 
 pub static mut PAGE_TO_RENDER: u8 = 0;
 pub static mut ALLOW_QUERY: bool = true;
+
+
+
+
+
+pub fn button_change_color_when_hovered(all_buttons: &mut Vec<(bool, Color, Rect, u16)>)
+{
+    unsafe 
+    {
+        if let Some(button_being_hovered) = BUTTON_BEING_HOVERED
+        {
+            for button in all_buttons
+            {
+                if button_being_hovered as u16 == button.3
+                {
+                    if (button.1.r as i32 - COLOR_CHANGE_WHEN_SELECTED.0 as i32) > 1 { button.1.r -= COLOR_CHANGE_WHEN_SELECTED.0 } else { button.1.r = 0 };
+                    if (button.1.g as i32 - COLOR_CHANGE_WHEN_SELECTED.1 as i32) > 1 { button.1.g -= COLOR_CHANGE_WHEN_SELECTED.1 } else { button.1.g = 0 };
+                    if (button.1.b as i32 - COLOR_CHANGE_WHEN_SELECTED.2 as i32) > 1 { button.1.b -= COLOR_CHANGE_WHEN_SELECTED.2 } else { button.1.b = 0 };
+                };
+            };
+        }
+    }
+}
 
 
 

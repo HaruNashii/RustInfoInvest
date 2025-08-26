@@ -4,10 +4,11 @@ use sdl3::pixels::Color;
 use sdl3::render::Texture;
 use crate::
 { 
-    input_handler::{BUTTON_BEING_HOVERED, IS_ON_WRITE_MODE, USER_INPUT}, 
+    input_handler::{IS_ON_WRITE_MODE, USER_INPUT}, 
     investment_wallet::{ALL_INVESTMENTS, DAY, INVESTMENT_NAME, MONTH, REALTIME_CURRENCY, REALTIME_RETURN_PER_SECOND, REALTIME_TOTAL_INVESTED, RETURN_PER_INVESTMENT, TOTAL_INVESTED_PER_INVESTMENT, YEAR}, 
     math::{calculator_maths, realtime_currency_maths, DAYS_INVESTED, HOURS_INVESTED, MINUTES_INVESTED, MONTHLY_CONTRIBUTION, MONTHS_INVESTED, ONLINE_HISTORIC_RETURN_VALUE, RETURN_VALUE, SECS_INVESTED, TOTAL_INVESTED, YEARS_INVESTED}, 
-    sdl3_generators::gen_text
+    sdl3_generators::gen_text,
+    buttons::button_change_color_when_hovered,
 };
 
 
@@ -26,7 +27,7 @@ pub struct Page<'a>
 
 
 
-const COLOR_CHANGE_WHEN_SELECTED: (u8, u8, u8) = (17, 17, 17);
+pub const COLOR_CHANGE_WHEN_SELECTED: (u8, u8, u8) = (25, 25, 25);
 const BACKGROUND_COLOR: Color = Color::RGB(30,  30,  46);
 const TEXT_COLOR:       Color = Color::RGB(255, 255, 255);
 const SUBTEXT_COLOR:    Color = Color::RGB(186, 194, 222);
@@ -64,21 +65,7 @@ pub fn persistent_page() -> Page<'static>
 
 
     //===================== make buttons change color when selected =========================
-    unsafe 
-    {
-        if let Some(result) = BUTTON_BEING_HOVERED
-        {
-            for button in &mut all_buttons
-            {
-                if result as u16 == button.3
-                {
-                    button.1.r -= COLOR_CHANGE_WHEN_SELECTED.0;
-                    button.1.g -= COLOR_CHANGE_WHEN_SELECTED.1;
-                    button.1.b -= COLOR_CHANGE_WHEN_SELECTED.2;
-                };
-            };
-        }
-    }
+    button_change_color_when_hovered(&mut all_buttons);
 
 
 
@@ -154,21 +141,7 @@ pub fn calculator_page() -> Page<'static>
 
 
    //===================== make buttons change color when selected =========================
-   unsafe 
-   {
-       if let Some(result) = BUTTON_BEING_HOVERED
-        {
-            for button in &mut all_buttons
-            {
-                if result as u16 == button.3
-                {
-                    button.1.r -= COLOR_CHANGE_WHEN_SELECTED.0;
-                    button.1.g -= COLOR_CHANGE_WHEN_SELECTED.1;
-                    button.1.b -= COLOR_CHANGE_WHEN_SELECTED.2;
-                };
-            };
-        }
-    }
+   button_change_color_when_hovered(&mut all_buttons);
 
 
 
@@ -265,21 +238,7 @@ pub fn realtime_currency_page() -> Page<'static>
 
 
     //===================== make buttons change color when selected =========================
-    unsafe 
-    {
-        if let Some(result) = BUTTON_BEING_HOVERED
-        {
-            for button in &mut all_buttons
-            {
-                if result as u16 == button.3
-                {
-                    button.1.r -= COLOR_CHANGE_WHEN_SELECTED.0;
-                    button.1.b -= COLOR_CHANGE_WHEN_SELECTED.1;
-                    button.1.g -= COLOR_CHANGE_WHEN_SELECTED.2;
-                };
-            };
-        }
-    }
+    button_change_color_when_hovered(&mut all_buttons);
 
 
 
@@ -335,21 +294,7 @@ pub fn selic_page() -> Page<'static>
 
 
     //===================== make buttons change color when selected =========================
-    unsafe 
-    {
-        if let Some(result) = BUTTON_BEING_HOVERED
-        {
-            for button in &mut all_buttons
-            {
-                if result as u16 == button.3
-                {
-                    button.1.r -= COLOR_CHANGE_WHEN_SELECTED.0;
-                    button.1.b -= COLOR_CHANGE_WHEN_SELECTED.1;
-                    button.1.g -= COLOR_CHANGE_WHEN_SELECTED.2;
-                };
-            };
-        }
-    }
+    button_change_color_when_hovered(&mut all_buttons);
 
 
 
@@ -441,21 +386,7 @@ pub fn investment_wallet_page() -> Page<'static>
 
 
     //===================== make buttons change color when selected =========================
-    unsafe 
-    {
-        if let Some(result) = BUTTON_BEING_HOVERED
-        {
-            for button in &mut all_buttons
-            {
-                if result as u16 == button.3
-                {
-                    button.1.r -= COLOR_CHANGE_WHEN_SELECTED.0;
-                    button.1.b -= COLOR_CHANGE_WHEN_SELECTED.1;
-                    button.1.g -= COLOR_CHANGE_WHEN_SELECTED.2;
-                };
-            };
-        }
-    }
+    button_change_color_when_hovered(&mut all_buttons);
 
 
 
