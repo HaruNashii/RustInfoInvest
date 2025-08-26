@@ -28,7 +28,7 @@ pub fn create_window() -> (Canvas<Window>, EventPump)
     let icon_path = format!("{}/.local/share/icons/RustInfoInvest_LOGO_WITHOUT_BG.bmp", home_path).replace(" ", "");
     let icon_surface = Surface::load_bmp(icon_path).unwrap();
     window.set_icon(icon_surface);
-    window.set_minimum_size(800, 600).unwrap();
+    window.set_minimum_size(1024, 576).unwrap();
 
     video_system.text_input().start(&window);
     let mut canvas = window.into_canvas();
