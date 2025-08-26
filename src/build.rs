@@ -17,12 +17,11 @@ fn main()
     if !fs::exists(&icon_dir).unwrap() 
     {
         fs::copy(icon_path, icon_dir).expect("Failed to copy icon");
-        println!("Icon Copied Sucessfuly");
     };
 
 
     //Move The SDL_TTF Library To The Project Folder
-    let local_lib_path = "local_libs/libSDL3_ttf.so";
+    let local_lib_path = "assets/local_libs/libSDL3_ttf.so";
     let out_dir = PathBuf::from(env::var("OUT_DIR").unwrap());
     let target_dir = out_dir.ancestors().nth(3).unwrap().to_path_buf();
     let lib_destination = target_dir.join(PathBuf::from(local_lib_path).file_name().expect("Failed to get filename"),);
@@ -30,7 +29,6 @@ fn main()
     {
         fs::copy(local_lib_path, lib_destination).expect("Failed to copy SDL_ttf library");
     }
-    println!("SDL3 Library Copied Sucessfuly");
 
     println!("cargo:rerun-if-changed={}", local_lib_path);
 }
