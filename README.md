@@ -14,14 +14,11 @@
 <img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/40825d0d-c4be-461c-8f21-4e5168540b8c" />
 <details> <summary>Others Pages</summary>
 
-  
 - Realtime Currency Page
 <img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/cdc837dc-6566-4ad2-a81c-cc36c9c4bf3e" />
 
-
 - Investment Wallet Page
 <img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/426737c6-ef7a-45d8-a563-4b040589b169" />
-
 
 - Selic Historic Page
 <img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/e271d895-0ac6-41a2-8720-feb6eca3634f" />
@@ -48,14 +45,30 @@
 <br/>
 
 ## **Dependencies**
-- you will need ttf-jetbrains-mono, pkg-config, base-devel, cmake, geckodriver and firefox packages,
-- on Arch Linux: 
+- for use all features in the app you will need the followings packages: "ttf-jetbrains-mono, pkg-config, base-devel, cmake, geckodriver and firefox"
+- on Arch Linux you can get them by running: 
 - ```sudo pacman -Sy ttf-jetbrains-mono pkg-config base-devel cmake geckodriver firefox```
+- for basic features you will need to have only: "ttf-jetbrains-mono, pkg-config, base-devel and cmake"
+- on Arch Linux you can get them by running:
+- ```sudo pacman -Sy ttf-jetbrains-mono pkg-config base-devel cmake```
 
 <br/>
 <br/>
 <br/>
 
 ## **Downloading And Running**
-- after downloading the dependencies, you can run the app while on the root folder of the project with:
+- 1. Go to the Github Release Page
+- 2. Download The App Packages "RustInfoInvest_x86_64_Linux.zip"
+- 3. Unzip In Your Desired Location
+- 4. Give It Permission To Run (Can be done with "chmod a+x 'name_of_the_app'")
+- 5. Run It And Enjoy!! :).
+
+<br/>
+<br/>
+<br/>
+
+## **Building And Running**
+- after downloading the dependencies, you can build the app while on the root folder of the project with:
+- ```cargo build --release```
+- for running, you can direct run the app in the "target/release/" folder, or if isn't builded yet, you can run the following command:
 - ```cargo run --release```
