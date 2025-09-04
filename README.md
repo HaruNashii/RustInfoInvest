@@ -45,30 +45,42 @@
 <br/>
 
 ## **Dependencies**
-- for use all features in the app you will need the followings packages: "ttf-jetbrains-mono, pkg-config, base-devel, cmake, geckodriver and firefox"
-- on Arch Linux you can get them by running: 
-- ```sudo pacman -Sy ttf-jetbrains-mono pkg-config base-devel cmake geckodriver firefox```
-- for basic features you will need to have only: "ttf-jetbrains-mono, pkg-config, base-devel and cmake"
-- on Arch Linux you can get them by running:
-- ```sudo pacman -Sy ttf-jetbrains-mono pkg-config base-devel cmake```
+**to use all features in the app you will need the followings packages: "ttf-jetbrains-mono, pkg-config, base-devel, cmake, geckodriver and firefox"**
+  
+| Arch Linux |
+| --- |
+| `sudo pacman -Sy ttf-jetbrains-mono pkg-config base-devel cmake geckodriver firefox` |
+
+**for basic features you will need to have only: "ttf-jetbrains-mono, pkg-config, base-devel and cmake"**
+  
+| Arch Linux |
+| --- |
+| `sudo pacman -Sy ttf-jetbrains-mono pkg-config base-devel cmake` |
 
 <br/>
 <br/>
 <br/>
 
 ## **Downloading And Running**
-- 1. Go to the Github Release Page
-- 2. Download The App Packages "RustInfoInvest_x86_64_Linux.zip"
-- 3. Unzip In Your Desired Location
-- 4. Give It Permission To Run (Can be done with "chmod a+x 'name_of_the_app'")
-- 5. Run It And Enjoy!! :).
+- Go to the [Github Release Page](https://github.com/HaruNashii/RustInfoInvest/releases)
+- Download The App Packages "RustInfoInvest_x86_64_Linux.zip"
+- Unzip In Your Desired Location
+- Give It Permission To Run (Can be done with "chmod a+x 'name_of_the_app'")
+- Run It And Enjoy!! :).
 
 <br/>
 <br/>
 <br/>
 
 ## **Building And Running**
-- after downloading the dependencies, you can build the app while on the root folder of the project with:
-- ```cargo build --release```
-- for running, you can direct run the app in the "target/release/" folder, or if isn't builded yet, you can run the following command:
-- ```cargo run --release```
+**after downloading the dependencies, you can build the app while on the ```root folder``` of the project with:**
+
+| Bash |
+| --- |
+| `cargo build --release` |
+
+**for running, you can direct run the app in the ```target/release``` folder, or if isn't builded yet, you can run the following command:**
+
+| Bash |
+| --- |
+| `cargo run --release` |
