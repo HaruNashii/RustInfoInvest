@@ -45,17 +45,21 @@
 <br/>
 
 ## **Dependencies**
-**to use all features in the app you will need the followings packages: "ttf-jetbrains-mono, pkg-config, base-devel, cmake, geckodriver and firefox"**
+**to use all features in the app you will need the followings packages: "sdl3_ttf (Only In AUR), ttf-jetbrains-mono, pkg-config, base-devel, cmake, geckodriver and firefox"**
   
 | Arch Linux |
 | --- |
 | `sudo pacman -Sy ttf-jetbrains-mono pkg-config base-devel cmake geckodriver firefox` |
+| --- |
+| `yay -S sdl3_ttf` or `paru -S sdl3_ttf` |
 
-**for basic features you will need to have only: "ttf-jetbrains-mono, pkg-config, base-devel and cmake"**
+**for basic features you will need to have only: "sdl3_ttf (Only In AUR), ttf-jetbrains-mono, pkg-config, base-devel and cmake"**
   
 | Arch Linux |
 | --- |
 | `sudo pacman -Sy ttf-jetbrains-mono pkg-config base-devel cmake` |
+| --- |
+| `yay -S sdl3_ttf` or `paru -S sdl3_ttf` |
 
 <br/>
 <br/>
