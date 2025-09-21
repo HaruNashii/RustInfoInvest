@@ -1,6 +1,7 @@
 use std::env;
 use std::fs;
 use std::path::PathBuf;
+use std::process::Command;
 
 fn main() 
 {
@@ -31,6 +32,6 @@ fn main()
     }
 
     println!("cargo:rerun-if-changed={}", local_lib_path);
-    println!("cargo:rustc-cfg=SDL_UNIX_CONSOLE_BUILD=ON");
-    println!("cargo:env=SDL_UNIX_CONSOLE_BUILD=ON");
+
+    Command::new("cmake").args(&["-DSDL_UNIX_CONSOLE_BUILD=ON", "."]).status().expect("Failed to configure SDL with CMake");
 }
