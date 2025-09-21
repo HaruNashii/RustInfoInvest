@@ -32,7 +32,7 @@ jobs:
       run: rustup default stable
 
     - name: Build The Project
-      run: cargo build
+      run: ls $PWD && ls .. && cargo build
       
     - name: Check Clippy
       run: cargo clippy
