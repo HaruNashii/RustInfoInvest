@@ -21,6 +21,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+    - uses: actions/checkout@v4
     - uses: RangHo/setup-arch@main
       with:
         version: latest 
@@ -32,10 +33,13 @@ jobs:
       run: rustup default stable
 
     - name: Build The Project
-      run: ls $PWD && ls .. && cargo build
+      shell: arch.sh {0}
+      run: cargo build
       
     - name: Check Clippy
+      shell: arch.sh {0}
       run: cargo clippy
       
     - name: Run tests
+      shell: arch.sh {0}
       run: cargo test
