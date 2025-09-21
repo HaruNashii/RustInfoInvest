@@ -17,7 +17,9 @@ jobs:
     steps:
     - uses: actions/checkout@v4
     - name: Install Necessary Packages
-      run: sudo apt install -y pkg-config cmake build-essential git libfontconfig-dev
+      run: sudo apt install -y pkg-config cmake build-essential git
+    - name: configure cmake 
+      run: alias cmake=cmake -DSDL_UNIX_CONSOLE_BUILD=ON
     - name: Build The Project
       run: cargo build
     - name: Check Clippy
