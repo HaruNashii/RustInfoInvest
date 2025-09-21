@@ -22,19 +22,16 @@ jobs:
 
     steps:
     - name: Setup Arch Environment
-    - uses: RangHo/setup-arch@v1.2.2
-      with: ttf-jetbrains-mono pkg-config base-devel cmake rustup
+    - uses: RangHo/setup-arch@main
+      with:
+        version: latest 
+        mirror: https://geo.mirror.pkgbuild.com 
+        packages: "ttf-jetbrains-mono pkg-config base-devel cmake rustup"
     
     - name: Setup Rust 
       shell: arch.sh {0}
       run: rustup default stable
 
-
-
-jobs:
-  build:
-      
-    steps:
     - name: Build The Project
       run: cargo build
       shell: arch.sh {0}
