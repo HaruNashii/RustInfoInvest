@@ -1,4 +1,4 @@
-name: Rust
+name: Rust - Ubuntu
 
 on:
   push:
@@ -17,11 +17,9 @@ jobs:
     steps:
     - uses: actions/checkout@v4
     - name: Install Dependencies
-      run: sudo apt install -y pkg-config cmake build-essential git libfontconfig-dev
-    - name: configure cmake 
-      run: export CMAKE_ARGS="-DSDL_UNIX_CONSOLE_BUILD=ON" && export CMAKE_C_FLAGS="-DSDL_UNIX_CONSOLE_BUILD=ON"
+      run: sudo apt install -y pkg-config cmake build-essential git libx11-dev libxext-dev libxrandr-dev libxcursor-dev libxfixes-dev libxi-dev libgl1-mesa-dev libgles2-mesa-dev libegl1-mesa-dev libfontconfig-dev
     - name: Build The Project
-      run: CARGO_BUILD_ENV="CMAKE_ARGS=-DSDL_UNIX_CONSOLE_BUILD=ON" && cargo build
+      run: cargo build
     - name: Check Clippy
       run: cargo clippy
     - name: Run tests
