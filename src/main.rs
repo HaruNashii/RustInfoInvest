@@ -24,7 +24,7 @@ pub mod investment_wallet;
 
 
 
-fn main() 
+fn main()
 {
     let (mut canvas, mut event_pump) = create_window();
 
