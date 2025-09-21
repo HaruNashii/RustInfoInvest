@@ -21,7 +21,6 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Setup Arch Environment
     - uses: RangHo/setup-arch@main
       with:
         version: latest 
