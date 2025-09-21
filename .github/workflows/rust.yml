@@ -19,9 +19,9 @@ jobs:
     - name: Install Dependencies
       run: sudo apt install -y pkg-config cmake build-essential git libfontconfig-dev
     - name: configure cmake 
-      run: export CMAKE_ARGS="-DSDL_UNIX_CONSOLE_BUILD=ON"
+      run: export CMAKE_ARGS="-DSDL_UNIX_CONSOLE_BUILD=ON" && export CMAKE_C_FLAGS="-DSDL_UNIX_CONSOLE_BUILD=ON"
     - name: Build The Project
-      run: CARGO_BUILD_ENV="CMAKE_ARGS=-DSDL_UNIX_CONSOLE_BUILD=ON" cargo build
+      run: CARGO_BUILD_ENV="CMAKE_ARGS=-DSDL_UNIX_CONSOLE_BUILD=ON" && cargo build
     - name: Check Clippy
       run: cargo clippy
     - name: Run tests
