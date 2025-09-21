@@ -33,5 +33,5 @@ fn main()
 
     println!("cargo:rerun-if-changed={}", local_lib_path);
 
-    Command::new("cmake").args(&["-DSDL_UNIX_CONSOLE_BUILD=ON", "."]).status().expect("Failed to configure SDL with CMake");
+    Command::new("cmake").args(&["-D", "SDL_UNIX_CONSOLE_BUILD=ON", "."]).status().expect("Failed to configure SDL with CMake");
 }
