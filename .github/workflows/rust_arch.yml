@@ -6,19 +6,21 @@ on:
   pull_request:
     branches: [ "main" ]
 
-env:
-  CARGO_TERM_COLOR: always
-
 jobs:
   build:
 
     runs-on: ubuntu-latest
 
     steps:
+    - name: Setup Arch Environment
     - uses: RangHo/setup-arch@v1.2.2
     
-    - name: Setup Arch Environment
-      run: sudo pacman -Syu sudo pacman -Sy ttf-jetbrains-mono pkg-config base-devel cmake
+    - name: Download Dependencies
+      run: sudo pacman -Sy ttf-jetbrains-mono pkg-config base-devel cmake rustup
+      shell: arch.sh {0}
+
+    - name: Setup Rust 
+      run: rustup default stable
       shell: arch.sh {0}
       
     - name: Build The Project
