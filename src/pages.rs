@@ -152,8 +152,8 @@ pub fn calculator_page() -> Page<'static>
     let hour_string =   format!("Hours:   R${:.4}", one_hour);
     let minute_string = format!("Minutes: R${:.5}", one_min);
     let second_string = format!("Seconds: R${:.6}", one_secs);
-    let total_with_year_income_string = format!("Total in years Income: R${:.2}", unsafe{TOTAL_INVESTED + one_year});
-    let total_with_month_income_string = format!("Total in months Income: R${:.2}", unsafe{TOTAL_INVESTED + one_month + (MONTHLY_CONTRIBUTION * MONTHS_INVESTED) });
+    let total_with_year_income_string = format!("Total in {} years Income: R${:.2}", unsafe{YEARS_INVESTED}, unsafe{TOTAL_INVESTED + one_year + ((MONTHLY_CONTRIBUTION * 12.0) * YEARS_INVESTED)});
+    let total_with_month_income_string = format!("Total in {} months Income: R${:.2}", unsafe{MONTHS_INVESTED}, unsafe{TOTAL_INVESTED + one_month + (MONTHLY_CONTRIBUTION * MONTHS_INVESTED) });
 
     let mut all_text = vec!
     [
