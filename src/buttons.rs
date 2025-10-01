@@ -18,24 +18,32 @@ pub static mut ALLOW_QUERY: bool = true;
 
 
 
-
-
-pub fn button_change_color_when_hovered(all_buttons: &mut Vec<(bool, Color, Rect, u16)>)
+pub trait ChangeColors
 {
-    unsafe 
+   fn button_change_color_when_hovered(self) -> Vec<(bool, Color, Rect, u16)>;
+}
+
+impl ChangeColors for Vec<(bool, Color, Rect, u16)>
+{
+    fn button_change_color_when_hovered(mut self) -> Vec<(bool, Color, Rect, u16)>
     {
-        if let Some(button_being_hovered) = BUTTON_BEING_HOVERED
+        unsafe 
         {
-            for button in all_buttons
+            if let Some(button_being_hovered) = BUTTON_BEING_HOVERED
             {
-                if button_being_hovered as u16 == button.3
+                for button in &mut self
                 {
-                    if (button.1.r as i32 - COLOR_CHANGE_WHEN_SELECTED.0 as i32) > 1 { button.1.r -= COLOR_CHANGE_WHEN_SELECTED.0 } else { button.1.r = 0 };
-                    if (button.1.g as i32 - COLOR_CHANGE_WHEN_SELECTED.1 as i32) > 1 { button.1.g -= COLOR_CHANGE_WHEN_SELECTED.1 } else { button.1.g = 0 };
-                    if (button.1.b as i32 - COLOR_CHANGE_WHEN_SELECTED.2 as i32) > 1 { button.1.b -= COLOR_CHANGE_WHEN_SELECTED.2 } else { button.1.b = 0 };
+                    if button_being_hovered as u16 == button.3
+                    {
+                        if (button.1.r as i32 - COLOR_CHANGE_WHEN_SELECTED.0 as i32) > 1 { button.1.r -= COLOR_CHANGE_WHEN_SELECTED.0 } else { button.1.r = 0 };
+                        if (button.1.g as i32 - COLOR_CHANGE_WHEN_SELECTED.1 as i32) > 1 { button.1.g -= COLOR_CHANGE_WHEN_SELECTED.1 } else { button.1.g = 0 };
+                        if (button.1.b as i32 - COLOR_CHANGE_WHEN_SELECTED.2 as i32) > 1 { button.1.b -= COLOR_CHANGE_WHEN_SELECTED.2 } else { button.1.b = 0 };
+                    };
                 };
-            };
+            }
         }
+    
+        self
     }
 }
 

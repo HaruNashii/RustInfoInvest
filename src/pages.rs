@@ -4,11 +4,7 @@ use sdl3::pixels::Color;
 use sdl3::render::Texture;
 use crate::
 { 
-    input_handler::{IS_ON_WRITE_MODE, USER_INPUT}, 
-    investment_wallet::{ALL_INVESTMENTS, DAY, INVESTMENT_NAME, MONTH, REALTIME_CURRENCY, REALTIME_RETURN_PER_SECOND, REALTIME_TOTAL_INVESTED, RETURN_PER_INVESTMENT, TOTAL_INVESTED_PER_INVESTMENT, YEAR}, 
-    math::{calculator_maths, realtime_currency_maths, DAYS_INVESTED, HOURS_INVESTED, MINUTES_INVESTED, MONTHLY_CONTRIBUTION, MONTHS_INVESTED, ONLINE_HISTORIC_RETURN_VALUE, RETURN_VALUE, SECS_INVESTED, TOTAL_INVESTED, YEARS_INVESTED}, 
-    sdl3_generators::gen_text,
-    buttons::button_change_color_when_hovered,
+    buttons::ChangeColors, input_handler::{IS_ON_WRITE_MODE, USER_INPUT}, investment_wallet::{ALL_INVESTMENTS, DAY, INVESTMENT_NAME, MONTH, REALTIME_CURRENCY, REALTIME_RETURN_PER_SECOND, REALTIME_TOTAL_INVESTED, RETURN_PER_INVESTMENT, TOTAL_INVESTED_PER_INVESTMENT, YEAR}, math::{calculator_maths, realtime_currency_maths, DAYS_INVESTED, HOURS_INVESTED, MINUTES_INVESTED, MONTHLY_CONTRIBUTION, MONTHS_INVESTED, ONLINE_HISTORIC_RETURN_VALUE, RETURN_VALUE, SECS_INVESTED, TOTAL_INVESTED, YEARS_INVESTED}, sdl3_generators::gen_text
 };
 
 
@@ -52,7 +48,7 @@ pub fn persistent_page() -> Page<'static>
 
 
     //===================== buttons =========================
-    let mut all_buttons = vec!
+    let all_buttons = vec!
     [
         //main page button
         (true, PINK_COLOR, Rect::new(550, 10, 200, 75), 1),
@@ -60,12 +56,7 @@ pub fn persistent_page() -> Page<'static>
         (true, PINK_COLOR, Rect::new(850, 10, 200, 75), 2),
         //selic page button
         (true, PINK_COLOR, Rect::new(1149, 10, 200, 75), 3),
-    ];
-
-
-
-    //===================== make buttons change color when selected =========================
-    button_change_color_when_hovered(&mut all_buttons);
+    ].button_change_color_when_hovered();
 
 
 
@@ -116,7 +107,7 @@ pub fn calculator_page() -> Page<'static>
 
 
     //===================== buttons =========================
-    let mut all_buttons: Vec<(bool, Color, Rect, u16)> = vec!
+    let all_buttons: Vec<(bool, Color, Rect, u16)> = vec!
     [
         //receive input button 1
         (true, PURPLE_COLOR, Rect::new(10, 105, 940, 40), 4),
@@ -136,12 +127,7 @@ pub fn calculator_page() -> Page<'static>
         (true, BLACK_COLOR,  Rect::new(935, 905, 45, 25), 11),
         //receive input button 3
         (true, PURPLE_COLOR, Rect::new(965, 105, 940, 40), 12),
-    ];
-
-
-
-   //===================== make buttons change color when selected =========================
-   button_change_color_when_hovered(&mut all_buttons);
+    ].button_change_color_when_hovered();
 
 
 
@@ -229,16 +215,11 @@ pub fn realtime_currency_page() -> Page<'static>
 
 
     //===================== buttons =========================
-    let mut all_buttons = vec!
+    let all_buttons = vec!
     [
         //investment wallet
         (true, PURPLE_COLOR,   Rect::new(10, 105, 940, 40), 13),
-    ];
-
-
-
-    //===================== make buttons change color when selected =========================
-    button_change_color_when_hovered(&mut all_buttons);
+    ].button_change_color_when_hovered();
 
 
 
@@ -294,8 +275,7 @@ pub fn selic_page() -> Page<'static>
 
 
     //===================== make buttons change color when selected =========================
-    button_change_color_when_hovered(&mut all_buttons);
-
+    all_buttons = all_buttons.button_change_color_when_hovered();
 
 
     //===================== texts =========================
@@ -386,8 +366,7 @@ pub fn investment_wallet_page() -> Page<'static>
 
 
     //===================== make buttons change color when selected =========================
-    button_change_color_when_hovered(&mut all_buttons);
-
+    all_buttons = all_buttons.button_change_color_when_hovered();
 
 
     //===================== texts =========================
